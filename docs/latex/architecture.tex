@@ -1,0 +1,84 @@
+\documentclass[tikz,border=10pt]{standalone}
+\usepackage{tikz}
+\usepackage[polish]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usetikzlibrary{shapes.geometric, arrows, positioning, fit, arrows.meta}
+
+\begin{document}
+\begin{tikzpicture}[
+    node distance=1.5cm,
+    box/.style={
+        rectangle,
+        draw,
+        text width=8em,
+        text centered,
+        minimum height=3em,
+        rounded corners,
+        fill=blue!10
+    },
+    io/.style={
+        trapezium,
+        trapezium left angle=70,
+        trapezium right angle=110,
+        draw,
+        text width=8em,
+        text centered,
+        minimum height=3em,
+        fill=green!10
+    },
+    service/.style={
+        rectangle,
+        draw,
+        text width=8em,
+        text centered,
+        minimum height=3em,
+        rounded corners,
+        fill=orange!10
+    },
+    utility/.style={
+        ellipse,
+        draw,
+        text width=8em,
+        text centered,
+        minimum height=3em,
+        fill=purple!10
+    },
+    arrow/.style={
+        thick,
+        ->,
+        >=stealth
+    }
+]
+
+% External components
+\node (api) [io] {API JSONPlaceholder};
+
+% Services
+\node (apiservice) [service, below=of api] {Serwis API};
+\node (servicebuilder) [service, right=of apiservice] {Konstruktor Serwisu};
+
+% Main application
+\node (main) [box, below=of apiservice] {Główna Aplikacja};
+\node (post) [box, left=of main] {Model Post};
+
+% Utils
+\node (fileutils) [utility, below=of main] {Narzędzia Plikowe};
+
+% Output
+\node (files) [io, below=of fileutils] {Pliki JSON};
+
+% Connections
+\draw [arrow] (api) -- (apiservice);
+\draw [arrow] (apiservice) -- (main);
+\draw [arrow] (servicebuilder) -- (apiservice);
+\draw [arrow] (main) -- (fileutils);
+\draw [arrow] (post) -- (main);
+\draw [arrow] (post) -- (fileutils);
+\draw [arrow] (fileutils) -- (files);
+
+% Add a rectangle around the application components
+\node[draw, dotted, fit=(apiservice) (servicebuilder) (main) (post) (fileutils), inner sep=0.5cm, label=above:Komponenty Aplikacji] (app) {};
+
+\end{tikzpicture}
+\end{document} 

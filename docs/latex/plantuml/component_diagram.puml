@@ -1,0 +1,59 @@
+@startuml Component Diagram
+
+skinparam componentStyle uml2
+skinparam componentBackgroundColor LightBlue
+skinparam componentBorderColor DarkBlue
+skinparam interfaceBackgroundColor LightGreen
+skinparam interfaceBorderColor DarkGreen
+skinparam arrowColor DarkBlue
+
+title "Komponenty Systemu Pobierania Postow"
+
+package "Aplikacja" {
+  [Main] as Main
+  [Post Model] as PostModel
+  [API Service] as ApiService
+  [Service Builder] as ServiceBuilder
+  [File Utils] as FileUtils
+}
+
+cloud "Zewnetrzne API" {
+  [JSONPlaceholder API] as JsonApi
+}
+
+database "System Plikow" {
+  [Pliki JSON] as JsonFiles
+}
+
+interface "HTTP" as HttpInterface
+
+ServiceBuilder ..> HttpInterface : tworzy
+ApiService ..> HttpInterface : uzywa
+HttpInterface -- JsonApi
+
+Main --> PostModel : uzywa
+Main --> ApiService : wywoluje
+Main --> ServiceBuilder : konfiguruje
+Main --> FileUtils : uzywa do zapisu
+
+FileUtils --> PostModel : serializuje
+FileUtils --> JsonFiles : zapisuje
+
+JsonApi ..> PostModel : dostarcza dane
+
+note right of JsonApi
+  Zewnetrzny serwis dostarczajacy
+  dane w formacie JSON
+end note
+
+note right of FileUtils
+  Odpowiada za konwersje postow
+  do plikow JSON i zapis na dysk
+end note
+
+note right of ServiceBuilder
+  Konfiguruje Retrofit z bazowym URL
+  i konwerterem Gson
+end note
+
+@enduml 

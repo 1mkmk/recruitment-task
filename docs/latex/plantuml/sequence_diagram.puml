@@ -1,0 +1,51 @@
+@startuml Sequence Diagram
+
+skinparam sequenceArrowThickness 2
+skinparam sequenceParticipantBorderColor DarkBlue
+skinparam sequenceParticipantBackgroundColor LightBlue
+skinparam sequenceLifeLineBorderColor blue
+skinparam sequenceBoxBorderColor DarkBlue
+skinparam sequenceBoxBackgroundColor LightBlue
+
+title "Sekwencja Pobierania i Zapisywania Postow"
+
+actor User
+participant "Main" as Main
+participant "ServiceBuilder" as ServiceBuilder
+participant "ApiService" as ApiService
+participant "JSONPlaceholder API" as API #LightGreen
+participant "FileUtils" as FileUtils
+database "Pliki JSON" as Files #LightGreen
+
+User -> Main: Uruchomienie aplikacji
+activate Main
+
+Main -> ServiceBuilder: buildService(ApiService.class)
+activate ServiceBuilder
+ServiceBuilder --> Main: zwraca instancje serwisu API
+deactivate ServiceBuilder
+
+Main -> ApiService: getPosts()
+activate ApiService
+ApiService -> API: HTTP GET /posts
+activate API
+API --> ApiService: Odpowiedz JSON (lista postow)
+deactivate API
+ApiService --> Main: zwraca List<Post>
+deactivate ApiService
+
+Main -> Main: Tworzy katalog wyjsciowy
+
+loop dla kazdego posta
+    Main -> FileUtils: savePostAsJson(post, "posts")
+    activate FileUtils
+    FileUtils -> FileUtils: Konwertuje Post na JSON
+    FileUtils -> Files: Zapisuje plik <id>.json
+    FileUtils --> Main: zwraca status operacji
+    deactivate FileUtils
+end
+
+Main -> User: Wyswietla podsumowanie
+deactivate Main
+
+@enduml 
