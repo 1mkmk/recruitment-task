@@ -36,7 +36,13 @@ dependencies {
     // Logging
     implementation("ch.qos.logback:logback-classic:1.4.7")
     
+    // Testy
     testImplementation(kotlin("test"))
+    testImplementation("org.junit.jupiter:junit-jupiter:5.9.3")
+    testImplementation("io.mockk:mockk:1.13.5")
+    testImplementation("io.ktor:ktor-server-test-host:$ktor_version")
+    testImplementation("io.ktor:ktor-client-content-negotiation:$ktor_version")
+    testImplementation("io.ktor:ktor-client-mock:$ktor_version")
 }
 
 tasks.test {

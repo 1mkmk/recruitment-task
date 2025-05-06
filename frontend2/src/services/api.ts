@@ -178,19 +178,16 @@ export const getPosts = async (
   filters?: PostFilterOptions
 ): Promise<Post[]> => {
   try {
-    // Add cache-busting query parameter if forceRefresh is true
+    // Build URL with query parameters
     let url = `${API_URL}/posts`;
     const params = new URLSearchParams();
     
+    // Always add withRelations parameter to be explicit
+    params.append('withRelations', withRelations.toString());
+    
+    // Add cache-busting parameter if force refresh is requested
     if (forceRefresh) {
       params.append('refresh', Date.now().toString());
-    }
-    
-    if (withRelations) {
-      params.append('withRelations', 'true');
-    } else {
-      // Wyraźnie ustaw parametr withRelations=false
-      params.append('withRelations', 'false');
     }
     
     // Add filter parameters if provided
@@ -216,33 +213,26 @@ export const getPosts = async (
       }
     }
     
+    // Add parameters to URL
     if (params.toString()) {
       url += `?${params.toString()}`;
     }
     
+    // Configure fetch options with cache control
     const fetchOptions: RequestInit = {
-      ...defaultFetchOptions
-    };
-    
-    // Add cache control headers if forceRefresh is true
-    if (forceRefresh) {
-      fetchOptions.headers = {
+      ...defaultFetchOptions,
+      headers: {
         ...defaultFetchOptions.headers,
         'Cache-Control': 'no-cache, no-store, must-revalidate',
         'Pragma': 'no-cache',
         'Expires': '0'
-      };
-    }
+      }
+    };
     
-    console.log('Fetching posts from:', url);
+    console.log(`Fetching posts from: ${url}`);
     const response = await fetch(url, fetchOptions);
     const data = await handleResponse<Post[]>(response);
-    console.log(`Fetched ${data.length} posts`);
-    
-    // Jeśli withRelations jest false, upewnij się, że posty nie mają relacji
-    if (!withRelations) {
-      return stripRelationsFromPosts(data);
-    }
+    console.log(`Fetched ${data.length} posts with relations=${withRelations}`);
     
     return data;
   } catch (error) {
@@ -331,8 +321,15 @@ export const saveAllPosts = async (withRelations: boolean = false): Promise<{ su
   }
 };
 
-export const clearPosts = async (): Promise<{ success: boolean; message: string; directory: string }> => {
+export const clearPosts = async (): Promise<{ success: boolean; directory: string }> => {
   try {
+    // First check if there's any refresh in progress
+    const refreshStatus = await getRefreshStatus();
+    if (refreshStatus.isRefreshing) {
+      console.warn('Refresh already in progress:', refreshStatus);
+      throw new Error(`Operation in progress (${refreshStatus.refreshType})`);
+    }
+    
     // Remove the timestamp parameter which is causing serialization issues
     const url = `${API_URL}/posts`;
     console.log('Clearing posts with URL:', url);
@@ -398,12 +395,155 @@ export const downloadPostsAsZip = async (options?: {
   }
 };
 
-// Quick refresh posts - only fetch missing posts
+// Add types for refresh status
+export interface RefreshStatus {
+  isRefreshing: boolean;
+  refreshStartTime: number | null;
+  refreshType: string | null;
+  withRelations: boolean | null;
+}
+
+// Funkcja do sprawdzania stanu odświeżania
+export const getRefreshStatus = async (): Promise<RefreshStatus> => {
+  try {
+    // Dodaj parameter cache-busting, ale bez użycia Date objects które mogą nie działać w testach
+    const timestamp = Math.floor(Math.random() * 1000000);
+    const url = `${API_URL}/refresh-status?t=${timestamp}`;
+    
+    const response = await fetch(url, {
+      ...defaultFetchOptions,
+      headers: {
+        ...defaultFetchOptions.headers,
+        'Cache-Control': 'no-cache, no-store, must-revalidate',
+        'Pragma': 'no-cache',
+        'Expires': '0'
+      }
+    });
+    
+    const data = await handleResponse<RefreshStatus>(response);
+    console.log('Refresh status:', data);
+    return data;
+  } catch (error) {
+    console.error('Failed to get refresh status:', error);
+    // Return default state if API fails
+    return {
+      isRefreshing: false,
+      refreshStartTime: null,
+      refreshType: null,
+      withRelations: null
+    };
+  }
+};
+
+// Update the hardRefreshPosts function to check for ongoing refreshes
+export const hardRefreshPosts = async (
+  withRelations: boolean = false,
+  filters?: PostFilterOptions,
+  force: boolean = false
+): Promise<{ success: boolean; totalRefreshed: number; posts: Post[] }> => {
+  try {
+    // First check if there's any refresh in progress
+    const refreshStatus = await getRefreshStatus();
+    if (refreshStatus.isRefreshing) {
+      console.warn('Refresh already in progress:', refreshStatus);
+      throw new Error(`Refresh already in progress (${refreshStatus.refreshType})`);
+    }
+    
+    // Build URL with query parameters
+    let url = `${API_URL}/posts/hard-refresh`;
+    const params = new URLSearchParams();
+    
+    if (withRelations) {
+      params.append('withRelations', 'true');
+    } else {
+      // Wyraźnie ustaw parametr withRelations=false, aby być pewnym, że backend to zrozumie
+      params.append('withRelations', 'false');
+    }
+    
+    // Dodaj parametr force, aby wymusić pełne odświeżenie
+    if (force) {
+      params.append('force', 'true');
+    }
+    
+    // Add filter parameters if provided
+    if (filters) {
+      if (filters.minId !== undefined) {
+        params.append('minId', filters.minId.toString());
+      }
+      
+      if (filters.maxId !== undefined) {
+        params.append('maxId', filters.maxId.toString());
+      }
+      
+      if (filters.titleContains) {
+        params.append('titleContains', filters.titleContains);
+      }
+      
+      if (filters.bodyContains) {
+        params.append('bodyContains', filters.bodyContains);
+      }
+      
+      if (filters.fetchDateAfter) {
+        params.append('fetchDateAfter', filters.fetchDateAfter);
+      }
+    }
+    
+    if (params.toString()) {
+      url += `?${params.toString()}`;
+    }
+    
+    console.log('Hard refreshing posts from:', url);
+    const response = await fetch(url, {
+      ...defaultFetchOptions,
+      method: 'POST',
+      headers: {
+        ...defaultFetchOptions.headers,
+        'Cache-Control': 'no-cache, no-store, must-revalidate',
+        'Pragma': 'no-cache',
+        'Expires': '0'
+      }
+    });
+    
+    if (!response.ok) {
+      if (response.status === 429) { // Too Many Requests
+        const errorData = await response.json();
+        console.warn('Refresh already in progress:', errorData);
+        throw new Error(`Refresh already in progress (${errorData.refreshType})`);
+      }
+      throw new Error(`Refresh failed with status: ${response.status}`);
+    }
+    
+    const data = await handleResponse<{ success: boolean; totalRefreshed: number; posts: Post[] }>(response);
+    console.log(`Hard refresh complete: ${data.totalRefreshed} posts refreshed`);
+    
+    // Jeśli withRelations jest false, upewnij się, że posty nie mają relacji
+    if (!withRelations && data.posts) {
+      return {
+        ...data,
+        posts: stripRelationsFromPosts(data.posts)
+      };
+    }
+    
+    return data;
+  } catch (error) {
+    console.error('Failed to hard refresh posts:', error);
+    throw error;
+  }
+};
+
+// Also update quickRefreshPosts with similar pattern
 export const quickRefreshPosts = async (
   withRelations: boolean = false,
   filters?: PostFilterOptions
 ): Promise<{ success: boolean; totalChecked: number; totalAdded: number; posts: Post[] }> => {
   try {
+    // First check if there's any refresh in progress
+    const refreshStatus = await getRefreshStatus();
+    if (refreshStatus.isRefreshing) {
+      console.warn('Refresh already in progress:', refreshStatus);
+      throw new Error(`Refresh already in progress (${refreshStatus.refreshType})`);
+    }
+    
     // Build URL with query parameters
     let url = `${API_URL}/posts/quick-refresh`;
     const params = new URLSearchParams();
@@ -468,86 +608,6 @@ export const quickRefreshPosts = async (
     return data;
   } catch (error) {
     console.error('Failed to quick refresh posts:', error);
-    throw error;
-  }
-};
-
-// Hard refresh posts - reload all posts
-export const hardRefreshPosts = async (
-  withRelations: boolean = false,
-  filters?: PostFilterOptions,
-  force: boolean = false
-): Promise<{ success: boolean; totalRefreshed: number; posts: Post[] }> => {
-  try {
-    // Build URL with query parameters
-    let url = `${API_URL}/posts/hard-refresh`;
-    const params = new URLSearchParams();
-    
-    if (withRelations) {
-      params.append('withRelations', 'true');
-    } else {
-      // Wyraźnie ustaw parametr withRelations=false, aby być pewnym, że backend to zrozumie
-      params.append('withRelations', 'false');
-    }
-    
-    // Dodaj parametr force, aby wymusić pełne odświeżenie
-    if (force) {
-      params.append('force', 'true');
-    }
-    
-    // Add filter parameters if provided
-    if (filters) {
-      if (filters.minId !== undefined) {
-        params.append('minId', filters.minId.toString());
-      }
-      
-      if (filters.maxId !== undefined) {
-        params.append('maxId', filters.maxId.toString());
-      }
-      
-      if (filters.titleContains) {
-        params.append('titleContains', filters.titleContains);
-      }
-      
-      if (filters.bodyContains) {
-        params.append('bodyContains', filters.bodyContains);
-      }
-      
-      if (filters.fetchDateAfter) {
-        params.append('fetchDateAfter', filters.fetchDateAfter);
-      }
-    }
-    
-    if (params.toString()) {
-      url += `?${params.toString()}`;
-    }
-    
-    console.log('Hard refreshing posts from:', url);
-    const response = await fetch(url, {
-      ...defaultFetchOptions,
-      method: 'POST',
-      headers: {
-        ...defaultFetchOptions.headers,
-        'Cache-Control': 'no-cache, no-store, must-revalidate',
-        'Pragma': 'no-cache',
-        'Expires': '0'
-      }
-    });
-    
-    const data = await handleResponse<{ success: boolean; totalRefreshed: number; posts: Post[] }>(response);
-    console.log(`Hard refresh complete: ${data.totalRefreshed} posts refreshed`);
-    
-    // Jeśli withRelations jest false, upewnij się, że posty nie mają relacji
-    if (!withRelations && data.posts) {
-      return {
-        ...data,
-        posts: stripRelationsFromPosts(data.posts)
-      };
-    }
-    
-    return data;
-  } catch (error) {
-    console.error('Failed to hard refresh posts:', error);
     throw error;
   }
 }; 

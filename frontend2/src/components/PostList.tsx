@@ -1,7 +1,7 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, useRef } from 'react';
 import { useQuery } from '@tanstack/react-query';
-import { getPosts, getCurrentDateTime, clearPosts, downloadPostsAsZip, deletePost, quickRefreshPosts, hardRefreshPosts } from '@/services/api';
-import type { PostFilterOptions } from '@/services/api';
+import { getPosts, getCurrentDateTime, clearPosts, downloadPostsAsZip, deletePost, quickRefreshPosts, hardRefreshPosts, getRefreshStatus } from '@/services/api';
+import type { PostFilterOptions, RefreshStatus } from '@/services/api';
 import { useAppStore } from '@/store/useAppStore';
 import type { Post } from '@/store/useAppStore';
 import { PostCard } from './PostCard';
@@ -75,18 +75,54 @@ type SortOrder = 'asc' | 'desc';
 // Define filter schema
 const filterFormSchema = z.object({
   userId: z.array(z.number()).optional(),
-  idRange: z.array(z.number()).default([1, 100]),
+  minId: z.number().min(1).max(100),
+  maxId: z.number().min(1).max(100),
   titleContains: z.string().optional(),
   bodyContains: z.string().optional(),
   fetchDateAfter: z.string().optional(),
+}).refine((data) => data.minId <= data.maxId, {
+  message: "Minimum ID must be less than or equal to Maximum ID",
+  path: ["minId"],
 });
 
 type FilterFormValues = z.infer<typeof filterFormSchema>;
 
 export function PostList() {
+  // State declarations
+  const [withRelations, setWithRelations] = React.useState(false);
+  const [backendFilters, setBackendFilters] = React.useState<PostFilterOptions>({
+    minId: 1,
+    maxId: 100,
+    titleContains: "",
+    bodyContains: "",
+    fetchDateAfter: "",
+  });
+
+  // Query to fetch posts
+  const { 
+    data: posts, 
+    isLoading, 
+    error, 
+    refetch,
+    isRefetching 
+  } = useQuery({
+    queryKey: ['posts', withRelations, backendFilters],
+    queryFn: () => {
+      console.log(`[DEBUG] Wywołanie queryFn - pobieranie postów z withRelations=${withRelations}`);
+      return getPosts(false, withRelations, backendFilters);
+    },
+    refetchOnWindowFocus: false,
+    refetchOnMount: false,
+    refetchOnReconnect: false,
+    enabled: true,
+    refetchInterval: false,
+    staleTime: 5 * 60 * 1000,
+    gcTime: 10 * 60 * 1000,
+    retry: false,
+  });
+
   const { selectedPost, setSelectedPost, setLastFetchTime, lastFetchTime } = useAppStore();
   const [searchQuery, setSearchQuery] = React.useState('');
-  const [withRelations, setWithRelations] = React.useState(false);
   const [isClearing, setIsClearing] = React.useState(false);
   const [isConfirmOpen, setIsConfirmOpen] = React.useState(false);
   const [sortOrder, setSortOrder] = React.useState<SortOrder>('asc');
@@ -96,7 +132,6 @@ export function PostList() {
   const [isFilterOpen, setIsFilterOpen] = React.useState(false);
   const [activeFilters, setActiveFilters] = React.useState<Partial<FilterFormValues>>({});
   const [hasActiveFilters, setHasActiveFilters] = React.useState(false);
-  const [backendFilters, setBackendFilters] = React.useState<PostFilterOptions | undefined>(undefined);
   const [selectedPosts, setSelectedPosts] = React.useState<number[]>([]);
   const [isSelectionMode, setIsSelectionMode] = React.useState(false);
   const [isDeleteSelectionConfirmOpen, setIsDeleteSelectionConfirmOpen] = React.useState(false);
@@ -105,10 +140,122 @@ export function PostList() {
   const [isRelationsDialogOpen, setIsRelationsDialogOpen] = React.useState(false);
   const [pendingRelationsValue, setPendingRelationsValue] = React.useState(false);
   const [renderKey, setRenderKey] = useState(0);
+  const [refreshStatus, setRefreshStatus] = useState<RefreshStatus | null>(null);
+  const refreshCheckIntervalRef = useRef<NodeJS.Timeout | null>(null);
   const queryClient = useQueryClient();
 
-  // Dodaj referencję do śledzenia poprzedniej wartości withRelations
+  // Refs for tracking state changes
   const prevWithRelationsRef = React.useRef(withRelations);
+  const isInitialMount = React.useRef(true);
+
+  // Create form
+  const form = useForm<FilterFormValues>({
+    resolver: zodResolver(filterFormSchema),
+    defaultValues: {
+      minId: 1,
+      maxId: 100,
+      titleContains: "",
+      bodyContains: "",
+      fetchDateAfter: "",
+    },
+  });
+
+  // Dodaj funkcję do sprawdzania stanu odświeżania z backendu
+  const checkBackendRefreshStatus = useCallback(async () => {
+    try {
+      const status = await getRefreshStatus();
+      
+      // Zaktualizuj stan tylko jeśli zmienił się status odświeżania
+      if (!refreshStatus || 
+          refreshStatus.isRefreshing !== status.isRefreshing || 
+          refreshStatus.refreshType !== status.refreshType) {
+        
+        setRefreshStatus(status);
+        
+        // Jeśli odświeżanie zostało zakończone, odśwież dane
+        if (refreshStatus?.isRefreshing && !status.isRefreshing) {
+          console.log('Odświeżanie na backendzie zakończone, odświeżam dane frontendowe');
+          // Aktualizuj czas ostatniego pobrania
+          const currentTime = getCurrentDateTime();
+          setLastFetchTime(currentTime);
+          
+          // Odśwież cache
+          await queryClient.invalidateQueries({ 
+            queryKey: ['posts', withRelations, backendFilters] 
+          });
+          
+          // Resetuj flagi odświeżania na frontendzie
+          setIsQuickRefreshing(false);
+          setIsHardRefreshing(false);
+          setIsClearing(false);
+          
+          toast.success('Odświeżanie zakończone');
+        }
+        
+        // Jeśli odświeżanie jest w toku, a flagi frontendowe nie są ustawione
+        if (status.isRefreshing && !isHardRefreshing && !isQuickRefreshing && !isClearing) {
+          console.log('Wykryto trwające odświeżanie na backendzie:', status);
+          
+          // Ustaw odpowiednie flagi frontendowe
+          if (status.refreshType === 'hard_refresh') {
+            setIsHardRefreshing(true);
+          } else if (status.refreshType === 'quick_refresh') {
+            setIsQuickRefreshing(true);
+          } else if (status.refreshType === 'clear_posts') {
+            setIsClearing(true);
+          }
+          
+          toast.info(`Trwa operacja na backendzie: ${status.refreshType}`, {
+            duration: 3000,
+            position: 'top-center'
+          });
+        }
+      }
+    } catch (error) {
+      console.error('Błąd podczas sprawdzania stanu odświeżania:', error);
+    }
+  }, [refreshStatus, withRelations, backendFilters, queryClient, setLastFetchTime, isHardRefreshing, isQuickRefreshing, isClearing]);
+  
+  // Sprawdzaj stan odświeżania przy ładowaniu strony i co 3 sekundy
+  React.useEffect(() => {
+    // Sprawdź stan odświeżania przy pierwszym ładowaniu
+    checkBackendRefreshStatus();
+    
+    // Sprawdzaj stan odświeżania co 5 sekund (zamiast 3 sekund)
+    refreshCheckIntervalRef.current = setInterval(() => {
+      // Dodaj dodatkową logikę - sprawdzaj tylko jeśli trwa operacja lub nie wykonano jeszcze pierwszego sprawdzenia
+      if (isHardRefreshing || isQuickRefreshing || isClearing || !refreshStatus) {
+        console.log('Sprawdzanie stanu odświeżania...');
+        checkBackendRefreshStatus();
+      }
+    }, 5000);
+    
+    return () => {
+      // Wyczyść interwał przy odmontowaniu komponentu
+      if (refreshCheckIntervalRef.current) {
+        clearInterval(refreshCheckIntervalRef.current);
+      }
+    };
+  }, [checkBackendRefreshStatus, isHardRefreshing, isQuickRefreshing, isClearing, refreshStatus]);
+  
+  // Dodaj efekt do blokowania interakcji z przyciskami, gdy trwa odświeżanie
+  React.useEffect(() => {
+    // Jeśli status odświeżania pokazuje, że trwa odświeżanie, zaktualizuj stany frontendowe
+    if (refreshStatus?.isRefreshing) {
+      if (refreshStatus.refreshType === 'hard_refresh') {
+        setIsHardRefreshing(true);
+      } else if (refreshStatus.refreshType === 'quick_refresh') {
+        setIsQuickRefreshing(true);
+      } else if (refreshStatus.refreshType === 'clear_posts') {
+        setIsClearing(true);
+      }
+    } else if (refreshStatus && !refreshStatus.isRefreshing) {
+      // Gdy odświeżanie się zakończyło, zresetuj wszystkie flagi
+      setIsHardRefreshing(false);
+      setIsQuickRefreshing(false);
+      setIsClearing(false);
+    }
+  }, [refreshStatus]);
 
   // Dodaj funkcję forceDataRefresh na początku komponentu
   const forceDataRefresh = async () => {
@@ -141,50 +288,22 @@ export function PostList() {
     const checkRelationsStatus = async () => {
       try {
         console.log("Sprawdzanie stanu relacji...");
-        
-        // Pobierz bezpośrednio posty z relacjami
-        const postsWithRelations = await getPosts(true, true, backendFilters);
-        
-        // Pobierz bezpośrednio posty bez relacji
-        const postsWithoutRelations = await getPosts(true, false, backendFilters);
-        
-        if (postsWithRelations && postsWithRelations.length > 0 && 
-            postsWithoutRelations && postsWithoutRelations.length > 0) {
+
+        // Zamiast pobierać posty bezpośrednio, co wywołuje błąd serializacji,
+        // po prostu ustaw domyślny stan relacji na false i użyj localStorage
+        const storedValue = localStorage.getItem('withRelations');
+        if (storedValue !== null) {
+          const savedValue = storedValue === 'true';
           
-          // Sprawdź który zestaw danych ma relacje
-          const hasRelationsWithRelations = 
-            (postsWithRelations[0] as any).user !== undefined || 
-            (postsWithRelations[0] as any).comments !== undefined;
-          
-          const hasRelationsWithoutRelations = 
-            (postsWithoutRelations[0] as any).user !== undefined || 
-            (postsWithoutRelations[0] as any).comments !== undefined;
-          
-          console.log("Wyniki sprawdzania relacji:");
-          console.log("- Posty z parametrem withRelations=true:", hasRelationsWithRelations);
-          console.log("- Posty z parametrem withRelations=false:", hasRelationsWithoutRelations);
-          
-          // Zaktualizuj stan, jeśli posty z withRelations=true faktycznie mają relacje
-          // a posty z withRelations=false ich nie mają
-          if (hasRelationsWithRelations && !hasRelationsWithoutRelations) {
-            console.log("Stan relacji jest poprawny. Synchronizuję UI z danymi...");
-            
-            // Ustaw cache dla obu typów danych
-            queryClient.setQueryData(['posts', true, backendFilters], postsWithRelations);
-            queryClient.setQueryData(['posts', false, backendFilters], postsWithoutRelations);
-            
-            // Wymuś ustawienie prawidłowego stanu przełącznika
-            const currentlyWithRelations = hasRelationsWithRelations;
-            if (currentlyWithRelations !== withRelations) {
-              console.log(`Aktualizuję stan przełącznika: ${withRelations} -> ${currentlyWithRelations}`);
-              // Ustaw stan lokalny, ale bez wymuszania przeładowania
-              setWithRelations(currentlyWithRelations);
-            }
-          } else {
-            console.log("Wykryto nieprawidłowy stan relacji. Wymuszam przeładowanie strony...");
-            // W przypadku niezgodności, wymuś pełne przeładowanie strony
-            window.location.reload();
+          // Synchronizuj stan z localStorage
+          if (savedValue !== withRelations) {
+            console.log(`Inicjalizacja: wczytano stan relacji: ${savedValue}`);
+            setWithRelations(savedValue);
+            prevWithRelationsRef.current = savedValue;
           }
+        } else {
+          // Jeśli brak wartości w localStorage, domyślnie ustaw na false
+          localStorage.setItem('withRelations', 'false');
         }
       } catch (error) {
         console.error('Błąd przy sprawdzaniu statusu relacji:', error);
@@ -219,98 +338,87 @@ export function PostList() {
     return () => {
       window.removeEventListener('storage', handleStorageChange);
     };
-  }, []);  // Uruchom tylko przy pierwszym renderowaniu
+  }, []);
   
-  // Zapisz stan relacji w localStorage gdy się zmieni
+  // Efekt zapisujący zmiany do localStorage
   React.useEffect(() => {
-    localStorage.setItem('withRelations', withRelations.toString());
+    // Nie wykonuj zapisu przy pierwszym renderowaniu
+    if (prevWithRelationsRef.current !== withRelations) {
+      // Zapisz stan relacji w localStorage gdy się zmieni
+      localStorage.setItem('withRelations', withRelations.toString());
+      console.log(`Stan relacji zmieniony na: ${withRelations}, zapisuję do localStorage`);
+    }
   }, [withRelations]);
-
-  // Create form
-  const form = useForm<FilterFormValues>({
-    resolver: zodResolver(filterFormSchema),
-    defaultValues: {
-      idRange: [1, 100],
-      titleContains: "",
-      bodyContains: "",
-      fetchDateAfter: "",
-    },
-  });
-
-  // Query to fetch posts - MOVED UP before using refetch
-  const { 
-    data: posts, 
-    isLoading, 
-    error, 
-    refetch,
-    isRefetching 
-  } = useQuery({
-    queryKey: ['posts', withRelations, backendFilters],
-    queryFn: () => getPosts(false, withRelations, backendFilters),
-    refetchOnWindowFocus: false,
-    refetchOnMount: true,
-    refetchOnReconnect: false,
-    enabled: true,
-    refetchInterval: false,
-    staleTime: 0,
-    gcTime: 0,
-    retry: false,
-  });
+  
+  // Dodaj efekt zapobiegający automatycznemu odświeżaniu przy starcie aplikacji
+  React.useEffect(() => {
+    // Pomiń wykonanie efektu przy pierwszym montowaniu
+    if (isInitialMount.current) {
+      isInitialMount.current = false;
+      return;
+    }
+    
+    // Sprawdź, czy withRelations faktycznie się zmienił
+    if (prevWithRelationsRef.current !== withRelations) {
+      console.log(`Stan withRelations zmieniony na: ${withRelations}, wywołuję refetch`);
+      
+      // Wyczyść aktualnie wybrany post tylko przy zmianie trybu relacji
+      if (selectedPost) {
+        console.log('Czyszczę aktualnie wybrany post przy zmianie trybu relacji');
+        setSelectedPost(null);
+      }
+      
+      // Aktualizuj referencję
+      prevWithRelationsRef.current = withRelations;
+      
+      // Gdy withRelations zmieni się, wywołaj refetch
+      refetch();
+    }
+  }, [withRelations, refetch, setSelectedPost, selectedPost]);
 
   // Function to apply filters
-  const applyFilters = useCallback((values: FilterFormValues) => {
-    // Filter out empty values
-    const filtersToApply: Partial<FilterFormValues> = {};
+  const applyFilters = (values: FilterFormValues) => {
+    console.log('Applying filters:', values);
     
-    if (values.titleContains?.trim()) filtersToApply.titleContains = values.titleContains.trim();
-    if (values.bodyContains?.trim()) filtersToApply.bodyContains = values.bodyContains.trim();
-    if (values.fetchDateAfter?.trim()) filtersToApply.fetchDateAfter = values.fetchDateAfter.trim();
-    if (values.idRange?.[0] !== 1 || values.idRange?.[1] !== 100) filtersToApply.idRange = values.idRange;
+    // Create valid filter object with all properties set explicitly (no undefined values)
+    const newFilters: PostFilterOptions = {
+      minId: values.minId,
+      maxId: values.maxId,
+      titleContains: values.titleContains || "",
+      bodyContains: values.bodyContains || "",
+      fetchDateAfter: values.fetchDateAfter || "",
+    };
     
-    setActiveFilters(filtersToApply);
-    setHasActiveFilters(Object.keys(filtersToApply).length > 0);
-    
-    // Create backend filters object for API call
-    const apiFilters: PostFilterOptions = {};
-    
-    if (filtersToApply.idRange) {
-      apiFilters.minId = filtersToApply.idRange[0];
-      apiFilters.maxId = filtersToApply.idRange[1];
-    }
-    
-    if (filtersToApply.titleContains) {
-      apiFilters.titleContains = filtersToApply.titleContains;
-    }
-    
-    if (filtersToApply.bodyContains) {
-      apiFilters.bodyContains = filtersToApply.bodyContains;
-    }
-    
-    if (filtersToApply.fetchDateAfter) {
-      apiFilters.fetchDateAfter = filtersToApply.fetchDateAfter;
-    }
-    
-    // Set backend filters state
-    setBackendFilters(Object.keys(apiFilters).length > 0 ? apiFilters : undefined);
+    setBackendFilters(newFilters);
     setIsFilterOpen(false);
     
-    // Refetch data with new filters
+    // Explicitly refetch with the new filters
     refetch();
-  }, [refetch]);
+  };
 
   // Function to clear filters
   const clearFilters = () => {
     form.reset({
-      idRange: [1, 100],
+      minId: 1,
+      maxId: 100,
       titleContains: "",
       bodyContains: "",
       fetchDateAfter: "",
     });
-    setActiveFilters({});
-    setHasActiveFilters(false);
-    setBackendFilters(undefined);
     
-    // Refetch without filters
+    // Use a consistent filter object with empty strings instead of undefined values
+    const defaultFilters: PostFilterOptions = {
+      minId: 1,
+      maxId: 100,
+      titleContains: "",
+      bodyContains: "",
+      fetchDateAfter: "",
+    };
+    
+    setBackendFilters(defaultFilters);
+    setIsFilterOpen(false);
+    
+    // Explicitly refetch with the default filters
     refetch();
   };
 
@@ -465,88 +573,125 @@ export function PostList() {
     checkRelationsStatus();
   }, []); // Uruchom tylko przy pierwszym renderowaniu
   
-  // Modify the useEffect for withRelations changes to not cause a reload loop
+  // Dodaj nowy, zoptymalizowany efekt dla odświeżania przy zmianie relacji 
   React.useEffect(() => {
-    // Sprawdź, czy withRelations faktycznie się zmienił
-    if (prevWithRelationsRef.current !== withRelations) {
-      console.log(`Stan withRelations zmieniony na: ${withRelations}, wywołuję refetch`);
-      
-      // Wyczyść aktualnie wybrany post tylko przy zmianie trybu relacji
-      if (selectedPost) {
-        console.log('Czyszczę aktualnie wybrany post przy zmianie trybu relacji');
-        setSelectedPost(null);
-      }
-      
-      // Aktualizuj referencję
-      prevWithRelationsRef.current = withRelations;
-    }
+    // To jest równoważne instrukcji componentDidMount
+    console.log("[DEBUG] Komponent PostList zamontowany - pierwsze renderowanie");
     
-    // Gdy withRelations zmieni się, wywołaj tylko refetch bez przeładowania strony
-    refetch();
-  }, [withRelations, refetch, setSelectedPost, selectedPost]);
-  
-  // Modify the useEffect for withRelations changes to force refresh
-  React.useEffect(() => {
-    if (posts && posts.length > 0) {
-      console.log(`Stan withRelations zmieniony na: ${withRelations}, wykonuję przymusowe odświeżenie`);
-      forceDataRefresh();
-    }
-  }, [withRelations]);
+    // Wyłącz automatyczne odświeżanie przy pierwszym montowaniu
+    const currentWithRelations = withRelations;
+    prevWithRelationsRef.current = currentWithRelations;
+    
+    return () => {
+      console.log("[DEBUG] Komponent PostList odmontowany");
+    };
+  }, []); // Uruchom tylko przy pierwszym renderowaniu
 
   // Handle toggling of relations
-  const handleToggleRelations = async () => {
-    // Wyczyść aktualnie wybrany post
-    setSelectedPost(null);
-    
-    // Store the new value we want to set
-    setPendingRelationsValue(!withRelations);
-    // Open the confirmation dialog
-    setIsRelationsDialogOpen(true);
-  };
-
-  // Function to handle quick refresh - only adds missing posts
-  const handleQuickRefresh = async () => {
+  const handleToggleRelations = async (checked: boolean) => {
     try {
-      setIsQuickRefreshing(true);
+      console.log(`Rozpoczynam zmianę trybu relacji na: ${checked}`);
+      setIsHardRefreshing(true);
       
-      // Call the backend endpoint to handle quick refresh
-      const result = await quickRefreshPosts(withRelations, backendFilters);
+      // Wyświetl informację o trwającym odświeżaniu
+      toast.info('Trwa odświeżanie danych...', {
+        duration: 3000,
+        position: 'top-center'
+      });
       
-      // Zamiast używać danych zwróconych przez quickRefreshPosts,
-      // wymuszamy pełne odświeżenie danych
+      // Ustawienie flagi w localStorage
+      localStorage.setItem('withRelations', checked.toString());
+      
+      // 1. Ustaw nowy stan relacji
+      setWithRelations(checked);
+      prevWithRelationsRef.current = checked;
+      
+      // 2. Wyczyść cache zapytań dla obu trybów
+      queryClient.removeQueries({ 
+        queryKey: ['posts'] 
+      });
+      
+      // 3. Wykonaj forcedDataRefresh, który pobierze dane bezpośrednio
       await forceDataRefresh();
       
-      // Pokazujemy powiadomienie o wyniku
-      if (result.totalAdded > 0) {
-        toast.success(`Added ${result.totalAdded} new posts`);
-      } else {
-        toast.info('No new posts found');
-      }
+      // 4. Wyświetl komunikat o sukcesie
+      toast.success(`Tryb relacji ${checked ? 'włączony' : 'wyłączony'}`, {
+        duration: 3000,
+        position: 'top-center'
+      });
     } catch (error) {
-      toast.error('Failed to refresh posts');
-      console.error('Error refreshing posts:', error);
+      console.error('Błąd przy zmianie trybu relacji:', error);
+      toast.error('Błąd przy zmianie trybu relacji: ' + String(error), {
+        duration: 3000,
+        position: 'top-center'
+      });
+      
+      // Przywróć poprzedni stan w przypadku błędu
+      setWithRelations(!checked);
+      localStorage.setItem('withRelations', (!checked).toString());
     } finally {
-      setIsQuickRefreshing(false);
+      setIsHardRefreshing(false);
+      
+      // Sprawdź stan odświeżania na backendzie po zakończeniu
+      checkBackendRefreshStatus();
     }
   };
 
-  // Function to handle hard refresh - reloads all posts
+  // Function to handle hard refresh - reloads all posts - też zmodyfikuj
   const handleHardRefresh = async () => {
     try {
       setIsHardRefreshing(true);
       
-      // Call the backend endpoint to handle hard refresh
-      const result = await hardRefreshPosts(withRelations, backendFilters);
+      toast.info('Trwa pełne odświeżanie danych...', {
+        duration: 3000,
+        position: 'top-center'
+      });
       
-      // Wymuszamy pełne odświeżenie danych
+      // Instead of calling the backend API directly, use our forceDataRefresh function
       await forceDataRefresh();
       
-      toast.success(`Complete refresh successful (${result.totalRefreshed} posts)`);
+      // Update the timestamp
+      const currentTime = getCurrentDateTime();
+      setLastFetchTime(currentTime);
+      
+      toast.success('Pełne odświeżenie zakończone');
     } catch (error) {
-      toast.error('Failed to refresh posts');
       console.error('Error refreshing posts:', error);
+      toast.error('Failed to refresh posts: ' + String(error));
     } finally {
       setIsHardRefreshing(false);
+      
+      // Sprawdź stan odświeżania na backendzie po zakończeniu
+      checkBackendRefreshStatus();
+    }
+  };
+
+  // Function to handle quick refresh - tylko zmodyfikuj, żeby sprawdzało stan i wyświetlało informacje
+  const handleQuickRefresh = async () => {
+    try {
+      setIsQuickRefreshing(true);
+      
+      toast.info('Trwa szybkie odświeżanie danych...', {
+        duration: 3000,
+        position: 'top-center'
+      });
+      
+      // Use our forceDataRefresh function instead of direct API call
+      await forceDataRefresh();
+      
+      // Update the timestamp
+      const currentTime = getCurrentDateTime();
+      setLastFetchTime(currentTime);
+      
+      toast.success('Szybkie odświeżanie zakończone');
+    } catch (error) {
+      console.error('Error refreshing posts:', error);
+      toast.error('Failed to refresh posts: ' + String(error));
+    } finally {
+      setIsQuickRefreshing(false);
+      
+      // Sprawdź stan odświeżania na backendzie po zakończeniu
+      checkBackendRefreshStatus();
     }
   };
 
@@ -560,8 +705,24 @@ export function PostList() {
     setIsConfirmOpen(true);
   };
 
-  // Handle clearing posts
+  // Handle clearing posts - zmodyfikuj
   const handleClearPosts = async () => {
+    // Najpierw sprawdź stan odświeżania na backendzie
+    try {
+      const status = await getRefreshStatus();
+      if (status.isRefreshing) {
+        console.log('Odświeżanie już trwa, pomijam kolejne żądanie:', status);
+        toast.error(`Nie można wyczyścić postów, trwa operacja: ${status.refreshType}`, {
+          duration: 3000,
+          position: 'top-center'
+        });
+        setIsConfirmOpen(false);
+        return;
+      }
+    } catch (error) {
+      console.error('Błąd podczas sprawdzania stanu odświeżania:', error);
+    }
+    
     try {
       setIsClearing(true);
       setIsConfirmOpen(false); // Close the dialog immediately
@@ -584,10 +745,17 @@ export function PostList() {
             // Also clear the other potential queries
             queryClient.setQueryData(['posts', !withRelations, backendFilters], []);
             
+            // Sprawdź stan odświeżania na backendzie po zakończeniu
+            checkBackendRefreshStatus();
+            
             return `All posts deleted from ${result.directory}`;
           },
           error: (error) => {
             console.error('Clear posts error:', error);
+            
+            // Sprawdź stan odświeżania na backendzie po zakończeniu
+            checkBackendRefreshStatus();
+            
             return 'Failed to clear posts. Please try again.';
           }
         }
@@ -595,6 +763,9 @@ export function PostList() {
     } catch (error) {
       console.error('Clear posts error:', error);
       toast.error('Failed to clear posts');
+      
+      // Sprawdź stan odświeżania na backendzie po zakończeniu
+      checkBackendRefreshStatus();
     } finally {
       setIsClearing(false);
     }
@@ -835,6 +1006,19 @@ export function PostList() {
 
   return (
     <div className="flex flex-col h-full" key={renderKey}>
+      {/* Pasek informacyjny o odświeżaniu z backendu */}
+      {refreshStatus?.isRefreshing && (
+        <div className="bg-yellow-100 dark:bg-yellow-800/30 p-2 mb-3 rounded-md border border-yellow-300 dark:border-yellow-700">
+          <div className="flex items-center gap-2 text-sm text-yellow-800 dark:text-yellow-200">
+            <Loader2 size={16} className="animate-spin" />
+            <span>
+              <strong>Odświeżanie w toku:</strong> {refreshStatus.refreshType} 
+              {refreshStatus.withRelations !== null && ` (tryb relacji: ${refreshStatus.withRelations ? 'włączony' : 'wyłączony'})`}
+            </span>
+          </div>
+        </div>
+      )}
+      
       <div className="flex flex-col gap-3 mb-4">
         <div className="flex items-center gap-2">
           <Input
@@ -870,33 +1054,46 @@ export function PostList() {
                 </p>
               </div>
               <Form {...form}>
-                <form onSubmit={form.handleSubmit((data) => {
-                  // Ensure idRange is always an array with two values
-                  const values = {
-                    ...data,
-                    idRange: data.idRange || [1, 100]
-                  };
-                  applyFilters(values);
-                })} className="space-y-4 p-4">
-                  <FormField
-                    control={form.control as any}
-                    name="idRange"
-                    render={({ field }) => (
-                      <FormItem className="space-y-1">
-                        <FormLabel className="text-xs">ID Range ({field.value[0]} - {field.value[1]})</FormLabel>
-                        <FormControl>
-                          <Slider
-                            min={1}
-                            max={100}
-                            step={1}
-                            value={field.value}
-                            onValueChange={field.onChange}
-                            className="py-4"
-                          />
-                        </FormControl>
-                      </FormItem>
-                    )}
-                  />
+                <form onSubmit={form.handleSubmit(applyFilters)} className="space-y-4 p-4">
+                  <div className="space-y-4">
+                    <FormField
+                      control={form.control as any}
+                      name="minId"
+                      render={({ field }) => (
+                        <FormItem className="space-y-1">
+                          <FormLabel className="text-xs">Minimum ID</FormLabel>
+                          <FormControl>
+                            <Input
+                              type="number"
+                              min={1}
+                              max={100}
+                              {...field}
+                              onChange={(e) => field.onChange(Number(e.target.value))}
+                            />
+                          </FormControl>
+                        </FormItem>
+                      )}
+                    />
+                    
+                    <FormField
+                      control={form.control as any}
+                      name="maxId"
+                      render={({ field }) => (
+                        <FormItem className="space-y-1">
+                          <FormLabel className="text-xs">Maximum ID</FormLabel>
+                          <FormControl>
+                            <Input
+                              type="number"
+                              min={1}
+                              max={100}
+                              {...field}
+                              onChange={(e) => field.onChange(Number(e.target.value))}
+                            />
+                          </FormControl>
+                        </FormItem>
+                      )}
+                    />
+                  </div>
                   
                   <FormField
                     control={form.control as any}
@@ -1035,8 +1232,14 @@ export function PostList() {
             <Switch
               checked={withRelations}
               onCheckedChange={handleToggleRelations}
-              disabled={isHardRefreshing}
+              disabled={isHardRefreshing || isQuickRefreshing}
             />
+            {isHardRefreshing && (
+              <span className="text-yellow-600 dark:text-yellow-400">
+                <Loader2 size={14} className="animate-spin inline-block mr-1" />
+                Odświeżanie...
+              </span>
+            )}
           </div>
         </div>
       </div>

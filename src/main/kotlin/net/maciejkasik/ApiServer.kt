@@ -17,6 +17,8 @@ import kotlinx.serialization.Serializable
 import java.io.File
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
+import java.util.concurrent.atomic.AtomicBoolean
+import java.util.concurrent.atomic.AtomicLong
 
 @Serializable
 data class OutputDirectoryRequest(val outputDirectory: String)
@@ -44,13 +46,28 @@ data class QuickRefreshResponse(
 data class HardRefreshResponse(
     val success: Boolean,
     val totalFetched: Int,
+    val totalRefreshed: Int = 0,
     val posts: List<Post>
+)
+
+@Serializable
+data class RefreshStatusResponse(
+    val isRefreshing: Boolean,
+    val refreshStartTime: Long?,
+    val refreshType: String?,
+    val withRelations: Boolean?
 )
 
 @Serializable
 data class ErrorResponse(
     val error: String
 )
+
+// Globalne flagi stanu odświeżania
+private val isRefreshing = AtomicBoolean(false)
+private val refreshStartTime = AtomicLong(0)
+private var refreshType: String? = null
+private var refreshWithRelations: Boolean? = null
 
 /**
  * Klasa odpowiedzialna za uruchomienie i konfigurację serwera API
@@ -286,7 +303,18 @@ class ApiServer(private val env: Environment) {
                         "environment" to env.name,
                         "version" to "1.0.0",
                         "outputDirectory" to config.outputDirectory,
-                        "lastFetchTime" to getCurrentFormattedDateTime()
+                        "lastFetchTime" to getCurrentFormattedDateTime(),
+                        "isRefreshing" to isRefreshing.get()
+                    ))
+                }
+                
+                // Endpoint do sprawdzania stanu odświeżania
+                get("/refresh-status") {
+                    call.respond(RefreshStatusResponse(
+                        isRefreshing = isRefreshing.get(),
+                        refreshStartTime = if (refreshStartTime.get() > 0) refreshStartTime.get() else null,
+                        refreshType = refreshType,
+                        withRelations = refreshWithRelations
                     ))
                 }
                 
@@ -345,86 +373,128 @@ class ApiServer(private val env: Environment) {
                             fetchDateAfter = call.request.queryParameters["fetchDateAfter"]
                         )
                         
+                        // Jeśli przetwarzanie odświeżania jest w toku, zwróć informację o tym
+                        if (refresh && isRefreshing.get()) {
+                            call.respond(
+                                status = HttpStatusCode.TooManyRequests,
+                                message = hashMapOf(
+                                    "error" to "Refresh already in progress",
+                                    "isRefreshing" to true,
+                                    "refreshStartTime" to refreshStartTime.get(),
+                                    "refreshType" to refreshType,
+                                    "withRelations" to refreshWithRelations
+                                )
+                            )
+                            return@get
+                        }
+                        
                         // Get the output directory from config
                         val directory = java.io.File(config.outputDirectory)
                         if (!directory.exists()) {
                             directory.mkdirs()
                         }
                         
-                        // If refresh is requested or no JSON files exist, fetch from API and save to files
+                        // If refresh is requested or no JSON files exist, fetch from API
                         if (refresh || 
                             !directory.exists() || 
                             !directory.isDirectory || 
                             directory.listFiles { file -> file.isFile && file.name.endsWith(".json") }?.isEmpty() == true) {
                             
-                            if (withRelations) {
-                                // Fetch posts first
-                                val posts = apiService.getPosts()
-                                // Create a list to store posts with relations
-                                val postsWithRelations = mutableListOf<PostWithRelations>()
+                            // Ustaw flagę, że odświeżanie jest w toku
+                            if (refresh && isRefreshing.compareAndSet(false, true)) {
+                                refreshStartTime.set(System.currentTimeMillis())
+                                refreshType = "get_posts"
+                                refreshWithRelations = withRelations
+                            }
+                            
+                            try {
+                                // Fetch all posts from API
+                                val allPosts = apiService.getPosts()
                                 
-                                // For each post, fetch its user and comments
-                                for (post in posts) {
-                                    try {
-                                        // Fetch user by userId
-                                        val user = apiService.getUser(post.userId)
-                                        // Fetch comments for this post
-                                        val comments = apiService.getCommentsForPost(post.id)
-                                        
-                                        // Create post with relations
-                                        val postWithRelations = PostWithRelations(
-                                            userId = post.userId,
-                                            id = post.id,
-                                            title = post.title,
-                                            body = post.body,
-                                            user = user,
-                                            comments = comments,
-                                            fetchDate = getCurrentFormattedDateTime()
-                                        )
-                                        
-                                        // Always save the post to file
-                                        FileUtils.savePostWithRelationsAsJson(postWithRelations)
-                                        
-                                        postsWithRelations.add(postWithRelations)
-                                    } catch (e: Exception) {
-                                        // If there's an error fetching relations, still include the post but without relations
-                                        val postWithRelations = PostWithRelations(
-                                            userId = post.userId,
-                                            id = post.id,
-                                            title = post.title,
-                                            body = post.body,
-                                            fetchDate = getCurrentFormattedDateTime()
-                                        )
-                                        
-                                        // Always save the post to file
-                                        FileUtils.savePostAsJson(Post(post.userId, post.id, post.title, post.body, getCurrentFormattedDateTime()))
-                                        
-                                        postsWithRelations.add(postWithRelations)
+                                if (withRelations) {
+                                    // Create a list to store posts with relations
+                                    val postsWithRelations = mutableListOf<PostWithRelations>()
+                                    
+                                    // For each post, fetch its user and comments
+                                    for (post in allPosts) {
+                                        try {
+                                            // Fetch user by userId
+                                            val user = apiService.getUser(post.userId)
+                                            // Fetch comments for this post
+                                            val comments = apiService.getCommentsForPost(post.id)
+                                            
+                                            // Create post with relations
+                                            val postWithRelations = PostWithRelations(
+                                                userId = post.userId,
+                                                id = post.id,
+                                                title = post.title,
+                                                body = post.body,
+                                                user = user,
+                                                comments = comments,
+                                                fetchDate = getCurrentFormattedDateTime()
+                                            )
+                                            
+                                            // Save the post to file
+                                            FileUtils.savePostWithRelationsAsJson(postWithRelations)
+                                            
+                                            postsWithRelations.add(postWithRelations)
+                                        } catch (e: Exception) {
+                                            // If there's an error fetching relations, still include the post but without relations
+                                            val postWithRelations = PostWithRelations(
+                                                userId = post.userId,
+                                                id = post.id,
+                                                title = post.title,
+                                                body = post.body,
+                                                fetchDate = getCurrentFormattedDateTime()
+                                            )
+                                            
+                                            // Save the post to file
+                                            FileUtils.savePostAsJson(Post(post.userId, post.id, post.title, post.body, getCurrentFormattedDateTime()))
+                                            
+                                            postsWithRelations.add(postWithRelations)
+                                        }
                                     }
+                                    
+                                    // Apply filters to the posts with relations
+                                    val filteredPosts = filterPostsWithRelations(postsWithRelations, filterParams)
+                                    
+                                    // Return only the base Post objects without relations
+                                    call.respond(filteredPosts.map { 
+                                        Post(it.userId, it.id, it.title, it.body, it.fetchDate)
+                                    })
+                                } else {
+                                    // Handle regular posts without relations
+                                    val posts = mutableListOf<Post>()
+                                    
+                                    for (post in allPosts) {
+                                        val postWithDate = Post(
+                                            userId = post.userId,
+                                            id = post.id,
+                                            title = post.title,
+                                            body = post.body,
+                                            fetchDate = getCurrentFormattedDateTime()
+                                        )
+                                        
+                                        // Save the post to file
+                                        FileUtils.savePostAsJson(postWithDate)
+                                        
+                                        posts.add(postWithDate)
+                                    }
+                                    
+                                    // Apply filters to the posts
+                                    val filteredPosts = filterPosts(posts, filterParams)
+                                    call.respond(filteredPosts)
                                 }
-                                
-                                // Apply filters to the posts with relations
-                                val filteredPosts = filterPostsWithRelations(postsWithRelations, filterParams)
-                                call.respond(filteredPosts)
-                            } else {
-                                // Fetch regular posts
-                                var posts = apiService.getPosts()
-                                
-                                // Always save posts to files
-                                posts.forEach { post ->
-                                    // Add the fetch date to the post before saving
-                                    val postWithDate = post.copy(fetchDate = getCurrentFormattedDateTime())
-                                    FileUtils.savePostAsJson(postWithDate)
+                            } finally {
+                                // Reset the refresh state when done
+                                if (refresh) {
+                                    isRefreshing.set(false)
+                                    refreshType = null
+                                    refreshWithRelations = null
                                 }
-                                
-                                // Apply filters to the posts
-                                val postsWithDates = posts.map { it.copy(fetchDate = getCurrentFormattedDateTime()) }
-                                val filteredPosts = filterPosts(postsWithDates, filterParams)
-                                call.respond(filteredPosts)
                             }
                         } else {
                             // If refresh is not requested and files exist, read from files
-                            // Read posts from JSON files in the output directory
                             val jsonFiles = directory.listFiles { file -> 
                                 file.isFile && file.name.endsWith(".json") 
                             } ?: emptyArray()
@@ -447,7 +517,11 @@ class ApiServer(private val env: Environment) {
                                 
                                 // Apply filters to the posts with relations
                                 val filteredPosts = filterPostsWithRelations(postsWithRelations, filterParams)
-                                call.respond(filteredPosts)
+                                
+                                // Return only the base Post objects without relations
+                                call.respond(filteredPosts.map { 
+                                    Post(it.userId, it.id, it.title, it.body, it.fetchDate)
+                                })
                             } else {
                                 // Handle regular posts
                                 val posts = mutableListOf<Post>()
@@ -470,9 +544,14 @@ class ApiServer(private val env: Environment) {
                             }
                         }
                     } catch (e: Exception) {
+                        // Reset the refresh state in case of error
+                        isRefreshing.set(false)
+                        refreshType = null
+                        refreshWithRelations = null
+                        
                         call.respond(
                             status = HttpStatusCode.InternalServerError,
-                            message = hashMapOf("error" to e.message)
+                            message = hashMapOf("error" to e.message.toString())
                         )
                     }
                 }
@@ -889,6 +968,28 @@ class ApiServer(private val env: Environment) {
                         // Check if we should fetch with relations
                         val withRelations = call.request.queryParameters["withRelations"]?.toBoolean() ?: false
                         
+                        // Jeśli przetwarzanie odświeżania jest w toku, zwróć informację o tym
+                        if (isRefreshing.get()) {
+                            call.respond(
+                                status = HttpStatusCode.TooManyRequests,
+                                message = hashMapOf(
+                                    "error" to "Refresh already in progress",
+                                    "isRefreshing" to true,
+                                    "refreshStartTime" to refreshStartTime.get(),
+                                    "refreshType" to refreshType,
+                                    "withRelations" to refreshWithRelations
+                                )
+                            )
+                            return@post
+                        }
+                        
+                        // Ustaw flagę, że odświeżanie jest w toku
+                        if (isRefreshing.compareAndSet(false, true)) {
+                            refreshStartTime.set(System.currentTimeMillis())
+                            refreshType = "quick_refresh"
+                            refreshWithRelations = withRelations
+                        }
+                        
                         // Get filter parameters
                         val filterParams = PostFilterParams(
                             minId = call.request.queryParameters["minId"]?.toIntOrNull(),
@@ -1000,6 +1101,11 @@ class ApiServer(private val env: Environment) {
                         
                         println("Quick refresh completed: ${newPosts.size} new posts added out of ${allPosts.size} total posts")
                     } catch (e: Exception) {
+                        // Reset the refresh state in case of error
+                        isRefreshing.set(false)
+                        refreshType = null
+                        refreshWithRelations = null
+                        
                         call.respond(
                             status = HttpStatusCode.InternalServerError,
                             message = ErrorResponse(error = e.message ?: "Unknown error during quick refresh")
@@ -1012,6 +1118,30 @@ class ApiServer(private val env: Environment) {
                     try {
                         // Check if we should fetch with relations
                         val withRelations = call.request.queryParameters["withRelations"]?.toBoolean() ?: false
+                        // Check if force refresh was requested
+                        val force = call.request.queryParameters["force"]?.toBoolean() ?: false
+                        
+                        // Jeśli przetwarzanie odświeżania jest w toku, zwróć informację o tym
+                        if (isRefreshing.get()) {
+                            call.respond(
+                                status = HttpStatusCode.TooManyRequests,
+                                message = hashMapOf(
+                                    "error" to "Refresh already in progress",
+                                    "isRefreshing" to true,
+                                    "refreshStartTime" to refreshStartTime.get(),
+                                    "refreshType" to refreshType,
+                                    "withRelations" to refreshWithRelations
+                                )
+                            )
+                            return@post
+                        }
+                        
+                        // Ustaw flagę, że odświeżanie jest w toku
+                        if (isRefreshing.compareAndSet(false, true)) {
+                            refreshStartTime.set(System.currentTimeMillis())
+                            refreshType = "hard_refresh"
+                            refreshWithRelations = withRelations
+                        }
                         
                         // Get filter parameters
                         val filterParams = PostFilterParams(
@@ -1026,6 +1156,11 @@ class ApiServer(private val env: Environment) {
                         val directory = java.io.File(config.outputDirectory)
                         if (!directory.exists()) {
                             directory.mkdirs()
+                        }
+                        
+                        // If force refresh is requested, clear the directory
+                        if (force) {
+                            directory.listFiles()?.forEach { it.delete() }
                         }
                         
                         // Fetch all posts from API
@@ -1082,6 +1217,7 @@ class ApiServer(private val env: Environment) {
                             val response = HardRefreshResponse(
                                 success = true,
                                 totalFetched = allPosts.size,
+                                totalRefreshed = allPosts.size,
                                 posts = filteredPosts.map { 
                                     Post(it.userId, it.id, it.title, it.body, it.fetchDate)
                                 }
@@ -1089,32 +1225,96 @@ class ApiServer(private val env: Environment) {
                             
                             call.respond(response)
                         } else {
-                            // Save posts to files
-                            allPosts.forEach { post ->
-                                // Add the fetch date to the post before saving
-                                val postWithDate = post.copy(fetchDate = getCurrentFormattedDateTime())
+                            // Handle regular posts without relations
+                            val posts = mutableListOf<Post>()
+                            
+                            for (post in allPosts) {
+                                val postWithDate = Post(
+                                    userId = post.userId,
+                                    id = post.id,
+                                    title = post.title,
+                                    body = post.body,
+                                    fetchDate = getCurrentFormattedDateTime()
+                                )
+                                
+                                // Save the post to file
                                 FileUtils.savePostAsJson(postWithDate)
+                                
+                                posts.add(postWithDate)
                             }
                             
-                            // Apply filters to the posts and return them
-                            val postsWithDates = allPosts.map { it.copy(fetchDate = getCurrentFormattedDateTime()) }
-                            val filteredPosts = filterPosts(postsWithDates, filterParams)
+                            // Apply filters to the posts
+                            val filteredPosts = filterPosts(posts, filterParams)
                             
                             // Create a properly serializable response object
                             val response = HardRefreshResponse(
                                 success = true,
                                 totalFetched = allPosts.size,
+                                totalRefreshed = allPosts.size,
                                 posts = filteredPosts
                             )
                             
                             call.respond(response)
                         }
-                        
-                        println("Hard refresh completed: ${allPosts.size} posts fetched")
                     } catch (e: Exception) {
+                        // Reset the refresh state in case of error
+                        isRefreshing.set(false)
+                        refreshType = null
+                        refreshWithRelations = null
+                        
                         call.respond(
                             status = HttpStatusCode.InternalServerError,
-                            message = ErrorResponse(error = e.message ?: "Unknown error during hard refresh")
+                            message = hashMapOf(
+                                "error" to e.message.toString()
+                            )
+                        )
+                    }
+                }
+
+                // Clear posts endpoint
+                post("/posts/clear") {
+                    try {
+                        // Jeśli przetwarzanie odświeżania jest w toku, zwróć informację o tym
+                        if (isRefreshing.get()) {
+                            call.respond(
+                                status = HttpStatusCode.TooManyRequests,
+                                message = hashMapOf(
+                                    "error" to "Refresh or clear operation already in progress",
+                                    "isRefreshing" to true,
+                                    "refreshStartTime" to refreshStartTime.get(),
+                                    "refreshType" to refreshType,
+                                    "withRelations" to refreshWithRelations
+                                )
+                            )
+                            return@post
+                        }
+                        
+                        // Ustaw flagę, że odświeżanie jest w toku
+                        if (isRefreshing.compareAndSet(false, true)) {
+                            refreshStartTime.set(System.currentTimeMillis())
+                            refreshType = "clear_posts"
+                            refreshWithRelations = null
+                        }
+                        
+                        try {
+                            // Existing code for clearing posts
+                        } finally {
+                            // Reset the refresh state when done
+                            isRefreshing.set(false)
+                            refreshType = null
+                            refreshWithRelations = null
+                        }
+                    } catch (e: Exception) {
+                        // Reset the refresh state in case of error
+                        isRefreshing.set(false)
+                        refreshType = null
+                        refreshWithRelations = null
+                        
+                        call.respond(
+                            status = HttpStatusCode.InternalServerError,
+                            message = hashMapOf(
+                                "error" to e.message.toString()
+                            )
                         )
                     }
                 }
