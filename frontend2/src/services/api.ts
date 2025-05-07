@@ -1,13 +1,4 @@
-import type { Post } from '@/store/useAppStore';
-
-// Dodaj definicję brakującego typu
-interface EnvironmentInfo {
-  version: string;
-  environment: string;
-  apiUrl?: string;
-  lastFetchTime?: string;
-  outputDirectory?: string;
-}
+import type { Post, EnvironmentInfo } from '@/store/useAppStore';
 
 // Use the direct URL to the backend server
 // This bypasses Vite's proxy which might be causing issues
@@ -20,6 +11,7 @@ export interface PostFilterOptions {
   titleContains?: string;
   bodyContains?: string;
   fetchDateAfter?: string;
+  withRelations?: boolean;
 }
 
 // Opcje dla pobierania wielu postów na raz
@@ -83,9 +75,10 @@ export const getEnvironmentInfo = async (forceRefresh: boolean = false): Promise
     });
     const data = await handleResponse<EnvironmentInfo>(response);
     
-    // Add lastFetchTime property to the response
+    // Ensure outputDirectory is always a string
     return {
       ...data,
+      outputDirectory: data.outputDirectory || './posts',
       lastFetchTime: getCurrentDateTime()
     };
   } catch (error) {
@@ -109,14 +102,29 @@ export const updateOutputDirectory = async (directory: string): Promise<Environm
       body: JSON.stringify({ outputDirectory: directory })
     });
     
+    if (!response.ok) {
+      const errorText = await response.text().catch(() => 'Unknown error');
+      throw new Error(`Failed to update output directory: ${errorText}`);
+    }
+    
     const data = await handleResponse<{ success: boolean; message: string; config: EnvironmentInfo }>(response);
     
+    if (!data.success) {
+      throw new Error(data.message || 'Failed to update output directory');
+    }
+    
+    // Ensure outputDirectory is always a string
+    if (!data.config.outputDirectory) {
+      throw new Error('Invalid response: outputDirectory is missing');
+    }
+    
+    // Return the config object directly since it contains all the necessary information
     return {
       ...data.config,
       lastFetchTime: getCurrentDateTime()
     };
   } catch (error) {
-    console.error('Failed to update output directory:', error);
+    console.error('Error updating output directory:', error);
     throw error;
   }
 };
@@ -172,18 +180,20 @@ export const stripRelationsFromPosts = (posts: any[]): Post[] => {
   }));
 };
 
+// Add new interface for posts response
+interface PostsResponse {
+  posts: Post[];
+  hasRelations: boolean;
+}
+
 export const getPosts = async (
   forceRefresh: boolean = false, 
-  withRelations: boolean = false,
   filters?: PostFilterOptions
-): Promise<Post[]> => {
+): Promise<PostsResponse> => {
   try {
     // Build URL with query parameters
     let url = `${API_URL}/posts`;
     const params = new URLSearchParams();
-    
-    // Always add withRelations parameter to be explicit
-    params.append('withRelations', withRelations.toString());
     
     // Add cache-busting parameter if force refresh is requested
     if (forceRefresh) {
@@ -211,6 +221,10 @@ export const getPosts = async (
       if (filters.fetchDateAfter) {
         params.append('fetchDateAfter', filters.fetchDateAfter);
       }
+
+      if (filters.withRelations) {
+        params.append('withRelations', 'true');
+      }
     }
     
     // Add parameters to URL
@@ -231,8 +245,8 @@ export const getPosts = async (
     
     console.log(`Fetching posts from: ${url}`);
     const response = await fetch(url, fetchOptions);
-    const data = await handleResponse<Post[]>(response);
-    console.log(`Fetched ${data.length} posts with relations=${withRelations}`);
+    const data = await handleResponse<PostsResponse>(response);
+    console.log(`Fetched ${data.posts.length} posts with relations=${data.hasRelations}`);
     
     return data;
   } catch (error) {
@@ -436,11 +450,7 @@ export const getRefreshStatus = async (): Promise<RefreshStatus> => {
 };
 
 // Update the hardRefreshPosts function to check for ongoing refreshes
-export const hardRefreshPosts = async (
-  withRelations: boolean = false,
-  filters?: PostFilterOptions,
-  force: boolean = false
-): Promise<{ success: boolean; totalRefreshed: number; posts: Post[] }> => {
+export const hardRefreshPosts = async (options?: PostFilterOptions): Promise<HardRefreshResponse> => {
   try {
     // First check if there's any refresh in progress
     const refreshStatus = await getRefreshStatus();
@@ -453,39 +463,11 @@ export const hardRefreshPosts = async (
     let url = `${API_URL}/posts/hard-refresh`;
     const params = new URLSearchParams();
     
-    if (withRelations) {
-      params.append('withRelations', 'true');
-    } else {
-      // Wyraźnie ustaw parametr withRelations=false, aby być pewnym, że backend to zrozumie
-      params.append('withRelations', 'false');
-    }
-    
-    // Dodaj parametr force, aby wymusić pełne odświeżenie
-    if (force) {
-      params.append('force', 'true');
-    }
-    
-    // Add filter parameters if provided
-    if (filters) {
-      if (filters.minId !== undefined) {
-        params.append('minId', filters.minId.toString());
+    if (options) {
+      if (options.withRelations) {
+        params.append('withRelations', 'true');
       }
-      
-      if (filters.maxId !== undefined) {
-        params.append('maxId', filters.maxId.toString());
-      }
-      
-      if (filters.titleContains) {
-        params.append('titleContains', filters.titleContains);
-      }
-      
-      if (filters.bodyContains) {
-        params.append('bodyContains', filters.bodyContains);
-      }
-      
-      if (filters.fetchDateAfter) {
-        params.append('fetchDateAfter', filters.fetchDateAfter);
-      }
+      // Add other filter parameters as needed
     }
     
     if (params.toString()) {
@@ -513,16 +495,8 @@ export const hardRefreshPosts = async (
       throw new Error(`Refresh failed with status: ${response.status}`);
     }
     
-    const data = await handleResponse<{ success: boolean; totalRefreshed: number; posts: Post[] }>(response);
+    const data = await handleResponse<HardRefreshResponse>(response);
     console.log(`Hard refresh complete: ${data.totalRefreshed} posts refreshed`);
-    
-    // Jeśli withRelations jest false, upewnij się, że posty nie mają relacji
-    if (!withRelations && data.posts) {
-      return {
-        ...data,
-        posts: stripRelationsFromPosts(data.posts)
-      };
-    }
     
     return data;
   } catch (error) {
@@ -532,10 +506,7 @@ export const hardRefreshPosts = async (
 };
 
 // Also update quickRefreshPosts with similar pattern
-export const quickRefreshPosts = async (
-  withRelations: boolean = false,
-  filters?: PostFilterOptions
-): Promise<{ success: boolean; totalChecked: number; totalAdded: number; posts: Post[] }> => {
+export const quickRefreshPosts = async (options?: PostFilterOptions): Promise<QuickRefreshResponse> => {
   try {
     // First check if there's any refresh in progress
     const refreshStatus = await getRefreshStatus();
@@ -548,33 +519,26 @@ export const quickRefreshPosts = async (
     let url = `${API_URL}/posts/quick-refresh`;
     const params = new URLSearchParams();
     
-    if (withRelations) {
-      params.append('withRelations', 'true');
-    } else {
-      // Wyraźnie ustaw parametr withRelations=false
-      params.append('withRelations', 'false');
-    }
-    
     // Add filter parameters if provided
-    if (filters) {
-      if (filters.minId !== undefined) {
-        params.append('minId', filters.minId.toString());
+    if (options) {
+      if (options.minId !== undefined) {
+        params.append('minId', options.minId.toString());
       }
       
-      if (filters.maxId !== undefined) {
-        params.append('maxId', filters.maxId.toString());
+      if (options.maxId !== undefined) {
+        params.append('maxId', options.maxId.toString());
       }
       
-      if (filters.titleContains) {
-        params.append('titleContains', filters.titleContains);
+      if (options.titleContains) {
+        params.append('titleContains', options.titleContains);
       }
       
-      if (filters.bodyContains) {
-        params.append('bodyContains', filters.bodyContains);
+      if (options.bodyContains) {
+        params.append('bodyContains', options.bodyContains);
       }
       
-      if (filters.fetchDateAfter) {
-        params.append('fetchDateAfter', filters.fetchDateAfter);
+      if (options.fetchDateAfter) {
+        params.append('fetchDateAfter', options.fetchDateAfter);
       }
     }
     
@@ -594,20 +558,36 @@ export const quickRefreshPosts = async (
       }
     });
     
-    const data = await handleResponse<{ success: boolean; totalChecked: number; totalAdded: number; posts: Post[] }>(response);
-    console.log(`Quick refresh complete: ${data.totalAdded} new posts added out of ${data.totalChecked} total posts`);
-    
-    // Jeśli withRelations jest false, upewnij się, że posty nie mają relacji
-    if (!withRelations && data.posts) {
-      return {
-        ...data,
-        posts: stripRelationsFromPosts(data.posts)
-      };
+    if (!response.ok) {
+      if (response.status === 429) { // Too Many Requests
+        const errorData = await response.json();
+        console.warn('Refresh already in progress:', errorData);
+        throw new Error(`Refresh already in progress (${errorData.refreshType})`);
+      }
+      throw new Error(`Refresh failed with status: ${response.status}`);
     }
+    
+    const data = await handleResponse<QuickRefreshResponse>(response);
+    console.log(`Quick refresh complete: ${data.totalAdded} new posts added`);
     
     return data;
   } catch (error) {
     console.error('Failed to quick refresh posts:', error);
     throw error;
   }
-}; 
+};
+
+// Add new interfaces for responses
+export interface QuickRefreshResponse {
+  success: boolean;
+  totalChecked: number;
+  totalAdded: number;
+  posts: Post[];
+}
+
+export interface HardRefreshResponse {
+  success: boolean;
+  totalFetched: number;
+  totalRefreshed: number;
+  posts: Post[];
+} 

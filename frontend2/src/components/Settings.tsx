@@ -65,7 +65,7 @@ const setThemeCookie = (theme: 'light' | 'dark'): void => {
 export function Settings() {
   const { environmentInfo, setEnvironmentInfo, setLastFetchTime } = useAppStore();
   const [isRefreshing, setIsRefreshing] = React.useState(false);
-  const [newDirectory, setNewDirectory] = React.useState(environmentInfo?.outputDirectory || '');
+  const [newDirectory, setNewDirectory] = React.useState('');  // Initialize empty, will be set by useEffect
   const [isUpdating, setIsUpdating] = React.useState(false);
   const [isOpen, setIsOpen] = React.useState(false);
   const [theme, setTheme] = React.useState<'light' | 'dark'>(() => {
@@ -83,12 +83,19 @@ export function Settings() {
     return 'light';
   });
 
-  // Update directory state when environmentInfo changes
+  // Update directory state when environmentInfo changes or component mounts
   React.useEffect(() => {
-    if (environmentInfo?.outputDirectory) {
+    if (environmentInfo) {
       setNewDirectory(environmentInfo.outputDirectory);
     }
-  }, [environmentInfo?.outputDirectory]);
+  }, [environmentInfo]);
+
+  // Refresh environment info when dialog opens
+  React.useEffect(() => {
+    if (isOpen) {
+      handleRefresh();
+    }
+  }, [isOpen]);
 
   const handleRefresh = async () => {
     try {
@@ -106,22 +113,20 @@ export function Settings() {
   };
 
   const handleUpdateDirectory = async () => {
+    if (!environmentInfo) return;
+    
     try {
       setIsUpdating(true);
       const updatedInfo = await updateOutputDirectory(newDirectory);
-      if (updatedInfo && environmentInfo) {
-        setEnvironmentInfo({
-          environment: environmentInfo.environment,
-          version: environmentInfo.version,
-          outputDirectory: newDirectory,
-          lastFetchTime: updatedInfo.lastFetchTime || ''
-        });
-        setLastFetchTime(updatedInfo.lastFetchTime || '');
-        toast.success('Output directory updated successfully');
-      }
+      setEnvironmentInfo(updatedInfo);
+      setLastFetchTime(updatedInfo.lastFetchTime || '');
+      toast.success('Output directory updated successfully');
+      setIsOpen(false); // Close the dialog after successful update
     } catch (error) {
-      toast.error('Failed to update output directory');
+      const errorMessage = error instanceof Error ? error.message : 'Failed to update output directory';
+      toast.error(errorMessage);
       console.error('Update directory error:', error);
+      setNewDirectory(environmentInfo.outputDirectory); // Reset to original on error
     } finally {
       setIsUpdating(false);
     }
@@ -172,7 +177,7 @@ export function Settings() {
     <Dialog open={isOpen} onOpenChange={setIsOpen}>
       <DialogTrigger asChild>
         <button 
-          className="flex items-center gap-2 text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
+          className="flex items-center gap-2 text-foreground hover:text-primary transition-colors"
           aria-label="Open settings"
           onClick={() => setIsOpen(true)}
         >
@@ -181,11 +186,11 @@ export function Settings() {
       </DialogTrigger>
       <DialogContent className="sm:max-w-md">
         <DialogHeader>
-          <DialogTitle className="flex items-center gap-2">
+          <DialogTitle className="flex items-center gap-2 text-foreground">
             <SettingsIcon className="h-5 w-5" />
             Application Settings
           </DialogTitle>
-          <DialogDescription>
+          <DialogDescription className="text-muted-foreground">
             Configure application settings and view system information.
           </DialogDescription>
         </DialogHeader>
@@ -201,18 +206,18 @@ export function Settings() {
             <div className="space-y-3">
               <div className="flex items-center justify-between">
                 <div className="space-y-0.5">
-                  <Label className="text-base">Appearance</Label>
+                  <Label className="text-base text-foreground">Appearance</Label>
                   <p className="text-sm text-muted-foreground">
                     Toggle between light and dark mode
                   </p>
                 </div>
                 <div className="flex items-center gap-2">
-                  <Sun size={16} className={theme === 'light' ? 'text-amber-500' : 'text-gray-500'} />
+                  <Sun size={16} className={theme === 'light' ? 'text-amber-500' : 'text-muted-foreground'} />
                   <Switch 
                     checked={theme === 'dark'}
                     onCheckedChange={toggleTheme}
                   />
-                  <Moon size={16} className={theme === 'dark' ? 'text-blue-400' : 'text-gray-500'} />
+                  <Moon size={16} className={theme === 'dark' ? 'text-blue-400' : 'text-muted-foreground'} />
                 </div>
               </div>
             </div>
@@ -222,17 +227,17 @@ export function Settings() {
             {/* Output Directory Setting */}
             <div className="space-y-3">
               <div className="flex items-center">
-                <HardDrive size={16} className="mr-2 text-blue-500" />
-                <Label className="text-base">Storage Settings</Label>
+                <HardDrive size={16} className="mr-2 text-primary" />
+                <Label className="text-base text-foreground">Storage Settings</Label>
               </div>
               <p className="text-sm text-muted-foreground">
                 Configure where saved posts will be stored
               </p>
               
               <div className="pt-2 space-y-2">
-                <Label>Output Directory</Label>
+                <Label className="text-foreground">Output Directory</Label>
                 <div className="flex items-center gap-2">
-                  <FolderOpen size={16} className="text-gray-500 shrink-0" />
+                  <FolderOpen size={16} className="text-muted-foreground shrink-0" />
                   <Input 
                     placeholder="Enter output directory path" 
                     value={newDirectory}
@@ -269,26 +274,26 @@ export function Settings() {
             {/* Environment Information */}
             <div className="space-y-4">
               <div className="flex items-center">
-                <Info size={16} className="mr-2 text-blue-500" />
-                <h3 className="text-base font-medium">System Information</h3>
+                <Info size={16} className="mr-2 text-primary" />
+                <h3 className="text-base font-medium text-foreground">System Information</h3>
               </div>
               
-              <div className="grid grid-cols-[auto_1fr] gap-x-3 gap-y-3 text-sm border rounded-md p-3 bg-gray-50 dark:bg-gray-800">
-                <span className="font-medium text-gray-500 dark:text-gray-400">Environment:</span>
+              <div className="grid grid-cols-[auto_1fr] gap-x-3 gap-y-3 text-sm border rounded-md p-3 bg-muted/50">
+                <span className="font-medium text-muted-foreground">Environment:</span>
                 <Badge variant={getBadgeVariant()} className="justify-self-start">
                   {environmentInfo.environment.toUpperCase()}
                 </Badge>
                 
-                <span className="font-medium text-gray-500 dark:text-gray-400">Version:</span>
-                <span>{environmentInfo.version}</span>
+                <span className="font-medium text-muted-foreground">Version:</span>
+                <span className="text-foreground">{environmentInfo.version}</span>
                 
-                <span className="font-medium text-gray-500 dark:text-gray-400">Output Directory:</span>
-                <span className="break-all">{environmentInfo.outputDirectory}</span>
+                <span className="font-medium text-muted-foreground">Output Directory:</span>
+                <span className="break-all text-foreground">{environmentInfo.outputDirectory}</span>
                 
-                <span className="font-medium text-gray-500 dark:text-gray-400">Last Updated:</span>
+                <span className="font-medium text-muted-foreground">Last Updated:</span>
                 <div className="flex items-center gap-1">
-                  <Clock size={14} className="shrink-0 text-gray-500 dark:text-gray-400" />
-                  <span>{environmentInfo.lastFetchTime || 'Unknown'}</span>
+                  <Clock size={14} className="shrink-0 text-muted-foreground" />
+                  <span className="text-foreground">{environmentInfo.lastFetchTime || 'Unknown'}</span>
                 </div>
               </div>
               

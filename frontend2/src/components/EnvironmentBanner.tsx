@@ -31,7 +31,10 @@ export function EnvironmentBanner({ environmentInfo }: EnvironmentBannerProps) {
     try {
       setIsRefreshing(true);
       const newInfo = await getEnvironmentInfo(true); // Force refresh
-      setEnvironmentInfo(newInfo);
+      setEnvironmentInfo({
+        ...newInfo,
+        outputDirectory: newInfo.outputDirectory || environmentInfo.outputDirectory
+      });
       setLastFetchTime(newInfo.lastFetchTime || '');
       toast.success('Information refreshed');
     } catch (error) {
@@ -46,7 +49,10 @@ export function EnvironmentBanner({ environmentInfo }: EnvironmentBannerProps) {
     try {
       setIsUpdating(true);
       const updatedInfo = await updateOutputDirectory(newDirectory);
-      setEnvironmentInfo(updatedInfo);
+      setEnvironmentInfo({
+        ...updatedInfo,
+        outputDirectory: updatedInfo.outputDirectory || newDirectory
+      });
       setLastFetchTime(updatedInfo.lastFetchTime || '');
       toast.success('Output directory updated successfully');
     } catch (error) {
@@ -87,7 +93,7 @@ export function EnvironmentBanner({ environmentInfo }: EnvironmentBannerProps) {
     <>
       <button 
         onClick={() => setIsSettingsOpen(true)}
-        className="flex items-center gap-2 text-gray-600 dark:text-gray-300 hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
+        className="flex items-center gap-2 text-foreground hover:text-primary transition-colors"
         aria-label="Open settings"
       >
         <SettingsIcon size={18} />
@@ -96,11 +102,11 @@ export function EnvironmentBanner({ environmentInfo }: EnvironmentBannerProps) {
       <Dialog open={isSettingsOpen} onOpenChange={setIsSettingsOpen}>
         <DialogContent className="sm:max-w-md">
           <DialogHeader>
-            <DialogTitle className="flex items-center gap-2">
+            <DialogTitle className="flex items-center gap-2 text-foreground">
               <SettingsIcon className="h-5 w-5" />
               Settings
             </DialogTitle>
-            <DialogDescription>
+            <DialogDescription className="text-muted-foreground">
               Configure application settings and view system information.
             </DialogDescription>
           </DialogHeader>
@@ -108,21 +114,21 @@ export function EnvironmentBanner({ environmentInfo }: EnvironmentBannerProps) {
           <div className="space-y-6 py-4">
             {/* Environment Information Section */}
             <div className="space-y-4">
-              <h3 className="text-sm font-medium text-gray-900 dark:text-gray-100">Environment Information</h3>
+              <h3 className="text-sm font-medium text-foreground">Environment Information</h3>
               
               <div className="grid grid-cols-[auto_1fr] gap-x-3 gap-y-2 text-sm">
-                <span className="font-medium text-gray-500 dark:text-gray-400">Type:</span>
+                <span className="font-medium text-muted-foreground">Type:</span>
                 <Badge variant={getBadgeVariant()} className="justify-self-start">
                   {environmentInfo.environment.toUpperCase()}
                 </Badge>
                 
-                <span className="font-medium text-gray-500 dark:text-gray-400">Version:</span>
-                <span>{environmentInfo.version}</span>
+                <span className="font-medium text-muted-foreground">Version:</span>
+                <span className="text-foreground">{environmentInfo.version}</span>
                 
-                <span className="font-medium text-gray-500 dark:text-gray-400">Last Updated:</span>
+                <span className="font-medium text-muted-foreground">Last Updated:</span>
                 <div className="flex items-center gap-1">
-                  <Clock size={14} className="shrink-0 text-gray-500 dark:text-gray-400" />
-                  <span>{environmentInfo.lastFetchTime || 'Unknown'}</span>
+                  <Clock size={14} className="shrink-0 text-muted-foreground" />
+                  <span className="text-foreground">{environmentInfo.lastFetchTime || 'Unknown'}</span>
                   <Button 
                     variant="ghost" 
                     size="icon" 
@@ -138,14 +144,14 @@ export function EnvironmentBanner({ environmentInfo }: EnvironmentBannerProps) {
             
             {/* Output Directory Section */}
             <div className="space-y-4 border-t pt-4">
-              <h3 className="text-sm font-medium text-gray-900 dark:text-gray-100">Storage Settings</h3>
+              <h3 className="text-sm font-medium text-foreground">Storage Settings</h3>
               
               <div className="space-y-3">
-                <label className="text-sm font-medium text-gray-500 dark:text-gray-400">
+                <label className="text-sm font-medium text-muted-foreground">
                   Output Directory
                 </label>
                 <div className="flex items-center gap-2">
-                  <FolderOpen size={16} className="text-gray-500 shrink-0" />
+                  <FolderOpen size={16} className="text-muted-foreground shrink-0" />
                   <Input 
                     placeholder="Enter output directory path" 
                     value={newDirectory}
@@ -153,7 +159,7 @@ export function EnvironmentBanner({ environmentInfo }: EnvironmentBannerProps) {
                     className="flex-1"
                   />
                 </div>
-                <p className="text-xs text-gray-500 dark:text-gray-400">
+                <p className="text-xs text-muted-foreground">
                   Directory where posts will be saved when using the Save Post function.
                 </p>
               </div>

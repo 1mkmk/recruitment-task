@@ -18,6 +18,7 @@ interface PostCardProps {
   onToggleSelect?: () => void;
   className?: string;
   detailed?: boolean;
+  onDelete?: () => void;
 }
 
 export function PostCard({ 
@@ -28,7 +29,8 @@ export function PostCard({
   isSelected = false,
   onToggleSelect,
   className = "",
-  detailed = false 
+  detailed = false,
+  onDelete
 }: PostCardProps) {
   const [isDeleting, setIsDeleting] = React.useState(false);
   const [isDownloading, setIsDownloading] = React.useState(false);
@@ -42,36 +44,8 @@ export function PostCard({
   // Delete post function
   const handleDelete = async (e: React.MouseEvent) => {
     e.stopPropagation();
-    
-    if (confirm('Are you sure you want to delete this post?')) {
-      try {
-        setIsDeleting(true);
-        await deletePost(post.id);
-        
-        // If the post being deleted is the selected post, clear selection
-        if (selectedPost && selectedPost.id === post.id) {
-          setSelectedPost(null);
-        }
-        
-        // Instead of invalidating queries (which would trigger a refetch),
-        // manually update the cache to remove the deleted post
-        const previousPosts = queryClient.getQueryData(['posts', hasRelations]) as Post[] | undefined;
-        
-        if (previousPosts) {
-          // Update the cache with the post removed
-          queryClient.setQueryData(
-            ['posts', hasRelations], 
-            previousPosts.filter(p => p.id !== post.id)
-          );
-        }
-        
-        toast.success('Post deleted successfully');
-      } catch (error) {
-        toast.error('Failed to delete post');
-        console.error('Error deleting post:', error);
-      } finally {
-        setIsDeleting(false);
-      }
+    if (onDelete) {
+      onDelete();
     }
   };
 
