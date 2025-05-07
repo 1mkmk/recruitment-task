@@ -3,5 +3,65 @@
     "id": 75,
     "title": "dignissimos eum dolor ut enim et delectus in",
     "body": "commodi non non omnis et voluptas sit\nautem aut nobis magnam et sapiente voluptatem\net laborum repellat qui delectus facilis temporibus\nrerum amet et nemo voluptate expedita adipisci error dolorem",
-    "fetchDate": "2025-05-07 15:38:41"
+    "user": {
+        "id": 8,
+        "name": "Nicholas Runolfsdottir V",
+        "username": "Maxime_Nienow",
+        "email": "Sherwood@rosamond.me",
+        "phone": "586.493.6943 x140",
+        "website": "jacynthe.com",
+        "company": {
+            "name": "Abernathy Group",
+            "catchPhrase": "Implemented secondary concept",
+            "bs": "e-enable extensible e-tailers"
+        },
+        "address": {
+            "street": "Ellsworth Summit",
+            "suite": "Suite 729",
+            "city": "Aliyaview",
+            "zipcode": "45169",
+            "geo": {
+                "lat": "-14.3990",
+                "lng": "-120.7677"
+            }
+        }
+    },
+    "comments": [
+        {
+            "postId": 75,
+            "id": 371,
+            "name": "ut quia sequi sed eius voluptas",
+            "email": "Lindsay@kiley.name",
+            "body": "est dicta totam architecto et minus id aut non\nut et fugit eaque culpa modi repellendus\naliquid qui veritatis doloribus aut consequatur voluptas sequi accusantium\nvoluptas occaecati saepe reprehenderit ut"
+        },
+        {
+            "postId": 75,
+            "id": 372,
+            "name": "qui cumque eos consequatur fuga ut",
+            "email": "Erika.Murazik@jorge.me",
+            "body": "aut illum est asperiores\nrerum laboriosam quis sit dolores magni minima fuga atque\nomnis at et quibusdam earum rem\nearum distinctio autem et enim dolore eos"
+        },
+        {
+            "postId": 75,
+            "id": 373,
+            "name": "nemo voluptatum quo qui atque",
+            "email": "Olin@edmund.ca",
+            "body": "iure aliquid qui sit\nexcepturi dolorem rerum possimus suscipit atque nisi\nlabore ut aut nihil voluptatum ut aliquid praesentium\nassumenda tempore dolor velit ratione et corrupti"
+        },
+        {
+            "postId": 75,
+            "id": 374,
+            "name": "quam exercitationem alias totam",
+            "email": "Lacey@novella.biz",
+            "body": "eligendi et consequuntur dolor nihil quaerat doloremque ut\ndignissimos sunt veniam non ratione esse\ndebitis omnis similique maxime dolores tempora laborum rerum adipisci\nreiciendis explicabo error quidem quo necessitatibus voluptatibus vitae ipsum"
+        },
+        {
+            "postId": 75,
+            "id": 375,
+            "name": "similique doloribus odit quas magnam omnis dolorem dolore et",
+            "email": "Sister@miller.net",
+            "body": "non ea sed reprehenderit reiciendis eaque et neque adipisci\nipsa architecto deserunt ratione nesciunt tempore similique occaecati non\nhic vitae sit neque\nrerum quod dolorem ratione esse aperiam necessitatibus"
+        }
+    ],
+    "fetchDate": "2025-05-07 16:10:21"
 }

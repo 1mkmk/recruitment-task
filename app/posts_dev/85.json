@@ -3,5 +3,65 @@
     "id": 85,
     "title": "dolore veritatis porro provident adipisci blanditiis et sunt",
     "body": "similique sed nisi voluptas iusto omnis\nmollitia et quo\nassumenda suscipit officia magnam sint sed tempora\nenim provident pariatur praesentium atque animi amet ratione",
-    "fetchDate": "2025-05-07 15:38:41"
+    "user": {
+        "id": 9,
+        "name": "Glenna Reichert",
+        "username": "Delphine",
+        "email": "Chaim_McDermott@dana.io",
+        "phone": "(775)976-6794 x41206",
+        "website": "conrad.com",
+        "company": {
+            "name": "Yost and Sons",
+            "catchPhrase": "Switchable contextually-based project",
+            "bs": "aggregate real-time technologies"
+        },
+        "address": {
+            "street": "Dayna Park",
+            "suite": "Suite 449",
+            "city": "Bartholomebury",
+            "zipcode": "76495-3109",
+            "geo": {
+                "lat": "24.6463",
+                "lng": "-168.8889"
+            }
+        }
+    },
+    "comments": [
+        {
+            "postId": 85,
+            "id": 421,
+            "name": "non eligendi ipsam provident",
+            "email": "Holden@kenny.io",
+            "body": "voluptate libero corrupti facere totam eaque consequatur nemo\nenim aliquid exercitationem nulla dignissimos illo\nest amet non iure\namet sed dolore non ipsam magni"
+        },
+        {
+            "postId": 85,
+            "id": 422,
+            "name": "sit molestiae corporis",
+            "email": "Guillermo_Dare@dorothea.tv",
+            "body": "ducimus ut ut fugiat nesciunt labore\ndeleniti non et aut voluptatum quidem consectetur\nincidunt voluptas accusantium\nquo fuga eaque quisquam et et sapiente aut"
+        },
+        {
+            "postId": 85,
+            "id": 423,
+            "name": "assumenda iure a",
+            "email": "Oscar@pearline.com",
+            "body": "rerum laborum voluptas ipsa enim praesentium\nquisquam aliquid perspiciatis eveniet id est est facilis\natque aut facere\nprovident reiciendis libero atque est"
+        },
+        {
+            "postId": 85,
+            "id": 424,
+            "name": "molestiae dolores itaque dicta earum eligendi dolores",
+            "email": "Jonathon_Feest@maxime.io",
+            "body": "ducimus hic ea velit\ndolorum soluta voluptas similique rerum\ndolorum sint maxime et vel\nvoluptatum nesciunt et id consequatur earum sed"
+        },
+        {
+            "postId": 85,
+            "id": 425,
+            "name": "cumque expedita consequatur qui",
+            "email": "Micah_Wolf@lennie.co.uk",
+            "body": "labore necessitatibus et eum quas id ut\ndoloribus aspernatur nostrum sapiente quo aut quia\neos rerum voluptatem\nnumquam minima soluta velit recusandae ut"
+        }
+    ],
+    "fetchDate": "2025-05-07 16:10:21"
 }

@@ -3,5 +3,65 @@
     "id": 78,
     "title": "quam voluptatibus rerum veritatis",
     "body": "nobis facilis odit tempore cupiditate quia\nassumenda doloribus rerum qui ea\nillum et qui totam\naut veniam repellendus",
-    "fetchDate": "2025-05-07 15:38:41"
+    "user": {
+        "id": 8,
+        "name": "Nicholas Runolfsdottir V",
+        "username": "Maxime_Nienow",
+        "email": "Sherwood@rosamond.me",
+        "phone": "586.493.6943 x140",
+        "website": "jacynthe.com",
+        "company": {
+            "name": "Abernathy Group",
+            "catchPhrase": "Implemented secondary concept",
+            "bs": "e-enable extensible e-tailers"
+        },
+        "address": {
+            "street": "Ellsworth Summit",
+            "suite": "Suite 729",
+            "city": "Aliyaview",
+            "zipcode": "45169",
+            "geo": {
+                "lat": "-14.3990",
+                "lng": "-120.7677"
+            }
+        }
+    },
+    "comments": [
+        {
+            "postId": 78,
+            "id": 386,
+            "name": "temporibus minus debitis deleniti repellat unde eveniet",
+            "email": "Alexandre@derrick.co.uk",
+            "body": "et dicta dolores sit\nrepudiandae id harum temporibus\nvoluptas quia blanditiis numquam a enim quae\nquisquam assumenda nam doloribus vel temporibus distinctio eveniet dolores"
+        },
+        {
+            "postId": 78,
+            "id": 387,
+            "name": "magnam nihil delectus dolor natus ab ea et",
+            "email": "Judd@lucinda.ca",
+            "body": "qui recusandae veniam sed voluptatem ullam facilis consequatur\nnumquam ut quod aut et\nnon alias ex quam aut quasi ipsum praesentium\nut aspernatur sit"
+        },
+        {
+            "postId": 78,
+            "id": 388,
+            "name": "laudantium quibusdam blanditiis pariatur non vero deleniti a perferendis",
+            "email": "Eleanora@karson.net",
+            "body": "facilis et totam\nvoluptatibus est optio cum\nfacilis qui aut blanditiis rerum voluptatem accusamus\net omnis quasi sint"
+        },
+        {
+            "postId": 78,
+            "id": 389,
+            "name": "excepturi nam cum molestiae et totam voluptatem nisi",
+            "email": "Enrico_Feil@liana.biz",
+            "body": "dolore nihil perferendis\ndolor hic repudiandae iste\ndoloribus labore quaerat et molestiae dolores sit excepturi sint\net eum et aut"
+        },
+        {
+            "postId": 78,
+            "id": 390,
+            "name": "temporibus aut et",
+            "email": "Beverly@perry.org",
+            "body": "dolor ratione ab repellendus aut quia reiciendis sed\nest alias ex\nodio voluptatem velit odit tempora nihil optio aperiam blanditiis\nlabore porro id velit dolor veritatis"
+        }
+    ],
+    "fetchDate": "2025-05-07 16:10:21"
 }

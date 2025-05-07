@@ -3,5 +3,65 @@
     "id": 87,
     "title": "nostrum quis quasi placeat",
     "body": "eos et molestiae\nnesciunt ut a\ndolores perspiciatis repellendus repellat aliquid\nmagnam sint rem ipsum est",
-    "fetchDate": "2025-05-07 15:38:41"
+    "user": {
+        "id": 9,
+        "name": "Glenna Reichert",
+        "username": "Delphine",
+        "email": "Chaim_McDermott@dana.io",
+        "phone": "(775)976-6794 x41206",
+        "website": "conrad.com",
+        "company": {
+            "name": "Yost and Sons",
+            "catchPhrase": "Switchable contextually-based project",
+            "bs": "aggregate real-time technologies"
+        },
+        "address": {
+            "street": "Dayna Park",
+            "suite": "Suite 449",
+            "city": "Bartholomebury",
+            "zipcode": "76495-3109",
+            "geo": {
+                "lat": "24.6463",
+                "lng": "-168.8889"
+            }
+        }
+    },
+    "comments": [
+        {
+            "postId": 87,
+            "id": 431,
+            "name": "velit incidunt ut accusantium odit maiores quaerat",
+            "email": "Bernie.Schoen@seamus.co.uk",
+            "body": "voluptas minus fugiat vel\nest quos soluta et veniam quia incidunt unde ut\nlaborum odio in eligendi distinctio odit repellat\nnesciunt consequatur blanditiis cupiditate consequatur at et"
+        },
+        {
+            "postId": 87,
+            "id": 432,
+            "name": "quod quia nihil nisi perferendis laborum blanditiis tempora eos",
+            "email": "Joesph@darryl.net",
+            "body": "quam et et harum\nplaceat minus neque quae magni inventore saepe deleniti quisquam\nsuscipit dolorum error aliquid dolores\ndignissimos dolorem autem natus iste molestiae est id impedit"
+        },
+        {
+            "postId": 87,
+            "id": 433,
+            "name": "qui ea voluptatem reiciendis enim enim nisi aut",
+            "email": "Timmothy.Corwin@augustus.co.uk",
+            "body": "voluptatem minus asperiores quasi\nperspiciatis et aut blanditiis illo deserunt molestiae ab aperiam\nex minima sed omnis at\net repellat aut incidunt"
+        },
+        {
+            "postId": 87,
+            "id": 434,
+            "name": "doloremque eligendi quas voluptatem non quos ex",
+            "email": "Julien_OHara@vance.io",
+            "body": "ex eum at culpa quam aliquam\ncupiditate et id dolorem sint quasi et quos et\nomnis et qui minus est quisquam non qui rerum\nquas molestiae tempore veniam"
+        },
+        {
+            "postId": 87,
+            "id": 435,
+            "name": "id voluptatum nulla maiores ipsa eos",
+            "email": "Susan.Bartell@euna.org",
+            "body": "reprehenderit molestias sit nemo quas culpa dolorem exercitationem\neos est voluptatem dolores est fugiat dolorem\neos aut quia et amet et beatae harum vitae\nofficia quia animi dicta magnam accusantium"
+        }
+    ],
+    "fetchDate": "2025-05-07 16:10:22"
 }

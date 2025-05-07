@@ -3,5 +3,65 @@
     "id": 4,
     "title": "eum et est occaecati",
     "body": "ullam et saepe reiciendis voluptatem adipisci\nsit amet autem assumenda provident rerum culpa\nquis hic commodi nesciunt rem tenetur doloremque ipsam iure\nquis sunt voluptatem rerum illo velit",
-    "fetchDate": "2025-05-07 15:38:41"
+    "user": {
+        "id": 1,
+        "name": "Leanne Graham",
+        "username": "Bret",
+        "email": "Sincere@april.biz",
+        "phone": "1-770-736-8031 x56442",
+        "website": "hildegard.org",
+        "company": {
+            "name": "Romaguera-Crona",
+            "catchPhrase": "Multi-layered client-server neural-net",
+            "bs": "harness real-time e-markets"
+        },
+        "address": {
+            "street": "Kulas Light",
+            "suite": "Apt. 556",
+            "city": "Gwenborough",
+            "zipcode": "92998-3874",
+            "geo": {
+                "lat": "-37.3159",
+                "lng": "81.1496"
+            }
+        }
+    },
+    "comments": [
+        {
+            "postId": 4,
+            "id": 16,
+            "name": "perferendis temporibus delectus optio ea eum ratione dolorum",
+            "email": "Christine@ayana.info",
+            "body": "iste ut laborum aliquid velit facere itaque\nquo ut soluta dicta voluptate\nerror tempore aut et\nsequi reiciendis dignissimos expedita consequuntur libero sed fugiat facilis"
+        },
+        {
+            "postId": 4,
+            "id": 17,
+            "name": "eos est animi quis",
+            "email": "Preston_Hudson@blaise.tv",
+            "body": "consequatur necessitatibus totam sed sit dolorum\nrecusandae quae odio excepturi voluptatum harum voluptas\nquisquam sit ad eveniet delectus\ndoloribus odio qui non labore"
+        },
+        {
+            "postId": 4,
+            "id": 18,
+            "name": "aut et tenetur ducimus illum aut nulla ab",
+            "email": "Vincenza_Klocko@albertha.name",
+            "body": "veritatis voluptates necessitatibus maiores corrupti\nneque et exercitationem amet sit et\nullam velit sit magnam laborum\nmagni ut molestias"
+        },
+        {
+            "postId": 4,
+            "id": 19,
+            "name": "sed impedit rerum quia et et inventore unde officiis",
+            "email": "Madelynn.Gorczany@darion.biz",
+            "body": "doloribus est illo sed minima aperiam\nut dignissimos accusantium tempore atque et aut molestiae\nmagni ut accusamus voluptatem quos ut voluptates\nquisquam porro sed architecto ut"
+        },
+        {
+            "postId": 4,
+            "id": 20,
+            "name": "molestias expedita iste aliquid voluptates",
+            "email": "Mariana_Orn@preston.org",
+            "body": "qui harum consequatur fugiat\net eligendi perferendis at molestiae commodi ducimus\ndoloremque asperiores numquam qui\nut sit dignissimos reprehenderit tempore"
+        }
+    ],
+    "fetchDate": "2025-05-07 16:10:16"
 }

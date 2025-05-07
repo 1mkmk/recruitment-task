@@ -3,5 +3,65 @@
     "id": 53,
     "title": "ut quo aut ducimus alias",
     "body": "minima harum praesentium eum rerum illo dolore\nquasi exercitationem rerum nam\nporro quis neque quo\nconsequatur minus dolor quidem veritatis sunt non explicabo similique",
-    "fetchDate": "2025-05-07 15:38:41"
+    "user": {
+        "id": 6,
+        "name": "Mrs. Dennis Schulist",
+        "username": "Leopoldo_Corkery",
+        "email": "Karley_Dach@jasper.info",
+        "phone": "1-477-935-8478 x6430",
+        "website": "ola.org",
+        "company": {
+            "name": "Considine-Lockman",
+            "catchPhrase": "Synchronised bottom-line interface",
+            "bs": "e-enable innovative applications"
+        },
+        "address": {
+            "street": "Norberto Crossing",
+            "suite": "Apt. 950",
+            "city": "South Christy",
+            "zipcode": "23505-1337",
+            "geo": {
+                "lat": "-71.4197",
+                "lng": "71.7478"
+            }
+        }
+    },
+    "comments": [
+        {
+            "postId": 53,
+            "id": 261,
+            "name": "aut veritatis quasi voluptatem enim dolor soluta temporibus",
+            "email": "Virgie@layne.org",
+            "body": "sapiente qui est quod\ndebitis qui est optio consequuntur\nalias hic amet ut non ad qui provident\nquia provident aspernatur corrupti occaecati"
+        },
+        {
+            "postId": 53,
+            "id": 262,
+            "name": "ipsa aliquid laborum quidem recusandae dolorum quia",
+            "email": "Tia@kirsten.info",
+            "body": "similique harum iste ipsam non dolores facere esse\net beatae error necessitatibus laboriosam fugiat culpa esse occaecati\nut provident ut et dolorum nam\ndelectus impedit aut blanditiis fugiat est unde"
+        },
+        {
+            "postId": 53,
+            "id": 263,
+            "name": "vitae voluptatem dolor iure quo non atque",
+            "email": "Marco@jennyfer.biz",
+            "body": "debitis dolore est\nut eos velit accusamus\nnon nobis ipsa nemo quas facilis quia hic\nofficia quam et possimus voluptas voluptatem quisquam tempore delectus"
+        },
+        {
+            "postId": 53,
+            "id": 264,
+            "name": "cum ab voluptates aut",
+            "email": "Taya@milan.biz",
+            "body": "consectetur maiores ab est qui aliquid porro\nipsa labore incidunt\niste deserunt quia aperiam quis sit perferendis\net sint iste"
+        },
+        {
+            "postId": 53,
+            "id": 265,
+            "name": "omnis incidunt est molestias",
+            "email": "Lenora@derrick.biz",
+            "body": "et quibusdam saepe labore delectus et earum quis perferendis\nlaborum soluta veritatis\nea veritatis quidem accusantium est aut porro rerum\nquia est consequatur voluptatem numquam laudantium repellendus"
+        }
+    ],
+    "fetchDate": "2025-05-07 16:10:19"
 }

@@ -3,5 +3,65 @@
     "id": 9,
     "title": "nesciunt iure omnis dolorem tempora et accusantium",
     "body": "consectetur animi nesciunt iure dolore\nenim quia ad\nveniam autem ut quam aut nobis\net est aut quod aut provident voluptas autem voluptas",
-    "fetchDate": "2025-05-07 15:38:41"
+    "user": {
+        "id": 1,
+        "name": "Leanne Graham",
+        "username": "Bret",
+        "email": "Sincere@april.biz",
+        "phone": "1-770-736-8031 x56442",
+        "website": "hildegard.org",
+        "company": {
+            "name": "Romaguera-Crona",
+            "catchPhrase": "Multi-layered client-server neural-net",
+            "bs": "harness real-time e-markets"
+        },
+        "address": {
+            "street": "Kulas Light",
+            "suite": "Apt. 556",
+            "city": "Gwenborough",
+            "zipcode": "92998-3874",
+            "geo": {
+                "lat": "-37.3159",
+                "lng": "81.1496"
+            }
+        }
+    },
+    "comments": [
+        {
+            "postId": 9,
+            "id": 41,
+            "name": "voluptas deleniti ut",
+            "email": "Lucio@gladys.tv",
+            "body": "facere repudiandae vitae ea aut sed quo ut et\nfacere nihil ut voluptates in\nsaepe cupiditate accusantium numquam dolores\ninventore sint mollitia provident"
+        },
+        {
+            "postId": 9,
+            "id": 42,
+            "name": "nam qui et",
+            "email": "Shemar@ewell.name",
+            "body": "aut culpa quaerat veritatis eos debitis\naut repellat eius explicabo et\nofficiis quo sint at magni ratione et iure\nincidunt quo sequi quia dolorum beatae qui"
+        },
+        {
+            "postId": 9,
+            "id": 43,
+            "name": "molestias sint est voluptatem modi",
+            "email": "Jackeline@eva.tv",
+            "body": "voluptatem ut possimus laborum quae ut commodi delectus\nin et consequatur\nin voluptas beatae molestiae\nest rerum laborum et et velit sint ipsum dolorem"
+        },
+        {
+            "postId": 9,
+            "id": 44,
+            "name": "hic molestiae et fuga ea maxime quod",
+            "email": "Marianna_Wilkinson@rupert.io",
+            "body": "qui sunt commodi\nsint vel optio vitae quis qui non distinctio\nid quasi modi dicta\neos nihil sit inventore est numquam officiis"
+        },
+        {
+            "postId": 9,
+            "id": 45,
+            "name": "autem illo facilis",
+            "email": "Marcia@name.biz",
+            "body": "ipsum odio harum voluptatem sunt cumque et dolores\nnihil laboriosam neque commodi qui est\nquos numquam voluptatum\ncorporis quo in vitae similique cumque tempore"
+        }
+    ],
+    "fetchDate": "2025-05-07 16:10:17"
 }

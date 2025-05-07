@@ -3,5 +3,65 @@
     "id": 61,
     "title": "voluptatem doloribus consectetur est ut ducimus",
     "body": "ab nemo optio odio\ndelectus tenetur corporis similique nobis repellendus rerum omnis facilis\nvero blanditiis debitis in nesciunt doloribus dicta dolores\nmagnam minus velit",
-    "fetchDate": "2025-05-07 15:38:41"
+    "user": {
+        "id": 7,
+        "name": "Kurtis Weissnat",
+        "username": "Elwyn.Skiles",
+        "email": "Telly.Hoeger@billy.biz",
+        "phone": "210.067.6132",
+        "website": "elvis.io",
+        "company": {
+            "name": "Johns Group",
+            "catchPhrase": "Configurable multimedia task-force",
+            "bs": "generate enterprise e-tailers"
+        },
+        "address": {
+            "street": "Rex Trail",
+            "suite": "Suite 280",
+            "city": "Howemouth",
+            "zipcode": "58804-1099",
+            "geo": {
+                "lat": "24.8918",
+                "lng": "21.8984"
+            }
+        }
+    },
+    "comments": [
+        {
+            "postId": 61,
+            "id": 301,
+            "name": "id voluptatibus voluptas occaecati quia sunt eveniet et eius",
+            "email": "Tiana@jeramie.tv",
+            "body": "dolore maxime saepe dolor asperiores cupiditate nisi nesciunt\nvitae tempora ducimus vel eos perferendis\nfuga sequi numquam blanditiis sit sed inventore et\nut possimus soluta voluptas nihil aliquid sed earum"
+        },
+        {
+            "postId": 61,
+            "id": 302,
+            "name": "quia voluptatem sunt voluptate ut ipsa",
+            "email": "Lindsey@caitlyn.net",
+            "body": "fuga aut est delectus earum optio impedit qui excepturi\niusto consequatur deserunt soluta sunt\net autem neque\ndolor ut saepe dolores assumenda ipsa eligendi"
+        },
+        {
+            "postId": 61,
+            "id": 303,
+            "name": "excepturi itaque laudantium reiciendis dolorem",
+            "email": "Gregory.Kutch@shawn.info",
+            "body": "sit nesciunt id vitae ut itaque sapiente\nneque in at consequuntur perspiciatis dicta consequatur velit\nfacilis iste ut error sed\nin sequi expedita autem"
+        },
+        {
+            "postId": 61,
+            "id": 304,
+            "name": "voluptatem quidem animi sit est nemo non omnis molestiae",
+            "email": "Murphy.Kris@casimer.me",
+            "body": "minus ab quis nihil quia suscipit vel\nperspiciatis sunt unde\naut ullam quo laudantium deleniti modi\nrerum illo error occaecati vel officiis facere"
+        },
+        {
+            "postId": 61,
+            "id": 305,
+            "name": "non cum consequatur at nihil aut fugiat delectus quia",
+            "email": "Isidro_Kiehn@cristina.org",
+            "body": "repellendus quae labore sunt ut praesentium fuga reiciendis quis\ncorporis aut quis dolor facere earum\nexercitationem enim sunt nihil asperiores expedita\neius nesciunt a sit sit"
+        }
+    ],
+    "fetchDate": "2025-05-07 16:10:20"
 }

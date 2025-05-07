@@ -3,5 +3,65 @@
     "id": 69,
     "title": "fugiat quod pariatur odit minima",
     "body": "officiis error culpa consequatur modi asperiores et\ndolorum assumenda voluptas et vel qui aut vel rerum\nvoluptatum quisquam perspiciatis quia rerum consequatur totam quas\nsequi commodi repudiandae asperiores et saepe a",
-    "fetchDate": "2025-05-07 15:38:41"
+    "user": {
+        "id": 7,
+        "name": "Kurtis Weissnat",
+        "username": "Elwyn.Skiles",
+        "email": "Telly.Hoeger@billy.biz",
+        "phone": "210.067.6132",
+        "website": "elvis.io",
+        "company": {
+            "name": "Johns Group",
+            "catchPhrase": "Configurable multimedia task-force",
+            "bs": "generate enterprise e-tailers"
+        },
+        "address": {
+            "street": "Rex Trail",
+            "suite": "Suite 280",
+            "city": "Howemouth",
+            "zipcode": "58804-1099",
+            "geo": {
+                "lat": "24.8918",
+                "lng": "21.8984"
+            }
+        }
+    },
+    "comments": [
+        {
+            "postId": 69,
+            "id": 341,
+            "name": "sunt ut voluptatem cupiditate maxime dolores eligendi",
+            "email": "April@larissa.co.uk",
+            "body": "iure ea ea neque est\nesse ab sed hic et ullam sed sequi a\nnon hic tenetur sunt enim ea\nlaudantium ea natus"
+        },
+        {
+            "postId": 69,
+            "id": 342,
+            "name": "corporis at consequuntur consequatur",
+            "email": "Glenna_Waters@retha.me",
+            "body": "quis beatae qui\nsequi dicta quas et dolor\nnon enim aspernatur excepturi aut rerum asperiores\naliquid animi nulla ea tempore esse"
+        },
+        {
+            "postId": 69,
+            "id": 343,
+            "name": "repellat sed consequatur suscipit aliquam",
+            "email": "Cordelia.Oberbrunner@peyton.com",
+            "body": "ea alias eos et corrupti\nvoluptatem ab incidunt\nvoluptatibus voluptas ea nesciunt\ntotam corporis dolor recusandae voluptas harum"
+        },
+        {
+            "postId": 69,
+            "id": 344,
+            "name": "blanditiis rerum voluptatem quaerat modi saepe ratione assumenda qui",
+            "email": "Zander@santino.net",
+            "body": "iusto nihil quae rerum laborum recusandae voluptatem et necessitatibus\nut deserunt cumque qui qui\nnon et et eos adipisci cupiditate dolor sed voluptates\nmaiores commodi eveniet consequuntur"
+        },
+        {
+            "postId": 69,
+            "id": 345,
+            "name": "ut deleniti autem ullam quod provident ducimus enim explicabo",
+            "email": "Camila_Runolfsdottir@tressa.tv",
+            "body": "omnis et fugit eos sint saepe ipsam unde est\ndolores sit sit assumenda laboriosam\ndolor deleniti voluptatem id nesciunt et\nplaceat dolorem cumque laboriosam sunt non"
+        }
+    ],
+    "fetchDate": "2025-05-07 16:10:20"
 }

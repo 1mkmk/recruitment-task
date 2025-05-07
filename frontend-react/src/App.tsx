@@ -50,10 +50,10 @@ function App() {
   }, [setEnvironmentInfo, setError, setLastFetchTime]);
 
   return (
-    <ThemeProvider defaultTheme="system" storageKey="vite-ui-theme">
+    <ThemeProvider defaultTheme="dark" storageKey="vite-ui-theme">
       <QueryClientProvider client={queryClient}>
-        <div className="flex flex-col min-h-screen w-full bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-900 dark:to-gray-800">
-          <header className="w-full bg-white/90 backdrop-blur-sm dark:bg-gray-800/90 shadow-sm border-b sticky top-0 z-10">
+        <div className="flex flex-col min-h-screen w-full bg-gradient-to-br from-gray-900 to-gray-800">
+          <header className="w-full bg-gray-800/90 backdrop-blur-sm shadow-sm border-b sticky top-0 z-10">
             <div className="container mx-auto py-3 px-4">
               <div className="flex justify-between items-center">
                 <div className="flex items-center gap-2">

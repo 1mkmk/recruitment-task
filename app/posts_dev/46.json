@@ -3,5 +3,65 @@
     "id": 46,
     "title": "aut quo modi neque nostrum ducimus",
     "body": "voluptatem quisquam iste\nvoluptatibus natus officiis facilis dolorem\nquis quas ipsam\nvel et voluptatum in aliquid",
-    "fetchDate": "2025-05-07 15:38:41"
+    "user": {
+        "id": 5,
+        "name": "Chelsey Dietrich",
+        "username": "Kamren",
+        "email": "Lucio_Hettinger@annie.ca",
+        "phone": "(254)954-1289",
+        "website": "demarco.info",
+        "company": {
+            "name": "Keebler LLC",
+            "catchPhrase": "User-centric fault-tolerant solution",
+            "bs": "revolutionize end-to-end systems"
+        },
+        "address": {
+            "street": "Skiles Walks",
+            "suite": "Suite 351",
+            "city": "Roscoeview",
+            "zipcode": "33263",
+            "geo": {
+                "lat": "-31.8129",
+                "lng": "62.5342"
+            }
+        }
+    },
+    "comments": [
+        {
+            "postId": 46,
+            "id": 226,
+            "name": "assumenda officia quam ex natus minima sint quia",
+            "email": "Benton@jayde.tv",
+            "body": "provident sed similique\nexplicabo fugiat quasi saepe voluptatem corrupti recusandae\nvoluptas repudiandae illum tenetur mollitia\nsint in enim earum est"
+        },
+        {
+            "postId": 46,
+            "id": 227,
+            "name": "omnis error aut doloremque ipsum ducimus",
+            "email": "Melody@london.name",
+            "body": "est quo quod tempora fuga debitis\neum nihil nemo nisi consequatur sequi nesciunt dolorum et\ncumque maxime qui consequatur mollitia dicta iusto aut\nvero recusandae ut dolorem provident voluptatibus suscipit sint"
+        },
+        {
+            "postId": 46,
+            "id": 228,
+            "name": "eaque expedita temporibus iure velit eligendi labore dignissimos molestiae",
+            "email": "Wyman.Swaniawski@marjorie.name",
+            "body": "quibusdam dolores eveniet qui minima\nmagni perspiciatis pariatur\nullam dolor sit ex molestiae in nulla unde rerum\nquibusdam deleniti nisi"
+        },
+        {
+            "postId": 46,
+            "id": 229,
+            "name": "maxime veniam at",
+            "email": "Deborah@fletcher.co.uk",
+            "body": "unde aliquam ipsam eaque quia laboriosam exercitationem totam illo\nnon et dolore ipsa\nlaborum et sapiente fugit voluptatem\net debitis quia optio et minima et nostrum"
+        },
+        {
+            "postId": 46,
+            "id": 230,
+            "name": "illo dolor corrupti quia pariatur in",
+            "email": "Dario@barton.info",
+            "body": "neque ullam eos amet\nratione architecto doloribus qui est nisi\noccaecati unde expedita perspiciatis animi tenetur minus eveniet aspernatur\neius nihil adipisci aut"
+        }
+    ],
+    "fetchDate": "2025-05-07 16:10:19"
 }

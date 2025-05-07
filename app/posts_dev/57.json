@@ -3,5 +3,65 @@
     "id": 57,
     "title": "sed ab est est",
     "body": "at pariatur consequuntur earum quidem\nquo est laudantium soluta voluptatem\nqui ullam et est\net cum voluptas voluptatum repellat est",
-    "fetchDate": "2025-05-07 15:38:41"
+    "user": {
+        "id": 6,
+        "name": "Mrs. Dennis Schulist",
+        "username": "Leopoldo_Corkery",
+        "email": "Karley_Dach@jasper.info",
+        "phone": "1-477-935-8478 x6430",
+        "website": "ola.org",
+        "company": {
+            "name": "Considine-Lockman",
+            "catchPhrase": "Synchronised bottom-line interface",
+            "bs": "e-enable innovative applications"
+        },
+        "address": {
+            "street": "Norberto Crossing",
+            "suite": "Apt. 950",
+            "city": "South Christy",
+            "zipcode": "23505-1337",
+            "geo": {
+                "lat": "-71.4197",
+                "lng": "71.7478"
+            }
+        }
+    },
+    "comments": [
+        {
+            "postId": 57,
+            "id": 281,
+            "name": "consequatur voluptates sed voluptatem fuga",
+            "email": "Bridie@pearl.ca",
+            "body": "eius voluptatem minus\net aliquid perspiciatis sint unde ut\nsimilique odio ullam vitae quisquam hic ex consequatur aliquid\nab nihil explicabo sint maiores aut et dolores nostrum"
+        },
+        {
+            "postId": 57,
+            "id": 282,
+            "name": "et vitae culpa corrupti",
+            "email": "Aglae_Goldner@madisyn.co.uk",
+            "body": "ea consequatur placeat\nquo omnis illum voluptatem\nvoluptatem fugit aut dolorum recusandae ut et\ntenetur officia voluptas"
+        },
+        {
+            "postId": 57,
+            "id": 283,
+            "name": "iste molestiae aut hic perspiciatis sint",
+            "email": "Owen_Moore@jeremy.org",
+            "body": "perspiciatis omnis eum nihil et porro facilis fuga qui\ndeleniti id et velit adipisci fuga voluptatibus voluptatum\ndebitis tempore dolorem atque consequatur ea perspiciatis sed\nqui temporibus doloremque"
+        },
+        {
+            "postId": 57,
+            "id": 284,
+            "name": "soluta omnis maiores animi veniam voluptas et totam repellendus",
+            "email": "Jarred@dangelo.name",
+            "body": "rem ut sed\nnon cumque corrupti vel nam rerum autem\nnobis dolorem necessitatibus fugit corporis\nquos sint distinctio ex et animi tempore"
+        },
+        {
+            "postId": 57,
+            "id": 285,
+            "name": "non est sunt consequatur reiciendis",
+            "email": "Remington_Mohr@vincenza.me",
+            "body": "est accusamus facere\nreprehenderit corporis ad et est fugit iure nulla et\ndoloribus reiciendis quasi autem voluptas\nipsam labore et pariatur quia"
+        }
+    ],
+    "fetchDate": "2025-05-07 16:10:20"
 }

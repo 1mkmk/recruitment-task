@@ -3,5 +3,65 @@
     "id": 59,
     "title": "qui commodi dolor at maiores et quis id accusantium",
     "body": "perspiciatis et quam ea autem temporibus non voluptatibus qui\nbeatae a earum officia nesciunt dolores suscipit voluptas et\nanimi doloribus cum rerum quas et magni\net hic ut ut commodi expedita sunt",
-    "fetchDate": "2025-05-07 15:38:41"
+    "user": {
+        "id": 6,
+        "name": "Mrs. Dennis Schulist",
+        "username": "Leopoldo_Corkery",
+        "email": "Karley_Dach@jasper.info",
+        "phone": "1-477-935-8478 x6430",
+        "website": "ola.org",
+        "company": {
+            "name": "Considine-Lockman",
+            "catchPhrase": "Synchronised bottom-line interface",
+            "bs": "e-enable innovative applications"
+        },
+        "address": {
+            "street": "Norberto Crossing",
+            "suite": "Apt. 950",
+            "city": "South Christy",
+            "zipcode": "23505-1337",
+            "geo": {
+                "lat": "-71.4197",
+                "lng": "71.7478"
+            }
+        }
+    },
+    "comments": [
+        {
+            "postId": 59,
+            "id": 291,
+            "name": "occaecati et dolorum",
+            "email": "Pascale@fleta.ca",
+            "body": "nisi dicta numquam dolor\nrerum sed quaerat et\nsed sequi doloribus libero quos temporibus\nblanditiis optio est tempore qui"
+        },
+        {
+            "postId": 59,
+            "id": 292,
+            "name": "consequatur et facere similique beatae explicabo eligendi consequuntur",
+            "email": "Molly_Kertzmann@tristin.me",
+            "body": "eos officiis omnis ab laborum nulla saepe exercitationem recusandae\nvoluptate minima voluptatem sint\nsunt est consequuntur dolor voluptatem odit\nmaxime similique deserunt et quod"
+        },
+        {
+            "postId": 59,
+            "id": 293,
+            "name": "qui sint hic",
+            "email": "Kailee.Larkin@amina.org",
+            "body": "fugiat dicta quasi voluptatibus ea aut est aspernatur sed\ncorrupti harum non omnis eos eaque quos ut\nquia et et nisi rerum voluptates possimus quis\nrecusandae aperiam quia esse"
+        },
+        {
+            "postId": 59,
+            "id": 294,
+            "name": "autem totam necessitatibus sit sunt minima aut quis",
+            "email": "Earnest.Sanford@lane.us",
+            "body": "ut est veritatis animi quos\nnam sed dolor\nitaque omnis nostrum autem molestiae\naut optio tempora ad sapiente quae voluptatem perferendis repellat"
+        },
+        {
+            "postId": 59,
+            "id": 295,
+            "name": "ullam dignissimos non aut dolore",
+            "email": "Abigail@trudie.com",
+            "body": "voluptatem est aspernatur consequatur vel facere\nut omnis tenetur non ea eos\nquibusdam error odio\natque consectetur voluptatem eligendi"
+        }
+    ],
+    "fetchDate": "2025-05-07 16:10:20"
 }

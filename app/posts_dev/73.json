@@ -3,5 +3,65 @@
     "id": 73,
     "title": "consequuntur deleniti eos quia temporibus ab aliquid at",
     "body": "voluptatem cumque tenetur consequatur expedita ipsum nemo quia explicabo\naut eum minima consequatur\ntempore cumque quae est et\net in consequuntur voluptatem voluptates aut",
-    "fetchDate": "2025-05-07 15:38:41"
+    "user": {
+        "id": 8,
+        "name": "Nicholas Runolfsdottir V",
+        "username": "Maxime_Nienow",
+        "email": "Sherwood@rosamond.me",
+        "phone": "586.493.6943 x140",
+        "website": "jacynthe.com",
+        "company": {
+            "name": "Abernathy Group",
+            "catchPhrase": "Implemented secondary concept",
+            "bs": "e-enable extensible e-tailers"
+        },
+        "address": {
+            "street": "Ellsworth Summit",
+            "suite": "Suite 729",
+            "city": "Aliyaview",
+            "zipcode": "45169",
+            "geo": {
+                "lat": "-14.3990",
+                "lng": "-120.7677"
+            }
+        }
+    },
+    "comments": [
+        {
+            "postId": 73,
+            "id": 361,
+            "name": "voluptates qui et corporis",
+            "email": "Antwon@domenico.me",
+            "body": "cum ad porro fuga sequi dolores\nipsa error magni itaque labore accusamus\ncorporis odit consequatur quis debitis\ncum et voluptas facilis incidunt ut itaque dolores error"
+        },
+        {
+            "postId": 73,
+            "id": 362,
+            "name": "quia qui quia qui",
+            "email": "Kenyon@retha.me",
+            "body": "excepturi omnis occaecati officiis enim saepe id\nnon quo et dignissimos voluptates ipsum\nmolestias facere dolorem qui iure similique corrupti\nneque ducimus sit alias dolor earum autem doloribus consequatur"
+        },
+        {
+            "postId": 73,
+            "id": 363,
+            "name": "nihil consequatur quibusdam",
+            "email": "Ben@elouise.net",
+            "body": "est magni totam est\net enim nam voluptas veritatis est\nsint doloremque incidunt et cum a\net eligendi nobis ratione delectus"
+        },
+        {
+            "postId": 73,
+            "id": 364,
+            "name": "vel architecto assumenda et maiores",
+            "email": "Madisen.Hauck@barney.co.uk",
+            "body": "architecto quo enim ad et reprehenderit\nlaboriosam quia commodi officia iusto\ndolorem totam consequuntur cupiditate\nveritatis voluptates aspernatur earum saepe et sed consequatur"
+        },
+        {
+            "postId": 73,
+            "id": 365,
+            "name": "aliquam officiis omnis",
+            "email": "Dock.Parker@roy.biz",
+            "body": "modi sed aut quidem quisquam optio est\naut facilis sit quia quis facere quod\nfugiat recusandae ex et quisquam ipsum sed sit\nexercitationem quia recusandae dolorem quasi iusto ipsa qui et"
+        }
+    ],
+    "fetchDate": "2025-05-07 16:10:21"
 }

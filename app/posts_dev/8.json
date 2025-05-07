@@ -3,5 +3,65 @@
     "id": 8,
     "title": "dolorem dolore est ipsam",
     "body": "dignissimos aperiam dolorem qui eum\nfacilis quibusdam animi sint suscipit qui sint possimus cum\nquaerat magni maiores excepturi\nipsam ut commodi dolor voluptatum modi aut vitae",
-    "fetchDate": "2025-05-07 15:38:41"
+    "user": {
+        "id": 1,
+        "name": "Leanne Graham",
+        "username": "Bret",
+        "email": "Sincere@april.biz",
+        "phone": "1-770-736-8031 x56442",
+        "website": "hildegard.org",
+        "company": {
+            "name": "Romaguera-Crona",
+            "catchPhrase": "Multi-layered client-server neural-net",
+            "bs": "harness real-time e-markets"
+        },
+        "address": {
+            "street": "Kulas Light",
+            "suite": "Apt. 556",
+            "city": "Gwenborough",
+            "zipcode": "92998-3874",
+            "geo": {
+                "lat": "-37.3159",
+                "lng": "81.1496"
+            }
+        }
+    },
+    "comments": [
+        {
+            "postId": 8,
+            "id": 36,
+            "name": "sit et quis",
+            "email": "Raheem_Heaney@gretchen.biz",
+            "body": "aut vero est\ndolor non aut excepturi dignissimos illo nisi aut quas\naut magni quia nostrum provident magnam quas modi maxime\nvoluptatem et molestiae"
+        },
+        {
+            "postId": 8,
+            "id": 37,
+            "name": "beatae veniam nemo rerum voluptate quam aspernatur",
+            "email": "Jacky@victoria.net",
+            "body": "qui rem amet aut\ncumque maiores earum ut quia sit nam esse qui\niusto aspernatur quis voluptas\ndolorem distinctio ex temporibus rem"
+        },
+        {
+            "postId": 8,
+            "id": 38,
+            "name": "maiores dolores expedita",
+            "email": "Piper@linwood.us",
+            "body": "unde voluptatem qui dicta\nvel ad aut eos error consequatur voluptatem\nadipisci doloribus qui est sit aut\nvelit aut et ea ratione eveniet iure fuga"
+        },
+        {
+            "postId": 8,
+            "id": 39,
+            "name": "necessitatibus ratione aut ut delectus quae ut",
+            "email": "Gaylord@russell.net",
+            "body": "atque consequatur dolorem sunt\nadipisci autem et\nvoluptatibus et quae necessitatibus rerum eaque aperiam nostrum nemo\neligendi sed et beatae et inventore"
+        },
+        {
+            "postId": 8,
+            "id": 40,
+            "name": "non minima omnis deleniti pariatur facere quibusdam at",
+            "email": "Clare.Aufderhar@nicole.ca",
+            "body": "quod minus alias quos\nperferendis labore molestias quae ut ut corporis deserunt vitae\net quaerat ut et ullam unde asperiores\ncum voluptatem cumque"
+        }
+    ],
+    "fetchDate": "2025-05-07 16:10:16"
 }

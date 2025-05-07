@@ -3,5 +3,65 @@
     "id": 30,
     "title": "a quo magni similique perferendis",
     "body": "alias dolor cumque\nimpedit blanditiis non eveniet odio maxime\nblanditiis amet eius quis tempora quia autem rem\na provident perspiciatis quia",
-    "fetchDate": "2025-05-07 15:38:41"
+    "user": {
+        "id": 3,
+        "name": "Clementine Bauch",
+        "username": "Samantha",
+        "email": "Nathan@yesenia.net",
+        "phone": "1-463-123-4447",
+        "website": "ramiro.info",
+        "company": {
+            "name": "Romaguera-Jacobson",
+            "catchPhrase": "Face to face bifurcated interface",
+            "bs": "e-enable strategic applications"
+        },
+        "address": {
+            "street": "Douglas Extension",
+            "suite": "Suite 847",
+            "city": "McKenziehaven",
+            "zipcode": "59590-4157",
+            "geo": {
+                "lat": "-68.6102",
+                "lng": "-47.0653"
+            }
+        }
+    },
+    "comments": [
+        {
+            "postId": 30,
+            "id": 146,
+            "name": "est qui debitis",
+            "email": "Vivienne@willis.org",
+            "body": "possimus necessitatibus quis\net dicta omnis voluptatem ea est\nsuscipit eum soluta in quia corrupti hic iusto\nconsequatur est aut qui earum nisi officiis sed culpa"
+        },
+        {
+            "postId": 30,
+            "id": 147,
+            "name": "reiciendis et consectetur officiis beatae corrupti aperiam",
+            "email": "Angelita@aliza.me",
+            "body": "nihil aspernatur consequatur voluptatem facere sed fugiat ullam\nbeatae accusamus et fuga maxime vero\nomnis necessitatibus quisquam ipsum consectetur incidunt repellat voluptas\nerror quo et ab magnam quisquam"
+        },
+        {
+            "postId": 30,
+            "id": 148,
+            "name": "iusto reprehenderit voluptatem modi",
+            "email": "Timmothy_Okuneva@alyce.tv",
+            "body": "nemo corporis quidem eius aut dolores\nitaque rerum quo occaecati mollitia incidunt\nautem est saepe nulla nobis a id\ndolore facilis placeat molestias in fugiat aliquam excepturi"
+        },
+        {
+            "postId": 30,
+            "id": 149,
+            "name": "optio dolorem et reiciendis et recusandae quidem",
+            "email": "Moriah_Welch@richmond.org",
+            "body": "veniam est distinctio\nnihil quia eos sed\ndistinctio hic ut sint ducimus debitis dolorem voluptatum assumenda\neveniet ea perspiciatis"
+        },
+        {
+            "postId": 30,
+            "id": 150,
+            "name": "id saepe numquam est facilis sint enim voluptas voluptatem",
+            "email": "Ramiro_Kuhn@harmon.biz",
+            "body": "est non atque eligendi aspernatur quidem earum mollitia\nminima neque nam exercitationem provident eum\nmaxime quo et ut illum sequi aut fuga repudiandae\nsapiente sed ea distinctio molestias illum consequatur libero quidem"
+        }
+    ],
+    "fetchDate": "2025-05-07 16:10:18"
 }

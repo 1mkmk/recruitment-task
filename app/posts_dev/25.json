@@ -3,5 +3,65 @@
     "id": 25,
     "title": "rem alias distinctio quo quis",
     "body": "ullam consequatur ut\nomnis quis sit vel consequuntur\nipsa eligendi ipsum molestiae et omnis error nostrum\nmolestiae illo tempore quia et distinctio",
-    "fetchDate": "2025-05-07 15:38:41"
+    "user": {
+        "id": 3,
+        "name": "Clementine Bauch",
+        "username": "Samantha",
+        "email": "Nathan@yesenia.net",
+        "phone": "1-463-123-4447",
+        "website": "ramiro.info",
+        "company": {
+            "name": "Romaguera-Jacobson",
+            "catchPhrase": "Face to face bifurcated interface",
+            "bs": "e-enable strategic applications"
+        },
+        "address": {
+            "street": "Douglas Extension",
+            "suite": "Suite 847",
+            "city": "McKenziehaven",
+            "zipcode": "59590-4157",
+            "geo": {
+                "lat": "-68.6102",
+                "lng": "-47.0653"
+            }
+        }
+    },
+    "comments": [
+        {
+            "postId": 25,
+            "id": 121,
+            "name": "deleniti quo corporis ullam magni praesentium molestiae",
+            "email": "Annabelle@cole.com",
+            "body": "soluta mollitia impedit cumque nostrum tempore aut placeat repellat\nenim adipisci dolores aut ut ratione laboriosam necessitatibus vel\net blanditiis est iste sapiente qui atque repellendus alias\nearum consequuntur quia quasi quia"
+        },
+        {
+            "postId": 25,
+            "id": 122,
+            "name": "nihil tempora et reiciendis modi veniam",
+            "email": "Kacey@jamal.info",
+            "body": "doloribus veritatis a et quis corrupti incidunt est\nharum maiores impedit et beatae qui velit et aut\nporro sed dignissimos deserunt deleniti\net eveniet voluptas ipsa pariatur rem ducimus"
+        },
+        {
+            "postId": 25,
+            "id": 123,
+            "name": "ad eos explicabo odio velit",
+            "email": "Mina@mallie.name",
+            "body": "nostrum perspiciatis doloribus\nexplicabo soluta id libero illo iste et\nab expedita error aliquam eum sint ipsum\nmodi possimus et"
+        },
+        {
+            "postId": 25,
+            "id": 124,
+            "name": "nostrum suscipit aut consequatur magnam sunt fuga nihil",
+            "email": "Hudson.Blick@ruben.biz",
+            "body": "ut ut eius qui explicabo quis\niste autem nulla beatae tenetur enim\nassumenda explicabo consequatur harum exercitationem\nvelit itaque consectetur et possimus"
+        },
+        {
+            "postId": 25,
+            "id": 125,
+            "name": "porro et voluptate et reprehenderit",
+            "email": "Domenic.Durgan@joaquin.name",
+            "body": "aut voluptas dolore autem\nreprehenderit expedita et nihil pariatur ea animi quo ullam\na ea officiis corporis\neius voluptatum cum mollitia dolore quaerat accusamus"
+        }
+    ],
+    "fetchDate": "2025-05-07 16:10:18"
 }

@@ -3,5 +3,65 @@
     "id": 16,
     "title": "sint suscipit perspiciatis velit dolorum rerum ipsa laboriosam odio",
     "body": "suscipit nam nisi quo aperiam aut\nasperiores eos fugit maiores voluptatibus quia\nvoluptatem quis ullam qui in alias quia est\nconsequatur magni mollitia accusamus ea nisi voluptate dicta",
-    "fetchDate": "2025-05-07 15:38:41"
+    "user": {
+        "id": 2,
+        "name": "Ervin Howell",
+        "username": "Antonette",
+        "email": "Shanna@melissa.tv",
+        "phone": "010-692-6593 x09125",
+        "website": "anastasia.net",
+        "company": {
+            "name": "Deckow-Crist",
+            "catchPhrase": "Proactive didactic contingency",
+            "bs": "synergize scalable supply-chains"
+        },
+        "address": {
+            "street": "Victor Plains",
+            "suite": "Suite 879",
+            "city": "Wisokyburgh",
+            "zipcode": "90566-7771",
+            "geo": {
+                "lat": "-43.9509",
+                "lng": "-34.4618"
+            }
+        }
+    },
+    "comments": [
+        {
+            "postId": 16,
+            "id": 76,
+            "name": "porro ut soluta repellendus similique",
+            "email": "Gage_Turner@halle.name",
+            "body": "sunt qui consequatur similique recusandae repellendus voluptates eos et\nvero nostrum fugit magnam aliquam\nreprehenderit nobis voluptatem eos consectetur possimus\net perferendis qui ea fugiat sit doloremque"
+        },
+        {
+            "postId": 16,
+            "id": 77,
+            "name": "dolores et quo omnis voluptates",
+            "email": "Alfred@sadye.biz",
+            "body": "eos ullam dolorem impedit labore mollitia\nrerum non dolores\nmolestiae dignissimos qui maxime sed voluptate consequatur\ndoloremque praesentium magnam odio iste quae totam aut"
+        },
+        {
+            "postId": 16,
+            "id": 78,
+            "name": "voluptas voluptas voluptatibus blanditiis",
+            "email": "Catharine@jordyn.com",
+            "body": "qui adipisci eveniet excepturi iusto magni et\nenim ducimus asperiores blanditiis nemo\ncommodi nihil ex\nenim rerum vel nobis nostrum et non"
+        },
+        {
+            "postId": 16,
+            "id": 79,
+            "name": "beatae ut ad quisquam sed repellendus et",
+            "email": "Esther_Ratke@shayna.biz",
+            "body": "et inventore sapiente sed\nsunt similique fugiat officia velit doloremque illo eligendi quas\nsed rerum in quidem perferendis facere molestias\ndolore dolor voluptas nam vel quia"
+        },
+        {
+            "postId": 16,
+            "id": 80,
+            "name": "et cumque ad culpa ut eligendi non",
+            "email": "Evangeline@chad.net",
+            "body": "dignissimos itaque ab et tempore odio omnis voluptatem\nitaque perferendis rem repellendus tenetur nesciunt velit\nqui cupiditate recusandae\nquis debitis dolores aliquam nam"
+        }
+    ],
+    "fetchDate": "2025-05-07 16:10:17"
 }

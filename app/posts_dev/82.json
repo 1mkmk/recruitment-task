@@ -3,5 +3,65 @@
     "id": 82,
     "title": "laudantium voluptate suscipit sunt enim enim",
     "body": "ut libero sit aut totam inventore sunt\nporro sint qui sunt molestiae\nconsequatur cupiditate qui iste ducimus adipisci\ndolor enim assumenda soluta laboriosam amet iste delectus hic",
-    "fetchDate": "2025-05-07 15:38:41"
+    "user": {
+        "id": 9,
+        "name": "Glenna Reichert",
+        "username": "Delphine",
+        "email": "Chaim_McDermott@dana.io",
+        "phone": "(775)976-6794 x41206",
+        "website": "conrad.com",
+        "company": {
+            "name": "Yost and Sons",
+            "catchPhrase": "Switchable contextually-based project",
+            "bs": "aggregate real-time technologies"
+        },
+        "address": {
+            "street": "Dayna Park",
+            "suite": "Suite 449",
+            "city": "Bartholomebury",
+            "zipcode": "76495-3109",
+            "geo": {
+                "lat": "24.6463",
+                "lng": "-168.8889"
+            }
+        }
+    },
+    "comments": [
+        {
+            "postId": 82,
+            "id": 406,
+            "name": "sint eaque rerum voluptas fugiat quia qui",
+            "email": "Merle.Schultz@marcel.org",
+            "body": "dicta in quam tenetur\nsed molestiae a sit est aut quia autem aut\nnam voluptatem reiciendis corporis voluptatem\nsapiente est id quia explicabo enim tempora asperiores"
+        },
+        {
+            "postId": 82,
+            "id": 407,
+            "name": "eius tempora sint reprehenderit",
+            "email": "Malvina_Fay@louie.name",
+            "body": "totam ad quia non vero dolor laudantium sed temporibus\nquia aperiam corrupti sint accusantium eligendi\naliquam rerum voluptatem delectus numquam nihil\nsoluta qui sequi nisi voluptatum eaque voluptas animi ipsam"
+        },
+        {
+            "postId": 82,
+            "id": 408,
+            "name": "non excepturi enim est sapiente numquam repudiandae illo",
+            "email": "Domenick_Douglas@gabe.us",
+            "body": "suscipit quidem fugiat consequatur\nquo sequi nesciunt\naliquam ratione possimus\nvoluptatem sit quia repellendus libero excepturi ut temporibus"
+        },
+        {
+            "postId": 82,
+            "id": 409,
+            "name": "dicta dolor voluptate vel praesentium",
+            "email": "Isaac@allene.net",
+            "body": "provident illo quis dolor distinctio laborum eius enim\nsuscipit quia error enim eos consequuntur\nest incidunt adipisci beatae tenetur excepturi in labore commodi\nfugiat omnis in et at nam accusamus et"
+        },
+        {
+            "postId": 82,
+            "id": 410,
+            "name": "et dolore hic a cupiditate beatae natus iusto soluta",
+            "email": "Marianna.Pacocha@george.net",
+            "body": "in consequatur corporis qui a et magni eum illum\ncorrupti veniam debitis ab iure harum\nenim ut assumenda cum adipisci veritatis et veniam\nrem eius expedita quos corrupti incidunt"
+        }
+    ],
+    "fetchDate": "2025-05-07 16:10:21"
 }

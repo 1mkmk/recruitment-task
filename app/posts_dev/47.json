@@ -3,5 +3,65 @@
     "id": 47,
     "title": "quibusdam cumque rem aut deserunt",
     "body": "voluptatem assumenda ut qui ut cupiditate aut impedit veniam\noccaecati nemo illum voluptatem laudantium\nmolestiae beatae rerum ea iure soluta nostrum\neligendi et voluptate",
-    "fetchDate": "2025-05-07 15:38:41"
+    "user": {
+        "id": 5,
+        "name": "Chelsey Dietrich",
+        "username": "Kamren",
+        "email": "Lucio_Hettinger@annie.ca",
+        "phone": "(254)954-1289",
+        "website": "demarco.info",
+        "company": {
+            "name": "Keebler LLC",
+            "catchPhrase": "User-centric fault-tolerant solution",
+            "bs": "revolutionize end-to-end systems"
+        },
+        "address": {
+            "street": "Skiles Walks",
+            "suite": "Suite 351",
+            "city": "Roscoeview",
+            "zipcode": "33263",
+            "geo": {
+                "lat": "-31.8129",
+                "lng": "62.5342"
+            }
+        }
+    },
+    "comments": [
+        {
+            "postId": 47,
+            "id": 231,
+            "name": "omnis minima dicta aliquam excepturi",
+            "email": "Kelton_McKenzie@danial.us",
+            "body": "veritatis laudantium laboriosam ut maxime sed voluptate\nconsequatur itaque occaecati voluptatum est\nut itaque aperiam eligendi at vel minus\ndicta tempora nihil pariatur libero est"
+        },
+        {
+            "postId": 47,
+            "id": 232,
+            "name": "voluptatem excepturi sit et sed qui ipsum quam consequatur",
+            "email": "Itzel@fritz.io",
+            "body": "ullam modi consequatur officia dolor non explicabo et\neum minus dicta dolores blanditiis dolore\nnobis assumenda harum velit ullam et cupiditate\net commodi dolor harum et sed cum reprehenderit omnis"
+        },
+        {
+            "postId": 47,
+            "id": 233,
+            "name": "qui dolores maxime autem enim repellendus culpa nostrum consequuntur",
+            "email": "Jacquelyn_Kutch@kaya.co.uk",
+            "body": "aperiam quo quis\nnobis error et culpa veritatis\nquae sapiente nobis architecto doloribus quia laboriosam\nest consequatur et recusandae est eius"
+        },
+        {
+            "postId": 47,
+            "id": 234,
+            "name": "natus et necessitatibus animi",
+            "email": "Cheyanne.Schowalter@alycia.biz",
+            "body": "itaque voluptatem voluptas velit non est rerum incidunt\nvitae aut labore accusantium in atque\nrepudiandae quos necessitatibus\nautem ea excepturi"
+        },
+        {
+            "postId": 47,
+            "id": 235,
+            "name": "odio sed accusantium iure repudiandae officiis ut autem illo",
+            "email": "Macey@abbie.org",
+            "body": "ea iusto laboriosam sit\nvoluptatibus magni ratione eum\net minus perferendis\neius rerum suscipit velit culpa ipsa ipsam aperiam est"
+        }
+    ],
+    "fetchDate": "2025-05-07 16:10:19"
 }

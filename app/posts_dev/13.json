@@ -3,5 +3,65 @@
     "id": 13,
     "title": "dolorum ut in voluptas mollitia et saepe quo animi",
     "body": "aut dicta possimus sint mollitia voluptas commodi quo doloremque\niste corrupti reiciendis voluptatem eius rerum\nsit cumque quod eligendi laborum minima\nperferendis recusandae assumenda consectetur porro architecto ipsum ipsam",
-    "fetchDate": "2025-05-07 15:38:41"
+    "user": {
+        "id": 2,
+        "name": "Ervin Howell",
+        "username": "Antonette",
+        "email": "Shanna@melissa.tv",
+        "phone": "010-692-6593 x09125",
+        "website": "anastasia.net",
+        "company": {
+            "name": "Deckow-Crist",
+            "catchPhrase": "Proactive didactic contingency",
+            "bs": "synergize scalable supply-chains"
+        },
+        "address": {
+            "street": "Victor Plains",
+            "suite": "Suite 879",
+            "city": "Wisokyburgh",
+            "zipcode": "90566-7771",
+            "geo": {
+                "lat": "-43.9509",
+                "lng": "-34.4618"
+            }
+        }
+    },
+    "comments": [
+        {
+            "postId": 13,
+            "id": 61,
+            "name": "quidem itaque dolores quod laborum aliquid molestiae",
+            "email": "Aurelio.Pfeffer@griffin.ca",
+            "body": "deserunt cumque laudantium\net et odit quia sint quia quidem\nquibusdam debitis fuga in tempora deleniti\nimpedit consequatur veniam reiciendis autem porro minima"
+        },
+        {
+            "postId": 13,
+            "id": 62,
+            "name": "libero beatae consequuntur optio est hic",
+            "email": "Vesta_Crooks@dora.us",
+            "body": "tempore dolorum corrupti facilis\npraesentium sunt iste recusandae\nunde quisquam similique\nalias consequuntur voluptates velit"
+        },
+        {
+            "postId": 13,
+            "id": 63,
+            "name": "occaecati dolor accusantium et quasi architecto aut eveniet fugiat",
+            "email": "Margarett_Klein@mike.biz",
+            "body": "aut eligendi et molestiae voluptatum tempora\nofficia nihil sit voluptatem aut deleniti\nquaerat consequatur eaque\nsapiente tempore commodi tenetur rerum qui quo"
+        },
+        {
+            "postId": 13,
+            "id": 64,
+            "name": "consequatur aut ullam voluptas dolorum voluptatum sequi et",
+            "email": "Freida@brandt.tv",
+            "body": "sed illum quis\nut aut culpa labore aspernatur illo\ndolorem quia vitae ut aut quo repellendus est omnis\nesse at est debitis"
+        },
+        {
+            "postId": 13,
+            "id": 65,
+            "name": "earum ea ratione numquam",
+            "email": "Mollie@agustina.name",
+            "body": "qui debitis vitae ratione\ntempora impedit aperiam porro molestiae placeat vero laboriosam recusandae\npraesentium consequatur facere et itaque quidem eveniet\nmagnam natus distinctio sapiente"
+        }
+    ],
+    "fetchDate": "2025-05-07 16:10:17"
 }

@@ -3,5 +3,65 @@
     "id": 74,
     "title": "enim unde ratione doloribus quas enim ut sit sapiente",
     "body": "odit qui et et necessitatibus sint veniam\nmollitia amet doloremque molestiae commodi similique magnam et quam\nblanditiis est itaque\nquo et tenetur ratione occaecati molestiae tempora",
-    "fetchDate": "2025-05-07 15:38:41"
+    "user": {
+        "id": 8,
+        "name": "Nicholas Runolfsdottir V",
+        "username": "Maxime_Nienow",
+        "email": "Sherwood@rosamond.me",
+        "phone": "586.493.6943 x140",
+        "website": "jacynthe.com",
+        "company": {
+            "name": "Abernathy Group",
+            "catchPhrase": "Implemented secondary concept",
+            "bs": "e-enable extensible e-tailers"
+        },
+        "address": {
+            "street": "Ellsworth Summit",
+            "suite": "Suite 729",
+            "city": "Aliyaview",
+            "zipcode": "45169",
+            "geo": {
+                "lat": "-14.3990",
+                "lng": "-120.7677"
+            }
+        }
+    },
+    "comments": [
+        {
+            "postId": 74,
+            "id": 366,
+            "name": "aperiam ut deserunt minus quo dicta nisi",
+            "email": "Pablo.Ritchie@tyrique.co.uk",
+            "body": "explicabo perspiciatis quae sit qui nulla incidunt facilis\nrepudiandae perspiciatis voluptate expedita sunt consectetur quasi\nid occaecati nesciunt dolorem aliquid perspiciatis repellat inventore esse\nut possimus exercitationem facere modi"
+        },
+        {
+            "postId": 74,
+            "id": 367,
+            "name": "praesentium eos quam eius optio eveniet",
+            "email": "Sebastian_Gaylord@freda.org",
+            "body": "nostrum modi et et dolores maxime facere\nalias doloribus eaque expedita et similique voluptatum magnam est\nomnis eos voluptatem\net unde fugit voluptatem asperiores"
+        },
+        {
+            "postId": 74,
+            "id": 368,
+            "name": "fugiat aliquid sint",
+            "email": "Lazaro@nadia.ca",
+            "body": "est dolor eveniet\nest minus eveniet recusandae\niure quo aut eos ut sed ipsa\nharum earum aut nesciunt non dolores"
+        },
+        {
+            "postId": 74,
+            "id": 369,
+            "name": "qui incidunt vel iusto eligendi amet quia qui",
+            "email": "Jessy.Boyle@vernice.biz",
+            "body": "qui fugit accusamus\net quo minus cumque hic adipisci\nodio blanditiis omnis et est\narchitecto et facilis inventore quasi provident quaerat ex rem"
+        },
+        {
+            "postId": 74,
+            "id": 370,
+            "name": "libero vero voluptatum sed facilis quos aut reprehenderit ad",
+            "email": "Mitchel@hal.co.uk",
+            "body": "beatae hic est et deserunt eius\ncorrupti quam ut commodi sit modi est corporis animi\nharum ut est\naperiam non fugit excepturi quo tenetur totam"
+        }
+    ],
+    "fetchDate": "2025-05-07 16:10:21"
 }

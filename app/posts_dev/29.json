@@ -3,5 +3,65 @@
     "id": 29,
     "title": "iusto eius quod necessitatibus culpa ea",
     "body": "odit magnam ut saepe sed non qui\ntempora atque nihil\naccusamus illum doloribus illo dolor\neligendi repudiandae odit magni similique sed cum maiores",
-    "fetchDate": "2025-05-07 15:38:41"
+    "user": {
+        "id": 3,
+        "name": "Clementine Bauch",
+        "username": "Samantha",
+        "email": "Nathan@yesenia.net",
+        "phone": "1-463-123-4447",
+        "website": "ramiro.info",
+        "company": {
+            "name": "Romaguera-Jacobson",
+            "catchPhrase": "Face to face bifurcated interface",
+            "bs": "e-enable strategic applications"
+        },
+        "address": {
+            "street": "Douglas Extension",
+            "suite": "Suite 847",
+            "city": "McKenziehaven",
+            "zipcode": "59590-4157",
+            "geo": {
+                "lat": "-68.6102",
+                "lng": "-47.0653"
+            }
+        }
+    },
+    "comments": [
+        {
+            "postId": 29,
+            "id": 141,
+            "name": "dignissimos perspiciatis voluptate quos rem qui temporibus excepturi",
+            "email": "Ottis@lourdes.org",
+            "body": "et ullam id eligendi rem sit\noccaecati et delectus in nemo\naut veritatis deserunt aspernatur dolor enim voluptas quos consequatur\nmolestiae temporibus error"
+        },
+        {
+            "postId": 29,
+            "id": 142,
+            "name": "cum dolore sit quisquam provident nostrum vitae",
+            "email": "Estel@newton.ca",
+            "body": "cumque voluptas quo eligendi sit\nnemo ut ut dolor et cupiditate aut\net voluptatem quia aut maiores quas accusantium expedita quia\nbeatae aut ad quis soluta id dolorum"
+        },
+        {
+            "postId": 29,
+            "id": 143,
+            "name": "velit molestiae assumenda perferendis voluptas explicabo",
+            "email": "Bertha@erik.co.uk",
+            "body": "est quasi maiores nisi reiciendis enim\ndolores minus facilis laudantium dignissimos\nreiciendis et facere occaecati dolores et\npossimus et vel et aut ipsa ad"
+        },
+        {
+            "postId": 29,
+            "id": 144,
+            "name": "earum ipsum ea quas qui molestiae omnis unde",
+            "email": "Joesph@matteo.info",
+            "body": "voluptatem unde consequatur natus nostrum vel ut\nconsequatur sequi doloremque omnis dolorem maxime\neaque sunt excepturi\nfuga qui illum et accusamus"
+        },
+        {
+            "postId": 29,
+            "id": 145,
+            "name": "magni iusto sit",
+            "email": "Alva@cassandre.net",
+            "body": "assumenda nihil et\nsed nulla tempora porro iste possimus aut sit officia\ncumque totam quis tenetur qui sequi\ndelectus aut sunt"
+        }
+    ],
+    "fetchDate": "2025-05-07 16:10:18"
 }

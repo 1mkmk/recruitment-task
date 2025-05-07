@@ -3,5 +3,65 @@
     "id": 17,
     "title": "fugit voluptas sed molestias voluptatem provident",
     "body": "eos voluptas et aut odit natus earum\naspernatur fuga molestiae ullam\ndeserunt ratione qui eos\nqui nihil ratione nemo velit ut aut id quo",
-    "fetchDate": "2025-05-07 15:38:41"
+    "user": {
+        "id": 2,
+        "name": "Ervin Howell",
+        "username": "Antonette",
+        "email": "Shanna@melissa.tv",
+        "phone": "010-692-6593 x09125",
+        "website": "anastasia.net",
+        "company": {
+            "name": "Deckow-Crist",
+            "catchPhrase": "Proactive didactic contingency",
+            "bs": "synergize scalable supply-chains"
+        },
+        "address": {
+            "street": "Victor Plains",
+            "suite": "Suite 879",
+            "city": "Wisokyburgh",
+            "zipcode": "90566-7771",
+            "geo": {
+                "lat": "-43.9509",
+                "lng": "-34.4618"
+            }
+        }
+    },
+    "comments": [
+        {
+            "postId": 17,
+            "id": 81,
+            "name": "aut non consequuntur dignissimos voluptatibus dolorem earum recusandae dolorem",
+            "email": "Newton.Kertzmann@anjali.io",
+            "body": "illum et voluptatem quis repellendus quidem repellat\nreprehenderit voluptas consequatur mollitia\npraesentium nisi quo quod et\noccaecati repellendus illo eius harum explicabo doloribus officia"
+        },
+        {
+            "postId": 17,
+            "id": 82,
+            "name": "ea est non dolorum iste nihil est",
+            "email": "Caleb_Herzog@rosamond.net",
+            "body": "officiis dolorem voluptas aliquid eveniet tempora qui\nea temporibus labore accusamus sint\nut sunt necessitatibus voluptatum animi cumque\nat reiciendis voluptatem iure aliquid et qui dolores et"
+        },
+        {
+            "postId": 17,
+            "id": 83,
+            "name": "nihil qui accusamus ratione et molestias et minus",
+            "email": "Sage_Mueller@candace.net",
+            "body": "et consequatur voluptates magnam fugit sunt repellendus nihil earum\nofficiis aut cupiditate\net distinctio laboriosam\nmolestiae sunt dolor explicabo recusandae"
+        },
+        {
+            "postId": 17,
+            "id": 84,
+            "name": "quia voluptatibus magnam voluptatem optio vel perspiciatis",
+            "email": "Bernie.Bergnaum@lue.com",
+            "body": "ratione ut magni voluptas\nexplicabo natus quia consequatur nostrum aut\nomnis enim in qui illum\naut atque laboriosam aliquid blanditiis quisquam et laborum"
+        },
+        {
+            "postId": 17,
+            "id": 85,
+            "name": "non voluptas cum est quis aut consectetur nam",
+            "email": "Alexzander_Davis@eduardo.name",
+            "body": "quisquam incidunt dolores sint qui doloribus provident\nvel cupiditate deleniti alias voluptatem placeat ad\nut dolorem illum unde iure quis libero neque\nea et distinctio id"
+        }
+    ],
+    "fetchDate": "2025-05-07 16:10:17"
 }

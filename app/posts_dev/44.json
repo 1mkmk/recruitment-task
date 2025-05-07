@@ -3,5 +3,65 @@
     "id": 44,
     "title": "optio dolor molestias sit",
     "body": "temporibus est consectetur dolore\net libero debitis vel velit laboriosam quia\nipsum quibusdam qui itaque fuga rem aut\nea et iure quam sed maxime ut distinctio quae",
-    "fetchDate": "2025-05-07 15:38:41"
+    "user": {
+        "id": 5,
+        "name": "Chelsey Dietrich",
+        "username": "Kamren",
+        "email": "Lucio_Hettinger@annie.ca",
+        "phone": "(254)954-1289",
+        "website": "demarco.info",
+        "company": {
+            "name": "Keebler LLC",
+            "catchPhrase": "User-centric fault-tolerant solution",
+            "bs": "revolutionize end-to-end systems"
+        },
+        "address": {
+            "street": "Skiles Walks",
+            "suite": "Suite 351",
+            "city": "Roscoeview",
+            "zipcode": "33263",
+            "geo": {
+                "lat": "-31.8129",
+                "lng": "62.5342"
+            }
+        }
+    },
+    "comments": [
+        {
+            "postId": 44,
+            "id": 216,
+            "name": "voluptatem esse sint alias",
+            "email": "Jaylan.Mayert@norbert.biz",
+            "body": "minima quaerat voluptatibus iusto earum\nquia nihil et\nminus deleniti aspernatur voluptatibus tempore sit molestias\narchitecto velit id debitis"
+        },
+        {
+            "postId": 44,
+            "id": 217,
+            "name": "eos velit velit esse autem minima voluptas",
+            "email": "Cristina.DAmore@destini.biz",
+            "body": "aperiam rerum aut provident cupiditate laboriosam\nenim placeat aut explicabo\nvoluptatum similique rerum eaque eligendi\nnobis occaecati perspiciatis sint ullam"
+        },
+        {
+            "postId": 44,
+            "id": 218,
+            "name": "voluptatem qui deserunt dolorum in voluptates similique et qui",
+            "email": "Ettie_Bashirian@lambert.biz",
+            "body": "rem qui est\nfacilis qui voluptatem quis est veniam quam aspernatur dicta\ndolore id sapiente saepe consequatur\nenim qui impedit culpa ex qui voluptas dolor"
+        },
+        {
+            "postId": 44,
+            "id": 219,
+            "name": "qui unde recusandae omnis ut explicabo neque magni veniam",
+            "email": "Lizeth@kellen.org",
+            "body": "est et dolores voluptas aut molestiae nam eos saepe\nexpedita eum ea tempore sit iure eveniet\niusto enim quos quo\nrepellendus laudantium eum fugiat aut et"
+        },
+        {
+            "postId": 44,
+            "id": 220,
+            "name": "vel autem quia in modi velit",
+            "email": "Vladimir_Schumm@sharon.tv",
+            "body": "illum ea eum quia\ndoloremque modi ducimus voluptatum eaque aperiam accusamus eos quia\nsed rerum aperiam sunt quo\nea veritatis natus eos deserunt voluptas ea voluptate"
+        }
+    ],
+    "fetchDate": "2025-05-07 16:10:19"
 }

@@ -3,5 +3,65 @@
     "id": 65,
     "title": "consequatur id enim sunt et et",
     "body": "voluptatibus ex esse\nsint explicabo est aliquid cumque adipisci fuga repellat labore\nmolestiae corrupti ex saepe at asperiores et perferendis\nnatus id esse incidunt pariatur",
-    "fetchDate": "2025-05-07 15:38:41"
+    "user": {
+        "id": 7,
+        "name": "Kurtis Weissnat",
+        "username": "Elwyn.Skiles",
+        "email": "Telly.Hoeger@billy.biz",
+        "phone": "210.067.6132",
+        "website": "elvis.io",
+        "company": {
+            "name": "Johns Group",
+            "catchPhrase": "Configurable multimedia task-force",
+            "bs": "generate enterprise e-tailers"
+        },
+        "address": {
+            "street": "Rex Trail",
+            "suite": "Suite 280",
+            "city": "Howemouth",
+            "zipcode": "58804-1099",
+            "geo": {
+                "lat": "24.8918",
+                "lng": "21.8984"
+            }
+        }
+    },
+    "comments": [
+        {
+            "postId": 65,
+            "id": 321,
+            "name": "rem ducimus ipsam ut est vero distinctio et",
+            "email": "Danyka_Stark@jedidiah.name",
+            "body": "ea necessitatibus eum nesciunt corporis\nminus in quisquam iste recusandae\nqui nobis deleniti asperiores non laboriosam sunt molestiae dolore\ndistinctio qui officiis tempora dolorem ea"
+        },
+        {
+            "postId": 65,
+            "id": 322,
+            "name": "ipsam et commodi",
+            "email": "Margarita@casper.io",
+            "body": "id molestiae doloribus\nomnis atque eius sunt aperiam\ntenetur quia natus nihil sunt veritatis recusandae quia\ncorporis quam omnis veniam voluptas amet quidem illo deleniti"
+        },
+        {
+            "postId": 65,
+            "id": 323,
+            "name": "et aut non illo cumque pariatur laboriosam",
+            "email": "Carlo@cortney.net",
+            "body": "explicabo dicta quas cum quis rerum dignissimos et\nmagnam sit mollitia est dolor voluptas sed\nipsum et tenetur recusandae\nquod facilis nulla amet deserunt"
+        },
+        {
+            "postId": 65,
+            "id": 324,
+            "name": "ut ut architecto vero est ipsam",
+            "email": "Mina@nikita.tv",
+            "body": "ipsam eum ea distinctio\nducimus saepe eos quaerat molestiae\ncorporis aut officia qui ut perferendis\nitaque possimus incidunt aut quis"
+        },
+        {
+            "postId": 65,
+            "id": 325,
+            "name": "odit sit numquam rerum porro dolorem",
+            "email": "Violette@naomi.tv",
+            "body": "qui vero recusandae\nporro esse sint doloribus impedit voluptatem commodi\nasperiores laudantium ut dolores\npraesentium distinctio magnam voluptatum aut"
+        }
+    ],
+    "fetchDate": "2025-05-07 16:10:20"
 }

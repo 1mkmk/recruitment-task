@@ -3,5 +3,65 @@
     "id": 66,
     "title": "repudiandae ea animi iusto",
     "body": "officia veritatis tenetur vero qui itaque\nsint non ratione\nsed et ut asperiores iusto eos molestiae nostrum\nveritatis quibusdam et nemo iusto saepe",
-    "fetchDate": "2025-05-07 15:38:41"
+    "user": {
+        "id": 7,
+        "name": "Kurtis Weissnat",
+        "username": "Elwyn.Skiles",
+        "email": "Telly.Hoeger@billy.biz",
+        "phone": "210.067.6132",
+        "website": "elvis.io",
+        "company": {
+            "name": "Johns Group",
+            "catchPhrase": "Configurable multimedia task-force",
+            "bs": "generate enterprise e-tailers"
+        },
+        "address": {
+            "street": "Rex Trail",
+            "suite": "Suite 280",
+            "city": "Howemouth",
+            "zipcode": "58804-1099",
+            "geo": {
+                "lat": "24.8918",
+                "lng": "21.8984"
+            }
+        }
+    },
+    "comments": [
+        {
+            "postId": 66,
+            "id": 326,
+            "name": "voluptatem laborum incidunt accusamus",
+            "email": "Lauren.Hodkiewicz@jarret.info",
+            "body": "perspiciatis vero nulla aut consequatur fuga earum aut\nnemo suscipit totam vitae qui at omnis aut\nincidunt optio dolorem voluptatem vel\nassumenda vero id explicabo deleniti sit corrupti sit"
+        },
+        {
+            "postId": 66,
+            "id": 327,
+            "name": "quisquam necessitatibus commodi iure eum",
+            "email": "Ernestina@piper.biz",
+            "body": "consequatur ut aut placeat harum\nquia perspiciatis unde doloribus quae non\nut modi ad unde ducimus omnis nobis voluptatem atque\nmagnam reiciendis dolorem et qui explicabo"
+        },
+        {
+            "postId": 66,
+            "id": 328,
+            "name": "temporibus ut vero quas",
+            "email": "Hettie_Morar@wiley.info",
+            "body": "molestiae minima aut rerum nesciunt\nvitae iusto consequatur architecto assumenda dolorum\nnon doloremque tempora possimus qui mollitia omnis\nvitae odit sed"
+        },
+        {
+            "postId": 66,
+            "id": 329,
+            "name": "quasi beatae sapiente voluptates quo temporibus",
+            "email": "Corbin.Hilll@modesto.biz",
+            "body": "nulla corrupti delectus est cupiditate explicabo facere\nsapiente quo id quis illo culpa\nut aut sit error magni atque asperiores soluta\naut cumque voluptatem occaecati omnis aliquid"
+        },
+        {
+            "postId": 66,
+            "id": 330,
+            "name": "illo ab quae deleniti",
+            "email": "Kenyatta@renee.io",
+            "body": "dolores tenetur rerum et aliquam\nculpa officiis ea rem neque modi quaerat deserunt\nmolestias minus nesciunt iusto impedit enim laborum perferendis\nvelit minima itaque voluptatem fugiat"
+        }
+    ],
+    "fetchDate": "2025-05-07 16:10:20"
 }

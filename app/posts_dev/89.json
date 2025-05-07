@@ -3,5 +3,65 @@
     "id": 89,
     "title": "sint soluta et vel magnam aut ut sed qui",
     "body": "repellat aut aperiam totam temporibus autem et\narchitecto magnam ut\nconsequatur qui cupiditate rerum quia soluta dignissimos nihil iure\ntempore quas est",
-    "fetchDate": "2025-05-07 15:38:41"
+    "user": {
+        "id": 9,
+        "name": "Glenna Reichert",
+        "username": "Delphine",
+        "email": "Chaim_McDermott@dana.io",
+        "phone": "(775)976-6794 x41206",
+        "website": "conrad.com",
+        "company": {
+            "name": "Yost and Sons",
+            "catchPhrase": "Switchable contextually-based project",
+            "bs": "aggregate real-time technologies"
+        },
+        "address": {
+            "street": "Dayna Park",
+            "suite": "Suite 449",
+            "city": "Bartholomebury",
+            "zipcode": "76495-3109",
+            "geo": {
+                "lat": "24.6463",
+                "lng": "-168.8889"
+            }
+        }
+    },
+    "comments": [
+        {
+            "postId": 89,
+            "id": 441,
+            "name": "nisi qui voluptates recusandae voluptas assumenda et",
+            "email": "Elian@matilda.me",
+            "body": "illum qui quis optio\nquasi eius dolores et non numquam et\nqui necessitatibus itaque magnam mollitia earum et\nnisi voluptate eum accusamus ea"
+        },
+        {
+            "postId": 89,
+            "id": 442,
+            "name": "sed molestias sit voluptatibus sit aut alias sunt inventore",
+            "email": "Salma@francis.net",
+            "body": "velit ut incidunt accusantium\nsuscipit animi officia iusto\nnemo omnis sunt nobis repellendus corporis\nconsequatur distinctio dolorem"
+        },
+        {
+            "postId": 89,
+            "id": 443,
+            "name": "illum pariatur aliquam esse nisi voluptas quisquam ea",
+            "email": "Orlando_Dickinson@vern.org",
+            "body": "reiciendis et distinctio qui totam non aperiam voluptas\nveniam in dolorem pariatur itaque\nvoluptas adipisci velit\nqui voluptates voluptas ut ullam veritatis repudiandae"
+        },
+        {
+            "postId": 89,
+            "id": 444,
+            "name": "incidunt aut qui quis est sit corporis pariatur qui",
+            "email": "Elda@orval.name",
+            "body": "eligendi labore aut non modi vel facere qui\naccusamus qui maxime aperiam\ntotam et non ut repudiandae eum corrupti pariatur quia\nnecessitatibus et adipisci ipsa consequuntur enim et nihil vero"
+        },
+        {
+            "postId": 89,
+            "id": 445,
+            "name": "temporibus adipisci eveniet libero ullam",
+            "email": "Dennis@karley.net",
+            "body": "est consequuntur cumque\nquo dolorem at ut dolores\nconsequatur quia voluptates reiciendis\nvel rerum id et"
+        }
+    ],
+    "fetchDate": "2025-05-07 16:10:22"
 }

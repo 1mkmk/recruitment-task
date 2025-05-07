@@ -3,5 +3,65 @@
     "id": 40,
     "title": "enim quo cumque",
     "body": "ut voluptatum aliquid illo tenetur nemo sequi quo facilis\nipsum rem optio mollitia quas\nvoluptatem eum voluptas qui\nunde omnis voluptatem iure quasi maxime voluptas nam",
-    "fetchDate": "2025-05-07 15:38:41"
+    "user": {
+        "id": 4,
+        "name": "Patricia Lebsack",
+        "username": "Karianne",
+        "email": "Julianne.OConner@kory.org",
+        "phone": "493-170-9623 x156",
+        "website": "kale.biz",
+        "company": {
+            "name": "Robel-Corkery",
+            "catchPhrase": "Multi-tiered zero tolerance productivity",
+            "bs": "transition cutting-edge web services"
+        },
+        "address": {
+            "street": "Hoeger Mall",
+            "suite": "Apt. 692",
+            "city": "South Elvis",
+            "zipcode": "53919-4257",
+            "geo": {
+                "lat": "29.4572",
+                "lng": "-164.2990"
+            }
+        }
+    },
+    "comments": [
+        {
+            "postId": 40,
+            "id": 196,
+            "name": "totam vel saepe aut qui velit quis",
+            "email": "Jenifer_Lowe@reuben.ca",
+            "body": "eum laborum quidem omnis facere harum ducimus dolores quaerat\ncorporis quidem aliquid\nquod aut aut at dolorum aspernatur reiciendis\nexercitationem quasi consectetur asperiores vero blanditiis dolor"
+        },
+        {
+            "postId": 40,
+            "id": 197,
+            "name": "non perspiciatis omnis facere rem",
+            "email": "Cecelia_Nitzsche@marty.com",
+            "body": "fugit ut laborum provident\nquos provident voluptatibus quam non\nsed accusantium explicabo dolore quia distinctio voluptatibus et\nconsequatur eos qui iure minus eaque praesentium"
+        },
+        {
+            "postId": 40,
+            "id": 198,
+            "name": "quod vel enim sit quia ipsa quo dolores",
+            "email": "Christop_Friesen@jordan.me",
+            "body": "est veritatis mollitia atque quas et sint et dolor\net ut beatae aut\nmagni corporis dolores voluptatibus optio molestiae enim minus est\nreiciendis facere voluptate rem officia doloribus ut"
+        },
+        {
+            "postId": 40,
+            "id": 199,
+            "name": "pariatur aspernatur nam atque quis",
+            "email": "Cooper_Boehm@damian.biz",
+            "body": "veniam eos ab voluptatem in fugiat ipsam quis\nofficiis non qui\nquia ut id voluptates et a molestiae commodi quam\ndolorem enim soluta impedit autem nulla"
+        },
+        {
+            "postId": 40,
+            "id": 200,
+            "name": "aperiam et omnis totam",
+            "email": "Amir@kaitlyn.org",
+            "body": "facere maxime alias aspernatur ab quibusdam necessitatibus\nratione similique error enim\nsed minus et\net provident minima voluptatibus"
+        }
+    ],
+    "fetchDate": "2025-05-07 16:10:18"
 }

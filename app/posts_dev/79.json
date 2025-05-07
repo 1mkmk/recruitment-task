@@ -3,5 +3,65 @@
     "id": 79,
     "title": "pariatur consequatur quia magnam autem omnis non amet",
     "body": "libero accusantium et et facere incidunt sit dolorem\nnon excepturi qui quia sed laudantium\nquisquam molestiae ducimus est\nofficiis esse molestiae iste et quos",
-    "fetchDate": "2025-05-07 15:38:41"
+    "user": {
+        "id": 8,
+        "name": "Nicholas Runolfsdottir V",
+        "username": "Maxime_Nienow",
+        "email": "Sherwood@rosamond.me",
+        "phone": "586.493.6943 x140",
+        "website": "jacynthe.com",
+        "company": {
+            "name": "Abernathy Group",
+            "catchPhrase": "Implemented secondary concept",
+            "bs": "e-enable extensible e-tailers"
+        },
+        "address": {
+            "street": "Ellsworth Summit",
+            "suite": "Suite 729",
+            "city": "Aliyaview",
+            "zipcode": "45169",
+            "geo": {
+                "lat": "-14.3990",
+                "lng": "-120.7677"
+            }
+        }
+    },
+    "comments": [
+        {
+            "postId": 79,
+            "id": 391,
+            "name": "sed ratione nesciunt odit expedita",
+            "email": "Corene_Mante@rory.com",
+            "body": "aut repellat tenetur delectus eaque est nihil consequatur quae\ndeleniti assumenda voluptates sit sit cupiditate maiores\nautem suscipit sint tenetur dolor tempore\ndolorem dolorum alias adipisci"
+        },
+        {
+            "postId": 79,
+            "id": 392,
+            "name": "rerum officiis qui quaerat omnis dolorem iure est repudiandae",
+            "email": "Emily_Flatley@ephraim.name",
+            "body": "aut aut ea ut repudiandae ea assumenda laboriosam\nsunt qui laboriosam dicta omnis sit corporis\nvoluptas eos amet quam quisquam officiis facilis laborum\nvoluptatibus accusantium ab aliquid sed id doloremque"
+        },
+        {
+            "postId": 79,
+            "id": 393,
+            "name": "illo quis nostrum accusantium architecto et aliquam ratione",
+            "email": "Donna@frederik.com",
+            "body": "et quia explicabo\nut hic commodi quas provident aliquam nihil\nvitae in voluptatem commodi\nvero velit optio omnis accusamus corrupti voluptatem"
+        },
+        {
+            "postId": 79,
+            "id": 394,
+            "name": "reprehenderit eos voluptatem ut",
+            "email": "Kyleigh@ruben.org",
+            "body": "voluptatem quisquam pariatur voluptatum qui quaerat\net minus ea aliquam ullam dolorem consequatur\nratione at ad nemo aperiam excepturi deleniti\nqui numquam quis hic nostrum tempora quidem"
+        },
+        {
+            "postId": 79,
+            "id": 395,
+            "name": "excepturi esse laborum ut qui culpa",
+            "email": "Noemy.Hammes@lisette.net",
+            "body": "esse vel reiciendis nobis inventore vero est\nfugit inventore ea quo consequatur aut\nautem deserunt ratione et repellendus nihil quam\nquidem iure est nihil mollitia"
+        }
+    ],
+    "fetchDate": "2025-05-07 16:10:21"
 }

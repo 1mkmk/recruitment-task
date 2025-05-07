@@ -3,5 +3,65 @@
     "id": 37,
     "title": "provident vel ut sit ratione est",
     "body": "debitis et eaque non officia sed nesciunt pariatur vel\nvoluptatem iste vero et ea\nnumquam aut expedita ipsum nulla in\nvoluptates omnis consequatur aut enim officiis in quam qui",
-    "fetchDate": "2025-05-07 15:38:41"
+    "user": {
+        "id": 4,
+        "name": "Patricia Lebsack",
+        "username": "Karianne",
+        "email": "Julianne.OConner@kory.org",
+        "phone": "493-170-9623 x156",
+        "website": "kale.biz",
+        "company": {
+            "name": "Robel-Corkery",
+            "catchPhrase": "Multi-tiered zero tolerance productivity",
+            "bs": "transition cutting-edge web services"
+        },
+        "address": {
+            "street": "Hoeger Mall",
+            "suite": "Apt. 692",
+            "city": "South Elvis",
+            "zipcode": "53919-4257",
+            "geo": {
+                "lat": "29.4572",
+                "lng": "-164.2990"
+            }
+        }
+    },
+    "comments": [
+        {
+            "postId": 37,
+            "id": 181,
+            "name": "similique ut et non laboriosam in eligendi et",
+            "email": "Milan.Schoen@cortney.io",
+            "body": "dolor iure corrupti\net eligendi nesciunt voluptatum autem\nconsequatur in sapiente\ndolor voluptas dolores natus iusto qui et in perferendis"
+        },
+        {
+            "postId": 37,
+            "id": 182,
+            "name": "soluta corporis excepturi consequatur perspiciatis quia voluptatem",
+            "email": "Sabrina@raymond.biz",
+            "body": "voluptatum voluptatem nisi consequatur et\nomnis nobis odio neque ab enim veniam\nsit qui aperiam odit voluptatem facere\nnesciunt esse nemo"
+        },
+        {
+            "postId": 37,
+            "id": 183,
+            "name": "praesentium quod quidem optio omnis qui",
+            "email": "Hildegard@alford.ca",
+            "body": "tempora soluta voluptas deserunt\nnon fugiat similique\nest natus enim eum error magni soluta\ndolores sit doloremque"
+        },
+        {
+            "postId": 37,
+            "id": 184,
+            "name": "veritatis velit quasi quo et voluptates dolore",
+            "email": "Lowell.Pagac@omari.biz",
+            "body": "odio saepe ad error minima itaque\nomnis fuga corrupti qui eaque cupiditate eum\nvitae laborum rerum ut reprehenderit architecto sit debitis magnam\nqui corrupti cum quidem commodi facere corporis"
+        },
+        {
+            "postId": 37,
+            "id": 185,
+            "name": "natus assumenda ut",
+            "email": "Vivianne@ima.us",
+            "body": "deleniti non et corrupti delectus ea cupiditate\nat nihil fuga rerum\ntemporibus doloribus unde sed alias\nducimus perspiciatis quia debitis fuga"
+        }
+    ],
+    "fetchDate": "2025-05-07 16:10:18"
 }

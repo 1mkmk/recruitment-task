@@ -3,5 +3,65 @@
     "id": 62,
     "title": "beatae enim quia vel",
     "body": "enim aspernatur illo distinctio quae praesentium\nbeatae alias amet delectus qui voluptate distinctio\nodit sint accusantium autem omnis\nquo molestiae omnis ea eveniet optio",
-    "fetchDate": "2025-05-07 15:38:41"
+    "user": {
+        "id": 7,
+        "name": "Kurtis Weissnat",
+        "username": "Elwyn.Skiles",
+        "email": "Telly.Hoeger@billy.biz",
+        "phone": "210.067.6132",
+        "website": "elvis.io",
+        "company": {
+            "name": "Johns Group",
+            "catchPhrase": "Configurable multimedia task-force",
+            "bs": "generate enterprise e-tailers"
+        },
+        "address": {
+            "street": "Rex Trail",
+            "suite": "Suite 280",
+            "city": "Howemouth",
+            "zipcode": "58804-1099",
+            "geo": {
+                "lat": "24.8918",
+                "lng": "21.8984"
+            }
+        }
+    },
+    "comments": [
+        {
+            "postId": 62,
+            "id": 306,
+            "name": "omnis nisi libero",
+            "email": "Kenton_Carter@yolanda.co.uk",
+            "body": "ab veritatis aspernatur molestiae explicabo ea saepe molestias sequi\nbeatae aut perferendis quaerat aut omnis illo fugiat\nquisquam hic doloribus maiores itaque\nvoluptas amet dolorem blanditiis"
+        },
+        {
+            "postId": 62,
+            "id": 307,
+            "name": "id ab commodi est quis culpa",
+            "email": "Amos_Rohan@mozelle.tv",
+            "body": "sit tenetur aut eum quasi reiciendis dignissimos non nulla\nrepellendus ut quisquam\nnumquam provident et repellendus eum nihil blanditiis\nbeatae iusto sed eius sit sed doloremque exercitationem nihil"
+        },
+        {
+            "postId": 62,
+            "id": 308,
+            "name": "enim ut optio architecto dolores nemo quos",
+            "email": "Timothy_Heathcote@jose.name",
+            "body": "officiis ipsa exercitationem impedit dolorem repellat adipisci qui\natque illum sapiente omnis et\nnihil esse et eum facilis aut impedit\nmaxime ullam et dolorem"
+        },
+        {
+            "postId": 62,
+            "id": 309,
+            "name": "maiores et quisquam",
+            "email": "Otilia.Daniel@elvie.io",
+            "body": "impedit qui nemo\nreprehenderit sequi praesentium ullam veniam quaerat optio qui error\naperiam qui quisquam dolor est blanditiis molestias rerum et\nquae quam eum odit ab quia est ut"
+        },
+        {
+            "postId": 62,
+            "id": 310,
+            "name": "sed qui atque",
+            "email": "Toni@joesph.biz",
+            "body": "quae quis qui ab rerum non hic\nconsequatur earum facilis atque quas dolore fuga ipsam\nnihil velit quis\nrerum sit nam est nulla nihil qui excepturi et"
+        }
+    ],
+    "fetchDate": "2025-05-07 16:10:20"
 }
