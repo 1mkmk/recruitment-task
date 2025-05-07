@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Frontend Connectivity Test</title>
+</head>
+<body>
+    <h1>Testing connection to frontend server</h1>
+    <div id="result">Connecting...</div>
+
+    <script>
+        // Test connection to frontend
+        fetch('http://localhost:3000/')
+            .then(response => {
+                if (response.ok) {
+                    document.getElementById('result').innerHTML = 
+                        '<span style="color: green">SUCCESS: Connected to frontend server!</span>';
+                } else {
+                    document.getElementById('result').innerHTML = 
+                        '<span style="color: red">ERROR: Received status ' + response.status + '</span>';
+                }
+            })
+            .catch(error => {
+                document.getElementById('result').innerHTML = 
+                    '<span style="color: red">ERROR: ' + error.message + '</span>';
+            });
+    </script>
+</body>
+</html> 

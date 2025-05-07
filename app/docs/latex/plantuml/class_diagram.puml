@@ -1,0 +1,60 @@
+@startuml Class Diagram
+
+skinparam classAttributeIconSize 0
+skinparam classFontStyle bold
+skinparam classBackgroundColor LightBlue
+skinparam classBorderColor DarkBlue
+skinparam arrowColor DarkBlue
+
+title "JSONPlaceholder - Diagram Klas"
+
+class Post {
+  + id: Int
+  + userId: Int
+  + title: String
+  + body: String
+}
+
+interface ApiService {
+  + getPosts(): List<Post>
+  + getPost(id: Int): Post
+}
+
+class ServiceBuilder {
+  - BASE_URL: String
+  - retrofit: Retrofit
+  + buildService<T>(service: Class<T>): T
+}
+
+class FileUtils {
+  - gson: Gson
+  + savePostAsJson(post: Post, directory: String): Boolean
+}
+
+class MainKt {
+  + main()
+}
+
+MainKt --> ApiService : uzywa
+MainKt --> Post : uzywa
+MainKt --> FileUtils : uzywa
+MainKt --> ServiceBuilder : uzywa
+ApiService --> Post : zwraca
+FileUtils --> Post : serializuje
+
+note right of MainKt
+  Glowny punkt wejscia aplikacji,
+  koordynuje pobieranie i zapisywanie postow
+end note
+
+note right of ServiceBuilder
+  Singleton odpowiedzialny za 
+  konfiguracje i tworzenie klienta Retrofit
+end note
+
+note right of FileUtils
+  Narzedzia do operacji na plikach,
+  obsluguje serializacje i zapisywanie JSON
+end note
+
+@enduml 
