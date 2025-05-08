@@ -1,0 +1,5 @@
+Manifest-Version: 1.0
+Main-Class: net.maciejkasik.MainKt
+Implementation-Title: jsonplaceholder-downloader
+Implementation-Version: 1.0-SNAPSHOT
+

@@ -17,7 +17,7 @@ services:
     command: >
       bash -c "cd /app &&
       gradle build -x test &&
-      java -Dapp.env=dev -Dapp.mode=api -jar build/libs/jsonplaceholder-downloader-1.0-SNAPSHOT.jar"
+      java -Dapp.env=dev -jar build/libs/jsonplaceholder-downloader-1.0-SNAPSHOT.jar"
     networks:
       - app-network
 
@@ -71,4 +71,4 @@ volumes:
 
 networks:
   app-network:
-    driver: bridge 
+    driver: bridge

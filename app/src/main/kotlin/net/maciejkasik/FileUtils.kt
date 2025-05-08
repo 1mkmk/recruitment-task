@@ -8,6 +8,8 @@ import java.nio.file.Files
 import java.nio.file.Paths
 import kotlinx.serialization.json.Json
 import kotlinx.serialization.encodeToString
+import kotlinx.serialization.json.JsonObject
+import kotlinx.serialization.decodeFromString
 import org.slf4j.LoggerFactory
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
@@ -193,4 +195,191 @@ object FileUtils {
             false
         }
     }
-} 
+    
+    /**
+     * Zwraca listę zapisanych postów
+     *
+     * @return Lista obiektów Post odczytanych z plików JSON
+     */
+    fun listSavedPosts(): List<Post> {
+        val config = ConfigProvider.getConfig(Environment.getCurrent())
+        val dir = File(config.outputDirectory)
+        val posts = mutableListOf<Post>()
+        
+        if (dir.exists() && dir.isDirectory) {
+            dir.listFiles()?.forEach { file ->
+                if (file.isFile && file.name.endsWith(".json")) {
+                    try {
+                        // Próba odczytania pliku jako PostWithRelations
+                        val jsonContent = file.readText()
+                        
+                        // Sprawdź, czy plik zawiera relacje
+                        try {
+                            val postWithRelations = json.decodeFromString<PostWithRelations>(jsonContent)
+                            posts.add(Post(
+                                id = postWithRelations.id,
+                                userId = postWithRelations.userId,
+                                title = postWithRelations.title,
+                                body = postWithRelations.body,
+                                fetchDate = postWithRelations.fetchDate
+                            ))
+                        } catch (e: Exception) {
+                            // Jeśli nie udało się odczytać jako PostWithRelations, spróbuj jako Post
+                            try {
+                                val post = json.decodeFromString<Post>(jsonContent)
+                                posts.add(post)
+                            } catch (e2: Exception) {
+                                logger.error("Błąd podczas odczytywania pliku ${file.name}: ${e2.message}")
+                            }
+                        }
+                    } catch (e: Exception) {
+                        logger.error("Błąd podczas odczytywania pliku ${file.name}: ${e.message}")
+                    }
+                }
+            }
+        }
+        
+        return posts
+    }
+    
+    /**
+     * Zwraca listę zapisanych plików JSON
+     *
+     * @return Lista plików JSON w katalogu wyjściowym
+     */
+    fun listJsonFiles(): List<File> {
+        val config = ConfigProvider.getConfig(Environment.getCurrent())
+        val dir = File(config.outputDirectory)
+        val files = mutableListOf<File>()
+        
+        if (dir.exists() && dir.isDirectory) {
+            dir.listFiles()?.forEach { file ->
+                if (file.isFile && file.name.endsWith(".json")) {
+                    files.add(file)
+                }
+            }
+        }
+        
+        return files
+    }
+    
+    /**
+     * Odczytuje post (z relacjami lub bez) z pliku JSON
+     *
+     * @param id ID postu
+     * @return Obiekt Post lub null, jeśli nie znaleziono pliku lub wystąpił błąd
+     */
+    fun readPost(id: Int): Post? {
+        val filePath = getPostFilePath(id)
+        val file = File(filePath)
+        
+        if (!file.exists() || !file.isFile) {
+            logger.warn("Plik nie istnieje: $filePath")
+            return null
+        }
+        
+        try {
+            val jsonContent = file.readText()
+            
+            // Najpierw próbujemy odczytać jako PostWithRelations
+            try {
+                val postWithRelations = json.decodeFromString<PostWithRelations>(jsonContent)
+                return Post(
+                    id = postWithRelations.id,
+                    userId = postWithRelations.userId,
+                    title = postWithRelations.title,
+                    body = postWithRelations.body,
+                    fetchDate = postWithRelations.fetchDate
+                )
+            } catch (e: Exception) {
+                // Jeśli nie udało się jako PostWithRelations, próbujemy jako zwykły Post
+                try {
+                    return json.decodeFromString<Post>(jsonContent)
+                } catch (e2: Exception) {
+                    logger.error("Błąd podczas odczytywania postu $id: ${e2.message}")
+                    return null
+                }
+            }
+        } catch (e: Exception) {
+            logger.error("Błąd podczas odczytywania pliku $filePath: ${e.message}")
+            return null
+        }
+    }
+    
+    /**
+     * Zwraca ścieżkę do pliku z postem o podanym ID
+     *
+     * @param postId ID postu
+     * @return Pełna ścieżka do pliku z postem
+     */
+    fun getPostFilePath(postId: Int): String {
+        val config = ConfigProvider.getConfig(Environment.getCurrent())
+        return "${config.outputDirectory}/$postId.json"
+    }
+    
+    /**
+     * Usuwa plik o podanej ścieżce
+     *
+     * @param filePath Ścieżka do usuwanego pliku
+     * @return true jeśli operacja się powiodła, false w przeciwnym razie
+     */
+    fun deleteFile(filePath: String): Boolean {
+        return try {
+            val file = File(filePath)
+            if (file.exists() && file.isFile) {
+                val result = file.delete()
+                if (result) {
+                    logger.info("Usunięto plik: $filePath")
+                } else {
+                    logger.warn("Nie udało się usunąć pliku: $filePath")
+                }
+                result
+            } else {
+                logger.warn("Plik nie istnieje: $filePath")
+                false
+            }
+        } catch (e: Exception) {
+            logger.error("Błąd podczas usuwania pliku $filePath: ${e.message}")
+            false
+        }
+    }
+    
+    /**
+     * Sprawdza, czy plik JSON zawiera post z relacjami czy bez
+     *
+     * @param file Plik JSON do sprawdzenia
+     * @return Para (czy plik zawiera post z relacjami, informacje o pliku)
+     */
+    fun checkPostFileType(file: File): Pair<Boolean, String> {
+        try {
+            // Zamiast parseToJsonElement, użyjemy alternatywnego podejścia
+            val jsonContent = file.readText()
+            
+            // Sprawdzamy, czy zawiera słowa kluczowe wskazujące na relacje
+            val hasUser = jsonContent.contains("\"user\":")
+            val hasComments = jsonContent.contains("\"comments\":")
+            
+            val hasRelations = hasUser || hasComments
+            
+            // Próba odczytania tytułu przez dekodowanie całego obiektu
+            val title = try {
+                // Najpierw spróbuj odczytać jako PostWithRelations
+                try {
+                    val postWithRelations = json.decodeFromString<PostWithRelations>(jsonContent)
+                    postWithRelations.title
+                } catch (e: Exception) {
+                    // Jeśli nie zadziała, spróbuj jako zwykły Post
+                    val post = json.decodeFromString<Post>(jsonContent)
+                    post.title
+                }
+            } catch (e: Exception) {
+                "Brak tytułu"
+            }
+            
+            return Pair(hasRelations, title)
+        } catch (e: Exception) {
+            logger.error("Błąd podczas sprawdzania typu pliku ${file.name}: ${e.message}")
+            return Pair(false, "Błąd odczytu")
+        }
+    }
+}

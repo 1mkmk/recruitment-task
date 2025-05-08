@@ -105,6 +105,17 @@ tasks.named<JavaExec>("run") {
     systemProperty("app.mode", mode)
 }
 
+// Add a task to run the app in CLI mode with direct command
+tasks.register<JavaExec>("runCliCmd") {
+    group = "application"
+    description = "Runs the application in CLI mode with command arguments"
+    mainClass.set("net.maciejkasik.CliAppKt")
+    classpath = sourceSets["main"].runtimeClasspath
+    
+    // Pass arguments from Gradle command
+    args = (project.findProperty("appArgs") as String? ?: "").split(" ").filter { it.isNotEmpty() }
+}
+
 // Existing tasks for specific environments
 tasks.register<JavaExec>("runDevCli") {
     group = "application"

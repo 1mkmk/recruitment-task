@@ -33,7 +33,16 @@ fun main(args: Array<String>) {
     
     // Execute the appropriate mode
     when (mode) {
-        AppMode.CLI -> runCliMode(env, config, cliArgs.command, cliArgs.commandArgs)
+        AppMode.CLI -> {
+            if (cliArgs.command == "v2" && cliArgs.commandArgs.isNotEmpty()) {
+                // Użyj nowego CliApp dla flagi v2
+                val cliApp = CliApp()
+                cliApp.run(cliArgs.commandArgs.toTypedArray())
+            } else {
+                // Użyj tradycyjnego trybu CLI
+                runCliMode(env, config, cliArgs.command, cliArgs.commandArgs)
+            }
+        }
         AppMode.API -> runApiMode(env)
     }
 }
@@ -160,6 +169,7 @@ private fun printCliHelp() {
         - list, ls             : Wyświetla listę zapisanych postów
         - get <id>             : Pobiera i wyświetla post o podanym ID
         - server, serve        : Uruchamia aplikację w trybie serwera API
+        - v2 <command>         : Uruchamia aplikację w nowym trybie CLI (v2)
         - help                 : Wyświetla tę pomoc
         
         Opcje:
@@ -173,6 +183,8 @@ private fun printCliHelp() {
         java -jar app.jar -e prod fetch         : Pobiera posty w środowisku produkcyjnym
         java -jar app.jar server                : Uruchamia serwer API
         java -jar app.jar --env dev --mode api  : Uruchamia serwer API w środowisku dev
+        java -jar app.jar v2 fetch              : Uruchamia nowy CLI (v2) z komendą fetch
+        java -jar app.jar v2 get 1              : Uruchamia nowy CLI (v2) z komendą get 1
     """.trimIndent())
 }
 
