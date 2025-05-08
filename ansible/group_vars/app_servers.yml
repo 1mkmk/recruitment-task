@@ -1,0 +1,58 @@
+---
+# Group variables for app_servers (Production environment)
+
+# System settings
+ansible_python_interpreter: /usr/bin/python3
+min_disk_space: 1000000  # 1GB in KB
+min_memory: 1024         # 1GB in MB
+
+# Deployment settings
+deploy_environment: production
+enable_monitoring: true
+
+# Java and JVM settings
+java_version: 17
+jvm_extra_opts: "-XX:+UseG1GC -XX:MaxGCPauseMillis=200"
+
+# Application resource limits
+app_memory_limit: "1G"
+app_cpu_quota: "200%"
+
+# Monitoring configuration
+monitoring_packages:
+  - prometheus-node-exporter
+  - rsyslog
+node_exporter_port: "9100"
+auto_restart_on_failure: true
+
+# API configuration
+api_timeout: 5000  # 5 seconds
+
+# Additional application properties (will be added to application.properties)
+additional_app_props:
+  app.metrics.enabled: "true"
+  app.download.batch-size: "20"
+  app.retry.max-attempts: "3"
+  management.endpoints.web.exposure.include: "health,info,metrics"
+
+# Frontend configuration
+frontend_name: jsonplaceholder-frontend
+frontend_version: 1.0.0
+frontend_dir: /var/www/jsonplaceholder-frontend
+frontend_port: 80
+frontend_min_disk_space: 200000  # 200MB in KB
+frontend_memory_limit: "512M"
+frontend_cpu_quota: "100%"
+
+# Web server and API connection
+web_server: nginx
+frontend_api_url: "http://localhost:8080/api"
+remove_default_nginx_site: true
+
+# Build settings
+clean_node_modules: true
+frontend_src_path: frontend-react/
+frontend_env_vars:
+  NODE_ENV: production
+  VITE_APP_ENV: production
+  VITE_API_BASE_URL: "/api"

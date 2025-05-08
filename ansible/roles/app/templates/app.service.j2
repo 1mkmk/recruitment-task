@@ -1,0 +1,44 @@
+[Unit]
+Description={{ app_name }} service
+Documentation=https://github.com/yourusername/{{ app_name }}
+After=network.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User={{ app_user }}
+Group={{ app_group | default(app_user) }}
+WorkingDirectory={{ app_dir }}
+ExecStart={{ app_dir }}/run-app.sh
+ExecStop=/bin/kill -TERM $MAINPID
+SuccessExitStatus=143
+
+# Restart settings
+Restart=on-failure
+RestartSec=10s
+
+# Logging
+StandardOutput=journal
+StandardError=journal
+SyslogIdentifier={{ app_name }}
+
+# Security hardening
+PrivateTmp=true
+ProtectHome=true
+ProtectSystem=full
+NoNewPrivileges=true
+{% if app_read_only_directories is defined %}
+ReadOnlyDirectories={{ app_read_only_directories | join(' ') }}
+{% endif %}
+
+# Resource controls
+{% if app_memory_limit is defined %}
+MemoryLimit={{ app_memory_limit }}
+{% endif %}
+{% if app_cpu_quota is defined %}
+CPUQuota={{ app_cpu_quota }}
+{% endif %}
+LimitNOFILE=65536
+
+[Install]
+WantedBy=multi-user.target

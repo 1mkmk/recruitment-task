@@ -3,5 +3,65 @@
     "id": 5,
     "title": "nesciunt quas odio",
     "body": "repudiandae veniam quaerat sunt sed\nalias aut fugiat sit autem sed est\nvoluptatem omnis possimus esse voluptatibus quis\nest aut tenetur dolor neque",
-    "fetchDate": "2025-05-08 00:23:07"
+    "user": {
+        "id": 1,
+        "name": "Leanne Graham",
+        "username": "Bret",
+        "email": "Sincere@april.biz",
+        "phone": "1-770-736-8031 x56442",
+        "website": "hildegard.org",
+        "company": {
+            "name": "Romaguera-Crona",
+            "catchPhrase": "Multi-layered client-server neural-net",
+            "bs": "harness real-time e-markets"
+        },
+        "address": {
+            "street": "Kulas Light",
+            "suite": "Apt. 556",
+            "city": "Gwenborough",
+            "zipcode": "92998-3874",
+            "geo": {
+                "lat": "-37.3159",
+                "lng": "81.1496"
+            }
+        }
+    },
+    "comments": [
+        {
+            "postId": 5,
+            "id": 21,
+            "name": "aliquid rerum mollitia qui a consectetur eum sed",
+            "email": "Noemie@marques.me",
+            "body": "deleniti aut sed molestias explicabo\ncommodi odio ratione nesciunt\nvoluptate doloremque est\nnam autem error delectus"
+        },
+        {
+            "postId": 5,
+            "id": 22,
+            "name": "porro repellendus aut tempore quis hic",
+            "email": "Khalil@emile.co.uk",
+            "body": "qui ipsa animi nostrum praesentium voluptatibus odit\nqui non impedit cum qui nostrum aliquid fuga explicabo\nvoluptatem fugit earum voluptas exercitationem temporibus dignissimos distinctio\nesse inventore reprehenderit quidem ut incidunt nihil necessitatibus rerum"
+        },
+        {
+            "postId": 5,
+            "id": 23,
+            "name": "quis tempora quidem nihil iste",
+            "email": "Sophia@arianna.co.uk",
+            "body": "voluptates provident repellendus iusto perspiciatis ex fugiat ut\nut dolor nam aliquid et expedita voluptate\nsunt vitae illo rerum in quos\nvel eligendi enim quae fugiat est"
+        },
+        {
+            "postId": 5,
+            "id": 24,
+            "name": "in tempore eos beatae est",
+            "email": "Jeffery@juwan.us",
+            "body": "repudiandae repellat quia\nsequi est dolore explicabo nihil et\net sit et\net praesentium iste atque asperiores tenetur"
+        },
+        {
+            "postId": 5,
+            "id": 25,
+            "name": "autem ab ea sit alias hic provident sit",
+            "email": "Isaias_Kuhic@jarrett.net",
+            "body": "sunt aut quae laboriosam sit ut impedit\nadipisci harum laborum totam deleniti voluptas odit rem ea\nnon iure distinctio ut velit doloribus\net non ex"
+        }
+    ],
+    "fetchDate": "2025-05-08 12:22:47"
 }

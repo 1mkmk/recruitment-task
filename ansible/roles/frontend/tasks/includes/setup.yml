@@ -1,0 +1,37 @@
+---
+# Setup tasks for frontend directories
+
+- name: Create frontend user if needed
+  ansible.builtin.user:
+    name: "{{ frontend_user }}"
+    group: "{{ frontend_group }}"
+    system: yes
+    create_home: no
+    shell: /bin/false
+  register: user_created
+  when: create_frontend_user | default(false) and frontend_user != "www-data"
+  tags: [frontend, setup]
+
+- name: Create frontend directories
+  ansible.builtin.file:
+    path: "{{ item }}"
+    state: directory
+    owner: "{{ frontend_user }}"
+    group: "{{ frontend_group }}"
+    mode: '0755'
+  loop:
+    - "{{ frontend_dir }}"
+    - "{{ frontend_dir }}/dist"
+    - "{{ frontend_dir }}/logs"
+    - "{{ frontend_dir }}/cache"
+    - "{{ frontend_dir }}/backups"
+  tags: [frontend, setup]
+
+- name: Create .env file for frontend
+  ansible.builtin.template:
+    src: env.j2
+    dest: "{{ frontend_dir }}/.env"
+    owner: "{{ frontend_user }}"
+    group: "{{ frontend_group }}"
+    mode: '0644'
+  tags: [frontend, setup]

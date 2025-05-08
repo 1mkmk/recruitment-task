@@ -3,5 +3,65 @@
     "id": 97,
     "title": "quas fugiat ut perspiciatis vero provident",
     "body": "eum non blanditiis soluta porro quibusdam voluptas\nvel voluptatem qui placeat dolores qui velit aut\nvel inventore aut cumque culpa explicabo aliquid at\nperspiciatis est et voluptatem dignissimos dolor itaque sit nam",
-    "fetchDate": "2025-05-08 00:23:07"
+    "user": {
+        "id": 10,
+        "name": "Clementina DuBuque",
+        "username": "Moriah.Stanton",
+        "email": "Rey.Padberg@karina.biz",
+        "phone": "024-648-3804",
+        "website": "ambrose.net",
+        "company": {
+            "name": "Hoeger LLC",
+            "catchPhrase": "Centralized empowering task-force",
+            "bs": "target end-to-end models"
+        },
+        "address": {
+            "street": "Kattie Turnpike",
+            "suite": "Suite 198",
+            "city": "Lebsackbury",
+            "zipcode": "31428-2261",
+            "geo": {
+                "lat": "-38.2386",
+                "lng": "57.2232"
+            }
+        }
+    },
+    "comments": [
+        {
+            "postId": 97,
+            "id": 481,
+            "name": "recusandae dolor similique autem saepe voluptate aut vel sit",
+            "email": "Domenick@russell.ca",
+            "body": "dignissimos nobis vitae corporis delectus eligendi et ut ut\namet laudantium neque\net quia cupiditate debitis aliquid\ndolorem aspernatur libero aut autem quo et"
+        },
+        {
+            "postId": 97,
+            "id": 482,
+            "name": "placeat eveniet sunt ut quis",
+            "email": "Chanelle@samson.me",
+            "body": "aliquid natus voluptas doloremque fugiat ratione adipisci\nunde eum facilis enim omnis ipsum nobis nihil praesentium\nut blanditiis voluptatem veniam\ntenetur fugit et distinctio aspernatur"
+        },
+        {
+            "postId": 97,
+            "id": 483,
+            "name": "a ipsa nihil sed impedit",
+            "email": "Hermann.Kunde@rosina.us",
+            "body": "quos aut rerum nihil est et\ndolores commodi voluptas voluptatem excepturi et\net expedita dignissimos atque aut reprehenderit\nquis quo soluta"
+        },
+        {
+            "postId": 97,
+            "id": 484,
+            "name": "hic inventore sint aut",
+            "email": "Olen@bryce.net",
+            "body": "vel libero quo sit vitae\nid nesciunt ipsam non a aut enim itaque totam\nillum est cupiditate sit\nnam exercitationem magnam veniam"
+        },
+        {
+            "postId": 97,
+            "id": 485,
+            "name": "enim asperiores illum",
+            "email": "Lorenza.Carter@consuelo.ca",
+            "body": "soluta quia porro mollitia eos accusamus\nvoluptatem illo perferendis earum quia\nquo sed ipsam in omnis cum earum tempore eos\nvoluptatem illum doloremque corporis ipsam facere"
+        }
+    ],
+    "fetchDate": "2025-05-08 12:23:27"
 }

@@ -3,5 +3,65 @@
     "id": 92,
     "title": "ratione ex tenetur perferendis",
     "body": "aut et excepturi dicta laudantium sint rerum nihil\nlaudantium et at\na neque minima officia et similique libero et\ncommodi voluptate qui",
-    "fetchDate": "2025-05-08 00:23:07"
+    "user": {
+        "id": 10,
+        "name": "Clementina DuBuque",
+        "username": "Moriah.Stanton",
+        "email": "Rey.Padberg@karina.biz",
+        "phone": "024-648-3804",
+        "website": "ambrose.net",
+        "company": {
+            "name": "Hoeger LLC",
+            "catchPhrase": "Centralized empowering task-force",
+            "bs": "target end-to-end models"
+        },
+        "address": {
+            "street": "Kattie Turnpike",
+            "suite": "Suite 198",
+            "city": "Lebsackbury",
+            "zipcode": "31428-2261",
+            "geo": {
+                "lat": "-38.2386",
+                "lng": "57.2232"
+            }
+        }
+    },
+    "comments": [
+        {
+            "postId": 92,
+            "id": 456,
+            "name": "quod voluptatem qui qui sit sed maiores fugit",
+            "email": "Cassie@diana.org",
+            "body": "sunt ipsam illum consequuntur\nquasi enim possimus unde qui beatae quo eligendi\nvel quia asperiores est quae voluptate\naperiam et iste perspiciatis"
+        },
+        {
+            "postId": 92,
+            "id": 457,
+            "name": "ipsa animi saepe veritatis voluptatibus ad amet id aut",
+            "email": "Jena.OKeefe@adonis.net",
+            "body": "incidunt itaque enim pariatur quibusdam voluptatibus blanditiis sint\nerror laborum voluptas sed officiis molestiae nostrum\ntemporibus culpa aliquam sit\nconsectetur dolores tempore id accusantium dignissimos vel"
+        },
+        {
+            "postId": 92,
+            "id": 458,
+            "name": "fugiat consectetur saepe dicta",
+            "email": "Magdalen@holly.io",
+            "body": "eos hic deserunt necessitatibus sed id ut esse nam\nhic eveniet vitae corrupti mollitia doloremque sit ratione\ndeleniti perspiciatis numquam est sapiente quaerat\nest est sit"
+        },
+        {
+            "postId": 92,
+            "id": 459,
+            "name": "nesciunt numquam alias doloremque minus ipsam optio",
+            "email": "Nyah@otho.com",
+            "body": "veniam natus aut vero et aliquam doloremque\nalias cupiditate non est\ntempore et non vel error placeat est quisquam ea\nnon dolore aliquid non fuga expedita dicta ut quos"
+        },
+        {
+            "postId": 92,
+            "id": 460,
+            "name": "eum fugit omnis optio",
+            "email": "Kara_Stokes@connie.co.uk",
+            "body": "qui qui deserunt expedita at\nprovident sequi veritatis sit qui nam tempora mollitia ratione\ncorporis vitae rerum pariatur unde deleniti ut eos ad\naut non quae nisi saepe"
+        }
+    ],
+    "fetchDate": "2025-05-08 12:23:25"
 }

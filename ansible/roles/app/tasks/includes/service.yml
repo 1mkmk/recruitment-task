@@ -1,0 +1,49 @@
+---
+# Service management tasks
+
+- name: Ensure application service is enabled
+  ansible.builtin.systemd:
+    name: "{{ app_name }}"
+    enabled: "{{ app_enabled | default('yes') }}"
+  tags: [service]
+
+- name: Flush handlers to ensure service is in desired state
+  ansible.builtin.meta: flush_handlers
+  tags: [service]
+
+- name: Wait for application to become available
+  ansible.builtin.uri:
+    url: "http://localhost:{{ app_port }}{{ app_health_check_path }}"
+    return_content: yes
+    status_code: 200
+  register: health_check
+  until: health_check.status == 200
+  retries: "{{ app_health_check_retries }}"
+  delay: "{{ app_health_check_delay }}"
+  become: false
+  tags: [service, health-check]
+  
+- name: Display application status
+  ansible.builtin.debug:
+    msg: "Application is running and healthy{% if health_check.content is defined %}: {{ health_check.content | default('') | from_json | default(health_check.content) }}{% endif %}"
+  when: health_check.status is defined and health_check.status == 200
+  tags: [service, health-check]
+  
+- name: Record deployment in monitoring system
+  ansible.builtin.uri:
+    url: "{{ monitoring_webhook_url | default('') }}"
+    method: POST
+    body_format: json
+    body: 
+      app: "{{ app_name }}"
+      version: "{{ app_version }}"
+      environment: "{{ deploy_environment | default('production') }}"
+      host: "{{ inventory_hostname }}"
+      deployed_at: "{{ ansible_date_time.iso8601 }}"
+  when: 
+    - monitoring_webhook_url is defined 
+    - monitoring_webhook_url | length > 0
+    - enable_monitoring | default(false) | bool
+  register: monitoring_notification
+  failed_when: false
+  tags: [monitoring]

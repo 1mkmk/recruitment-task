@@ -3,5 +3,65 @@
     "id": 22,
     "title": "dolor sint quo a velit explicabo quia nam",
     "body": "eos qui et ipsum ipsam suscipit aut\nsed omnis non odio\nexpedita earum mollitia molestiae aut atque rem suscipit\nnam impedit esse",
-    "fetchDate": "2025-05-08 00:23:07"
+    "user": {
+        "id": 3,
+        "name": "Clementine Bauch",
+        "username": "Samantha",
+        "email": "Nathan@yesenia.net",
+        "phone": "1-463-123-4447",
+        "website": "ramiro.info",
+        "company": {
+            "name": "Romaguera-Jacobson",
+            "catchPhrase": "Face to face bifurcated interface",
+            "bs": "e-enable strategic applications"
+        },
+        "address": {
+            "street": "Douglas Extension",
+            "suite": "Suite 847",
+            "city": "McKenziehaven",
+            "zipcode": "59590-4157",
+            "geo": {
+                "lat": "-68.6102",
+                "lng": "-47.0653"
+            }
+        }
+    },
+    "comments": [
+        {
+            "postId": 22,
+            "id": 106,
+            "name": "maiores placeat facere quam pariatur",
+            "email": "Allen@richard.biz",
+            "body": "dolores debitis voluptatem ab hic\nmagnam alias qui est sunt\net porro velit et repellendus occaecati est\nsequi quia odio deleniti illum"
+        },
+        {
+            "postId": 22,
+            "id": 107,
+            "name": "in ipsam vel id impedit possimus eos voluptate",
+            "email": "Nicholaus@mikayla.ca",
+            "body": "eveniet fugit qui\nporro eaque dolores eos adipisci dolores ut\nfugit perferendis pariatur\nnumquam et repellat occaecati atque ipsum neque"
+        },
+        {
+            "postId": 22,
+            "id": 108,
+            "name": "ut veritatis corporis placeat suscipit consequatur quaerat",
+            "email": "Kayla@susanna.org",
+            "body": "at a vel sequi nostrum\nharum nam nihil\ncumque aut in dolore rerum ipsa hic ratione\nrerum cum ratione provident labore ad quisquam repellendus a"
+        },
+        {
+            "postId": 22,
+            "id": 109,
+            "name": "eveniet ut similique accusantium qui dignissimos",
+            "email": "Gideon@amina.name",
+            "body": "aliquid qui dolorem deserunt aperiam natus corporis eligendi neque\nat et sunt aut qui\nillum repellat qui excepturi laborum facilis aut omnis consequatur\net aut optio ipsa nisi enim"
+        },
+        {
+            "postId": 22,
+            "id": 110,
+            "name": "sint est odit officiis similique aut corrupti quas autem",
+            "email": "Cassidy@maribel.io",
+            "body": "cum sequi in eligendi id eaque\ndolores accusamus dolorem eum est voluptatem quisquam tempore\nin voluptas enim voluptatem asperiores voluptatibus\neius quo quos quasi voluptas earum ut necessitatibus"
+        }
+    ],
+    "fetchDate": "2025-05-08 12:22:54"
 }

@@ -1,0 +1,92 @@
+---
+# Pre-flight checks to validate system readiness for deployment
+
+- name: Check minimum disk space
+  ansible.builtin.shell: df -P {{ app_dir | dirname }} | awk 'NR==2 {print $4}'
+  register: available_disk
+  changed_when: false
+  failed_when: false
+  check_mode: no
+  tags: [preflight, disk]
+
+- name: Verify sufficient disk space
+  ansible.builtin.assert:
+    that:
+      - available_disk.stdout | int > {{ min_disk_space | default(500000) }}
+    fail_msg: "Insufficient disk space. Required: {{ min_disk_space | default(500000) }}KB, Available: {{ available_disk.stdout | int }}KB"
+    success_msg: "Sufficient disk space available: {{ available_disk.stdout | int }}KB"
+  tags: [preflight, disk]
+
+- name: Check if Java is available
+  ansible.builtin.command: which java
+  register: java_check
+  changed_when: false
+  failed_when: false
+  check_mode: no
+  tags: [preflight, java]
+
+- name: Check Java version if installed
+  ansible.builtin.command: java -version
+  register: java_version_check
+  changed_when: false
+  failed_when: false
+  when: java_check.rc == 0
+  check_mode: no
+  tags: [preflight, java]
+
+- name: Display Java version
+  ansible.builtin.debug:
+    var: java_version_check.stderr
+  when: java_version_check.stderr is defined
+  tags: [preflight, java]
+
+- name: Check available memory
+  ansible.builtin.shell: free -m | awk 'NR==2 {print $4}'
+  register: available_memory
+  changed_when: false
+  failed_when: false
+  check_mode: no
+  tags: [preflight, memory]
+
+- name: Verify sufficient memory
+  ansible.builtin.assert:
+    that:
+      - available_memory.stdout | int > {{ min_memory | default(512) }}
+    fail_msg: "Insufficient memory. Required: {{ min_memory | default(512) }}MB, Available: {{ available_memory.stdout | int }}MB"
+    success_msg: "Sufficient memory available: {{ available_memory.stdout | int }}MB"
+  tags: [preflight, memory]
+
+- name: Check for open ports
+  ansible.builtin.wait_for:
+    port: "{{ app_port }}"
+    timeout: 5
+    state: stopped
+  register: port_check
+  failed_when: false
+  check_mode: no
+  tags: [preflight, network]
+
+- name: Verify port availability
+  ansible.builtin.assert:
+    that: port_check is success
+    fail_msg: "Port {{ app_port }} is already in use"
+    success_msg: "Port {{ app_port }} is available"
+  tags: [preflight, network]
+
+- name: Check network connectivity to required services
+  ansible.builtin.uri:
+    url: "https://jsonplaceholder.typicode.com/posts/1"
+    method: GET
+    status_code: 200
+    timeout: 5
+  register: external_api_check
+  failed_when: false
+  check_mode: no
+  tags: [preflight, network]
+
+- name: Verify API connectivity
+  ansible.builtin.assert:
+    that: external_api_check is success
+    fail_msg: "Cannot connect to external API: {{ external_api_check.msg | default('Unknown error') }}"
+    success_msg: "Successfully connected to external API"
+  tags: [preflight, network]

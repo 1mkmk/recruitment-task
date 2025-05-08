@@ -3,5 +3,65 @@
     "id": 34,
     "title": "magnam ut rerum iure",
     "body": "ea velit perferendis earum ut voluptatem voluptate itaque iusto\ntotam pariatur in\nnemo voluptatem voluptatem autem magni tempora minima in\nest distinctio qui assumenda accusamus dignissimos officia nesciunt nobis",
-    "fetchDate": "2025-05-08 00:23:07"
+    "user": {
+        "id": 4,
+        "name": "Patricia Lebsack",
+        "username": "Karianne",
+        "email": "Julianne.OConner@kory.org",
+        "phone": "493-170-9623 x156",
+        "website": "kale.biz",
+        "company": {
+            "name": "Robel-Corkery",
+            "catchPhrase": "Multi-tiered zero tolerance productivity",
+            "bs": "transition cutting-edge web services"
+        },
+        "address": {
+            "street": "Hoeger Mall",
+            "suite": "Apt. 692",
+            "city": "South Elvis",
+            "zipcode": "53919-4257",
+            "geo": {
+                "lat": "29.4572",
+                "lng": "-164.2990"
+            }
+        }
+    },
+    "comments": [
+        {
+            "postId": 34,
+            "id": 166,
+            "name": "sint alias molestiae qui dolor vel",
+            "email": "Aimee.Bins@braeden.ca",
+            "body": "nam quas eaque unde\ndolor blanditiis cumque eaque omnis qui\nrerum modi sint quae numquam exercitationem\natque aut praesentium ipsa sit neque qui sint aut"
+        },
+        {
+            "postId": 34,
+            "id": 167,
+            "name": "ea nam iste est repudiandae",
+            "email": "Eloy@vladimir.com",
+            "body": "molestiae voluptatem qui\nid facere nostrum quasi asperiores rerum\nquisquam est repellendus\ndeleniti eos aut sed nemo non"
+        },
+        {
+            "postId": 34,
+            "id": 168,
+            "name": "quis harum voluptatem et culpa",
+            "email": "Gabrielle@jada.co.uk",
+            "body": "cupiditate optio in quidem adipisci sit dolor id\net tenetur quo sit odit\naperiam illum optio magnam qui\nmolestiae eligendi harum optio dolores dolor quaerat nostrum"
+        },
+        {
+            "postId": 34,
+            "id": 169,
+            "name": "dolor dolore similique tempore ducimus",
+            "email": "Lee@dawn.net",
+            "body": "unde non aliquid magni accusantium architecto et\nrerum autem eos explicabo et\nodio facilis sed\nrerum ex esse beatae quia"
+        },
+        {
+            "postId": 34,
+            "id": 170,
+            "name": "cupiditate labore omnis consequatur",
+            "email": "Gideon.Hyatt@jalen.tv",
+            "body": "amet id deserunt ipsam\ncupiditate distinctio nulla voluptatem\ncum possimus voluptate\nipsum quidem laudantium quos nihil"
+        }
+    ],
+    "fetchDate": "2025-05-08 12:22:59"
 }

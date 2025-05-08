@@ -1,0 +1,23 @@
+---
+# Main task file for frontend role
+# This file orchestrates the execution of frontend deployment tasks
+
+- name: Run pre-flight checks for frontend
+  ansible.builtin.import_tasks: includes/preflight.yml
+  tags: [frontend, preflight]
+
+- name: Install frontend prerequisites
+  ansible.builtin.import_tasks: includes/prerequisites.yml
+  tags: [frontend, prerequisites]
+
+- name: Set up frontend directories
+  ansible.builtin.import_tasks: includes/setup.yml
+  tags: [frontend, setup]
+
+- name: Deploy and build frontend application
+  ansible.builtin.import_tasks: includes/deploy.yml
+  tags: [frontend, deploy]
+
+- name: Configure web server for frontend
+  ansible.builtin.import_tasks: includes/webserver.yml
+  tags: [frontend, webserver]

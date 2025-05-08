@@ -3,5 +3,65 @@
     "id": 7,
     "title": "magnam facilis autem",
     "body": "dolore placeat quibusdam ea quo vitae\nmagni quis enim qui quis quo nemo aut saepe\nquidem repellat excepturi ut quia\nsunt ut sequi eos ea sed quas",
-    "fetchDate": "2025-05-08 00:23:07"
+    "user": {
+        "id": 1,
+        "name": "Leanne Graham",
+        "username": "Bret",
+        "email": "Sincere@april.biz",
+        "phone": "1-770-736-8031 x56442",
+        "website": "hildegard.org",
+        "company": {
+            "name": "Romaguera-Crona",
+            "catchPhrase": "Multi-layered client-server neural-net",
+            "bs": "harness real-time e-markets"
+        },
+        "address": {
+            "street": "Kulas Light",
+            "suite": "Apt. 556",
+            "city": "Gwenborough",
+            "zipcode": "92998-3874",
+            "geo": {
+                "lat": "-37.3159",
+                "lng": "81.1496"
+            }
+        }
+    },
+    "comments": [
+        {
+            "postId": 7,
+            "id": 31,
+            "name": "ex velit ut cum eius odio ad placeat",
+            "email": "Buford@shaylee.biz",
+            "body": "quia incidunt ut\naliquid est ut rerum deleniti iure est\nipsum quia ea sint et\nvoluptatem quaerat eaque repudiandae eveniet aut"
+        },
+        {
+            "postId": 7,
+            "id": 32,
+            "name": "dolorem architecto ut pariatur quae qui suscipit",
+            "email": "Maria@laurel.name",
+            "body": "nihil ea itaque libero illo\nofficiis quo quo dicta inventore consequatur voluptas voluptatem\ncorporis sed necessitatibus velit tempore\nrerum velit et temporibus"
+        },
+        {
+            "postId": 7,
+            "id": 33,
+            "name": "voluptatum totam vel voluptate omnis",
+            "email": "Jaeden.Towne@arlene.tv",
+            "body": "fugit harum quae vero\nlibero unde tempore\nsoluta eaque culpa sequi quibusdam nulla id\net et necessitatibus"
+        },
+        {
+            "postId": 7,
+            "id": 34,
+            "name": "omnis nemo sunt ab autem",
+            "email": "Ethelyn.Schneider@emelia.co.uk",
+            "body": "omnis temporibus quasi ab omnis\nfacilis et omnis illum quae quasi aut\nminus iure ex rem ut reprehenderit\nin non fugit"
+        },
+        {
+            "postId": 7,
+            "id": 35,
+            "name": "repellendus sapiente omnis praesentium aliquam ipsum id molestiae omnis",
+            "email": "Georgianna@florence.io",
+            "body": "dolor mollitia quidem facere et\nvel est ut\nut repudiandae est quidem dolorem sed atque\nrem quia aut adipisci sunt"
+        }
+    ],
+    "fetchDate": "2025-05-08 12:22:48"
 }

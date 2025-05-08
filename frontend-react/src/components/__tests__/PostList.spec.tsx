@@ -292,7 +292,7 @@ describe('PostList Component', () => {
     
     mockApiServices.clearPosts.mockResolvedValue({
       success: true,
-      directory: './posts_dev'
+      directory: './posts'
     });
     
     const { user } = renderWithProviders(<PostList />);
@@ -349,4 +349,4 @@ describe('PostList Component', () => {
     // For now, we just verify the component rendered correctly
     expect(mockApiServices.getPosts).toHaveBeenCalledTimes(1);
   });
-}); 
+});

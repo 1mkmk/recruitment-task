@@ -3,5 +3,65 @@
     "id": 26,
     "title": "est et quae odit qui non",
     "body": "similique esse doloribus nihil accusamus\nomnis dolorem fuga consequuntur reprehenderit fugit recusandae temporibus\nperspiciatis cum ut laudantium\nomnis aut molestiae vel vero",
-    "fetchDate": "2025-05-08 00:23:07"
+    "user": {
+        "id": 3,
+        "name": "Clementine Bauch",
+        "username": "Samantha",
+        "email": "Nathan@yesenia.net",
+        "phone": "1-463-123-4447",
+        "website": "ramiro.info",
+        "company": {
+            "name": "Romaguera-Jacobson",
+            "catchPhrase": "Face to face bifurcated interface",
+            "bs": "e-enable strategic applications"
+        },
+        "address": {
+            "street": "Douglas Extension",
+            "suite": "Suite 847",
+            "city": "McKenziehaven",
+            "zipcode": "59590-4157",
+            "geo": {
+                "lat": "-68.6102",
+                "lng": "-47.0653"
+            }
+        }
+    },
+    "comments": [
+        {
+            "postId": 26,
+            "id": 126,
+            "name": "fuga tenetur id et qui labore delectus",
+            "email": "Alexie@alayna.org",
+            "body": "est qui ut tempore temporibus pariatur provident qui consequuntur\nlaboriosam porro dignissimos quos debitis id laborum et totam\naut eius sequi dolor maiores amet\nrerum voluptatibus quod ratione quos labore fuga sit"
+        },
+        {
+            "postId": 26,
+            "id": 127,
+            "name": "consequatur harum magnam",
+            "email": "Haven_Barrows@brant.org",
+            "body": "omnis consequatur dignissimos iure rerum odio\nculpa laudantium quia voluptas enim est nisi\ndoloremque consequatur autem officiis necessitatibus beatae et\net itaque animi dolor praesentium"
+        },
+        {
+            "postId": 26,
+            "id": 128,
+            "name": "labore architecto quaerat tempora voluptas consequuntur animi",
+            "email": "Marianne@maximo.us",
+            "body": "exercitationem eius aut ullam vero\nimpedit similique maiores ea et in culpa possimus omnis\neos labore autem quam repellendus dolores deserunt voluptatem\nnon ullam eos accusamus"
+        },
+        {
+            "postId": 26,
+            "id": 129,
+            "name": "deleniti facere tempore et perspiciatis voluptas quis voluptatem",
+            "email": "Fanny@danial.com",
+            "body": "fugit minima voluptatem est aut sed explicabo\nharum dolores at qui eaque\nmagni velit ut et\nnam et ut sunt excepturi repellat non commodi"
+        },
+        {
+            "postId": 26,
+            "id": 130,
+            "name": "quod est non quia doloribus quam deleniti libero",
+            "email": "Trevion_Kuphal@bernice.name",
+            "body": "dicta sit culpa molestiae quasi at voluptate eos\ndolorem perferendis accusamus rerum expedita ipsum quis qui\nquos est deserunt\nrerum fuga qui aliquam in consequatur aspernatur"
+        }
+    ],
+    "fetchDate": "2025-05-08 12:22:56"
 }

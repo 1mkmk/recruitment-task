@@ -1,0 +1,66 @@
+---
+# Prerequisites for frontend deployment
+
+- name: Update package repositories
+  ansible.builtin.apt:
+    update_cache: yes
+    cache_valid_time: 3600  # Cache is valid for 1 hour
+  when: ansible_os_family == "Debian"
+  tags: [frontend, prerequisites]
+
+- name: Install required packages for frontend
+  ansible.builtin.package:
+    name:
+      - curl
+      - wget
+      - ca-certificates
+      - gnupg
+      - lsb-release
+      - git
+    state: present
+  tags: [frontend, prerequisites]
+
+- name: Check if Node.js is installed
+  ansible.builtin.command: node --version
+  register: node_check
+  changed_when: false
+  failed_when: false
+  check_mode: no
+  tags: [frontend, prerequisites]
+
+- name: Setup Node.js repository (Debian/Ubuntu)
+  block:
+    - name: Add Node.js GPG key
+      ansible.builtin.apt_key:
+        url: https://deb.nodesource.com/gpgkey/nodesource.gpg.key
+        state: present
+      
+    - name: Add Node.js repository
+      ansible.builtin.apt_repository:
+        repo: "deb https://deb.nodesource.com/node_{{ node_version }} {{ ansible_distribution_release }} main"
+        state: present
+        update_cache: yes
+  when: 
+    - ansible_os_family == "Debian"
+    - node_check.rc != 0 or (node_check.stdout is defined and not node_check.stdout.startswith('v' + node_version.split('.')[0]))
+  tags: [frontend, prerequisites]
+
+- name: Install Node.js and npm
+  ansible.builtin.package:
+    name:
+      - nodejs
+    state: present
+  when: node_check.rc != 0 or (node_check.stdout is defined and not node_check.stdout.startswith('v' + node_version.split('.')[0]))
+  tags: [frontend, prerequisites]
+
+- name: Configure npm registry
+  ansible.builtin.command: npm config set registry {{ npm_registry }}
+  changed_when: true
+  tags: [frontend, prerequisites]
+
+- name: Install web server if needed
+  ansible.builtin.package:
+    name: "{{ web_server }}"
+    state: present
+  when: web_server != "none"
+  tags: [frontend, prerequisites]

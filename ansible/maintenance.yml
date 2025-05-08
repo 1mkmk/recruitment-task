@@ -1,0 +1,73 @@
+---
+# Maintenance playbook for common administrative tasks
+- name: Application Maintenance Tasks
+  hosts: app_servers
+  become: true
+  
+  vars:
+    maintenance_action: status  # Default action
+  
+  tasks:
+    - name: Check application status
+      ansible.builtin.systemd:
+        name: "{{ app_name | default('jsonplaceholder-downloader') }}"
+      register: service_status
+      when: maintenance_action == 'status'
+      
+    - name: Display application status
+      ansible.builtin.debug:
+        msg: "Application {{ app_name | default('jsonplaceholder-downloader') }} is {{ service_status.status.ActiveState }}"
+      when: maintenance_action == 'status' and service_status.status is defined
+      
+    - name: Restart application
+      ansible.builtin.systemd:
+        name: "{{ app_name | default('jsonplaceholder-downloader') }}"
+        state: restarted
+      when: maintenance_action == 'restart'
+      
+    - name: Stop application
+      ansible.builtin.systemd:
+        name: "{{ app_name | default('jsonplaceholder-downloader') }}"
+        state: stopped
+      when: maintenance_action == 'stop'
+      
+    - name: Start application
+      ansible.builtin.systemd:
+        name: "{{ app_name | default('jsonplaceholder-downloader') }}"
+        state: started
+      when: maintenance_action == 'start'
+      
+    - name: Check logs
+      ansible.builtin.command: "tail -n {{ log_lines | default('100') }} {{ app_log_dir | default('/opt/jsonplaceholder/logs') }}/application.log"
+      register: log_content
+      changed_when: false
+      when: maintenance_action == 'logs'
+      
+    - name: Display log content
+      ansible.builtin.debug:
+        var: log_content.stdout_lines
+      when: maintenance_action == 'logs' and log_content is defined
+      
+    - name: Clean old logs
+      ansible.builtin.shell: "find {{ app_log_dir | default('/opt/jsonplaceholder/logs') }} -name '*.gz' -mtime +{{ log_retention_days | default('30') }} -delete"
+      when: maintenance_action == 'clean_logs'
+      
+    - name: Clean output directory
+      ansible.builtin.shell: "find {{ output_dir | default('/opt/jsonplaceholder/posts') }} -name '*.json' -type f -delete"
+      when: maintenance_action == 'clean_output'
+      
+    - name: Update application configuration
+      ansible.builtin.template:
+        src: roles/app/templates/application.properties.j2
+        dest: "{{ app_config_dir | default('/opt/jsonplaceholder/config') }}/application.properties"
+        owner: "{{ app_user | default('appuser') }}"
+        group: "{{ app_group | default(app_user) | default('appuser') }}"
+        mode: '0644'
+      notify: restart application
+      when: maintenance_action == 'update_config'
+  
+  handlers:
+    - name: restart application
+      ansible.builtin.systemd:
+        name: "{{ app_name | default('jsonplaceholder-downloader') }}"
+        state: restarted

@@ -1,0 +1,79 @@
+---
+# Tasks for deploying the frontend application
+
+- name: Check if frontend directory exists
+  ansible.builtin.stat:
+    path: "{{ frontend_dir }}/src"
+  register: frontend_src_dir
+  tags: [frontend, deploy]
+
+- name: Backup existing frontend if exists
+  ansible.builtin.shell: |
+    cd {{ frontend_dir }} && \
+    timestamp=$(date +%Y%m%d_%H%M%S) && \
+    tar -czf backups/frontend_backup_${timestamp}.tar.gz dist 2>/dev/null || true
+  args:
+    warn: false
+  when: frontend_src_dir.stat.exists
+  tags: [frontend, deploy, backup]
+
+- name: Remove old frontend files
+  ansible.builtin.file:
+    path: "{{ frontend_dir }}/src"
+    state: absent
+  tags: [frontend, deploy]
+
+- name: Remove old frontend node_modules
+  ansible.builtin.file:
+    path: "{{ frontend_dir }}/node_modules"
+    state: absent
+  when: clean_node_modules | default(true)
+  tags: [frontend, deploy]
+
+- name: Copy frontend source files
+  ansible.builtin.copy:
+    src: "{{ frontend_src_path | default('frontend-react/') }}"
+    dest: "{{ frontend_dir }}/"
+    owner: "{{ frontend_user }}"
+    group: "{{ frontend_group }}"
+  register: frontend_copied
+  tags: [frontend, deploy]
+
+- name: List copied frontend files
+  ansible.builtin.find:
+    paths: "{{ frontend_dir }}"
+    file_type: file
+    recurse: yes
+    patterns: "*.json,*.js,*.ts,*.tsx,*.html,*.css"
+  register: copied_files
+  tags: [frontend, deploy, debug]
+
+- name: Install npm dependencies
+  ansible.builtin.shell: cd {{ frontend_dir }} && npm install
+  register: npm_install
+  changed_when: npm_install.rc == 0
+  failed_when: npm_install.rc != 0
+  when: frontend_copied.changed or clean_node_modules | default(true)
+  tags: [frontend, deploy]
+
+- name: Build frontend application
+  ansible.builtin.shell: |
+    cd {{ frontend_dir }} && \
+    {% for key, value in frontend_env_vars.items() %}
+    export {{ key }}="{{ value }}" && \
+    {% endfor %}
+    npm run build
+  register: frontend_build
+  changed_when: frontend_build.rc == 0
+  failed_when: frontend_build.rc != 0
+  tags: [frontend, deploy]
+
+- name: Set correct permissions for built files
+  ansible.builtin.file:
+    path: "{{ frontend_dir }}/dist"
+    state: directory
+    owner: "{{ frontend_user }}"
+    group: "{{ frontend_group }}"
+    mode: '0755'
+    recurse: yes
+  tags: [frontend, deploy]

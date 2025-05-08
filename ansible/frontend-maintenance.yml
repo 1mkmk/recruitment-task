@@ -1,0 +1,110 @@
+---
+# Maintenance playbook for frontend operations
+- name: Frontend Maintenance Tasks
+  hosts: app_servers
+  become: true
+  
+  vars:
+    maintenance_action: status  # Default action
+  
+  tasks:
+    - name: Check web server status (Nginx)
+      ansible.builtin.systemd:
+        name: nginx
+      register: nginx_status
+      when: maintenance_action == 'status' and web_server == 'nginx'
+      
+    - name: Check web server status (Apache)
+      ansible.builtin.systemd:
+        name: apache2
+      register: apache_status
+      when: maintenance_action == 'status' and web_server == 'apache2'
+      
+    - name: Check standalone server status
+      ansible.builtin.systemd:
+        name: "{{ frontend_name | default('jsonplaceholder-frontend') }}"
+      register: frontend_status
+      when: maintenance_action == 'status' and web_server == 'none'
+      
+    - name: Display frontend status
+      ansible.builtin.debug:
+        msg: "Frontend service is {{ nginx_status.status.ActiveState | default(apache_status.status.ActiveState) | default(frontend_status.status.ActiveState) | default('unknown') }}"
+      when: maintenance_action == 'status'
+      
+    - name: Restart web server (Nginx)
+      ansible.builtin.systemd:
+        name: nginx
+        state: restarted
+      when: maintenance_action == 'restart' and web_server == 'nginx'
+      
+    - name: Restart web server (Apache)
+      ansible.builtin.systemd:
+        name: apache2
+        state: restarted
+      when: maintenance_action == 'restart' and web_server == 'apache2'
+      
+    - name: Restart standalone server
+      ansible.builtin.systemd:
+        name: "{{ frontend_name | default('jsonplaceholder-frontend') }}"
+        state: restarted
+      when: maintenance_action == 'restart' and web_server == 'none'
+      
+    - name: Rebuild frontend application
+      block:
+        - name: Install npm dependencies
+          ansible.builtin.shell: cd {{ frontend_dir | default('/var/www/jsonplaceholder-frontend') }} && npm install
+          register: npm_install
+          failed_when: npm_install.rc != 0
+          
+        - name: Build frontend application
+          ansible.builtin.shell: |
+            cd {{ frontend_dir | default('/var/www/jsonplaceholder-frontend') }} && \
+            {% for key, value in frontend_env_vars.items() %}
+            export {{ key }}="{{ value }}" && \
+            {% endfor %}
+            npm run build
+          register: frontend_build
+          failed_when: frontend_build.rc != 0
+          
+        - name: Set correct permissions for built files
+          ansible.builtin.file:
+            path: "{{ frontend_dir | default('/var/www/jsonplaceholder-frontend') }}/dist"
+            state: directory
+            owner: "{{ frontend_user | default('www-data') }}"
+            group: "{{ frontend_group | default('www-data') }}"
+            mode: '0755'
+            recurse: yes
+      when: maintenance_action == 'rebuild'
+      
+    - name: Clean frontend cache
+      ansible.builtin.file:
+        path: "{{ item }}"
+        state: absent
+      with_items:
+        - "{{ frontend_dir | default('/var/www/jsonplaceholder-frontend') }}/node_modules"
+        - "{{ frontend_dir | default('/var/www/jsonplaceholder-frontend') }}/.cache"
+        - "{{ frontend_dir | default('/var/www/jsonplaceholder-frontend') }}/dist"
+      when: maintenance_action == 'clean'
+      
+    - name: View frontend logs (Nginx)
+      ansible.builtin.command: "tail -n {{ log_lines | default('100') }} /var/log/nginx/access.log"
+      register: log_content
+      changed_when: false
+      when: maintenance_action == 'logs' and web_server == 'nginx'
+      
+    - name: View frontend logs (Apache)
+      ansible.builtin.command: "tail -n {{ log_lines | default('100') }} /var/log/apache2/access.log"
+      register: log_content
+      changed_when: false
+      when: maintenance_action == 'logs' and web_server == 'apache2'
+      
+    - name: View frontend logs (Standalone)
+      ansible.builtin.command: "tail -n {{ log_lines | default('100') }} {{ frontend_dir | default('/var/www/jsonplaceholder-frontend') }}/logs/access.log"
+      register: log_content
+      changed_when: false
+      when: maintenance_action == 'logs' and web_server == 'none'
+      
+    - name: Display log content
+      ansible.builtin.debug:
+        var: log_content.stdout_lines
+      when: maintenance_action == 'logs' and log_content is defined

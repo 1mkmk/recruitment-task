@@ -1,0 +1,69 @@
+---
+# Tasks for backup and restore operations
+
+- name: Check if application is already installed
+  ansible.builtin.stat:
+    path: "{{ app_dir }}/{{ app_name }}.jar"
+  register: app_jar_stat
+  tags: [backup]
+
+- name: Create backup directory
+  ansible.builtin.file:
+    path: "{{ app_dir }}/backups"
+    state: directory
+    owner: "{{ app_user }}"
+    group: "{{ app_group | default(app_user) }}"
+    mode: '0755'
+  when: app_jar_stat.stat.exists | default(false)
+  tags: [backup]
+
+- name: Get timestamp for backup
+  ansible.builtin.set_fact:
+    backup_timestamp: "{{ ansible_date_time.iso8601_basic_short }}"
+  tags: [backup]
+
+- name: Backup existing application JAR
+  ansible.builtin.copy:
+    src: "{{ app_dir }}/{{ app_name }}.jar"
+    dest: "{{ app_dir }}/backups/{{ app_name }}-{{ backup_timestamp }}.jar"
+    remote_src: yes
+  when: app_jar_stat.stat.exists | default(false)
+  tags: [backup]
+
+- name: Backup existing configuration files
+  ansible.builtin.copy:
+    src: "{{ item }}"
+    dest: "{{ app_dir }}/backups/{{ item | basename }}-{{ backup_timestamp }}"
+    remote_src: yes
+  with_items:
+    - "{{ app_config_dir }}/application.properties"
+    - "{{ app_dir }}/run-app.sh"
+    - "/etc/systemd/system/{{ app_name }}.service"
+  when: app_jar_stat.stat.exists | default(false)
+  failed_when: false
+  tags: [backup]
+
+- name: Create backup metadata file
+  ansible.builtin.copy:
+    content: |
+      timestamp: {{ backup_timestamp }}
+      version: {{ app_version }}
+      backed_up_at: {{ ansible_date_time.iso8601 }}
+      backed_up_by: {{ ansible_user_id }}
+      host: {{ inventory_hostname }}
+    dest: "{{ app_dir }}/backups/backup-{{ backup_timestamp }}.meta"
+    owner: "{{ app_user }}"
+    group: "{{ app_group | default(app_user) }}"
+    mode: '0644'
+  when: app_jar_stat.stat.exists | default(false)
+  tags: [backup]
+
+- name: Record current version as last successful version
+  ansible.builtin.copy:
+    content: "{{ app_version }}"
+    dest: "{{ app_dir }}/backups/last_successful_version"
+    owner: "{{ app_user }}"
+    group: "{{ app_group | default(app_user) }}"
+    mode: '0644'
+  when: app_jar_stat.stat.exists | default(false)
+  tags: [backup]

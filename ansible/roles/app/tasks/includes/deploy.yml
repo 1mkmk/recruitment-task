@@ -1,0 +1,46 @@
+---
+# Tasks for deploying the application files
+
+- name: Copy application JAR file
+  ansible.builtin.copy:
+    src: "files/{{ app_name }}-{{ app_version }}.jar"
+    dest: "{{ app_dir }}/{{ app_name }}.jar"
+    owner: "{{ app_user }}"
+    group: "{{ app_group | default(app_user) }}"
+    mode: '0644'
+  register: app_jar
+  notify: restart application
+  tags: [deploy, app]
+
+- name: Generate application configuration
+  ansible.builtin.template:
+    src: application.properties.j2
+    dest: "{{ app_config_dir }}/application.properties"
+    owner: "{{ app_user }}"
+    group: "{{ app_group | default(app_user) }}"
+    mode: '0644'
+  register: app_config
+  notify: restart application
+  tags: [deploy, config]
+
+- name: Generate application startup script
+  ansible.builtin.template:
+    src: run-app.sh.j2
+    dest: "{{ app_dir }}/run-app.sh"
+    owner: "{{ app_user }}"
+    group: "{{ app_group | default(app_user) }}"
+    mode: '0755'
+  register: start_script
+  notify: restart application
+  tags: [deploy, scripts]
+
+- name: Generate systemd service file
+  ansible.builtin.template:
+    src: app.service.j2
+    dest: "/etc/systemd/system/{{ app_name }}.service"
+    mode: '0644'
+  register: systemd_service
+  notify: 
+    - reload systemd
+    - restart application
+  tags: [deploy, service]

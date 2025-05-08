@@ -1,0 +1,37 @@
+---
+# Pre-flight checks for frontend deployment
+
+- name: Check minimum disk space for frontend
+  ansible.builtin.shell: df -P {{ frontend_dir | dirname }} | awk 'NR==2 {print $4}'
+  register: available_disk
+  changed_when: false
+  failed_when: false
+  check_mode: no
+  tags: [frontend, preflight]
+
+- name: Verify sufficient disk space for frontend
+  ansible.builtin.assert:
+    that:
+      - available_disk.stdout | int > {{ frontend_min_disk_space | default(200000) }}  # 200MB in KB
+    fail_msg: "Insufficient disk space for frontend. Required: {{ frontend_min_disk_space | default(200000) }}KB, Available: {{ available_disk.stdout | int }}KB"
+    success_msg: "Sufficient disk space available for frontend: {{ available_disk.stdout | int }}KB"
+  tags: [frontend, preflight]
+
+- name: Check if web server port is available
+  ansible.builtin.wait_for:
+    port: "{{ frontend_port }}"
+    timeout: 5
+    state: stopped
+  register: port_check
+  when: not skip_port_check | default(false)
+  failed_when: false
+  check_mode: no
+  tags: [frontend, preflight]
+
+- name: Verify port availability
+  ansible.builtin.assert:
+    that: port_check.state is undefined or port_check.state == "stopped"
+    fail_msg: "Port {{ frontend_port }} is already in use"
+    success_msg: "Port {{ frontend_port }} is available for the frontend"
+  when: not skip_port_check | default(false)
+  tags: [frontend, preflight]

@@ -1,0 +1,25 @@
+---
+# Default variables for the frontend role
+frontend_name: jsonplaceholder-frontend
+frontend_version: 1.0.0
+frontend_dir: /var/www/{{ frontend_name }}
+frontend_user: www-data
+frontend_group: www-data
+
+# Node.js settings
+node_version: 18.x
+npm_registry: https://registry.npmjs.org/
+
+# Web server settings
+web_server: nginx
+frontend_port: 80
+frontend_domain: "{{ inventory_hostname }}"
+frontend_ssl_enabled: false
+frontend_api_url: "http://localhost:8080/api"
+
+# Build settings
+frontend_build_mode: production
+frontend_env_vars:
+  NODE_ENV: production
+  VITE_APP_ENV: production
+  VITE_API_BASE_URL: "{{ frontend_api_url }}"

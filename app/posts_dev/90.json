@@ -3,5 +3,65 @@
     "id": 90,
     "title": "ad iusto omnis odit dolor voluptatibus",
     "body": "minus omnis soluta quia\nqui sed adipisci voluptates illum ipsam voluptatem\neligendi officia ut in\neos soluta similique molestias praesentium blanditiis",
-    "fetchDate": "2025-05-08 00:23:07"
+    "user": {
+        "id": 9,
+        "name": "Glenna Reichert",
+        "username": "Delphine",
+        "email": "Chaim_McDermott@dana.io",
+        "phone": "(775)976-6794 x41206",
+        "website": "conrad.com",
+        "company": {
+            "name": "Yost and Sons",
+            "catchPhrase": "Switchable contextually-based project",
+            "bs": "aggregate real-time technologies"
+        },
+        "address": {
+            "street": "Dayna Park",
+            "suite": "Suite 449",
+            "city": "Bartholomebury",
+            "zipcode": "76495-3109",
+            "geo": {
+                "lat": "24.6463",
+                "lng": "-168.8889"
+            }
+        }
+    },
+    "comments": [
+        {
+            "postId": 90,
+            "id": 446,
+            "name": "dicta excepturi aut est dolor ab dolores rerum",
+            "email": "Jedediah@mason.io",
+            "body": "cum fugit earum vel et nulla et voluptatem\net ipsam aut\net nihil officia nemo eveniet accusamus\nnulla aut impedit veritatis praesentium"
+        },
+        {
+            "postId": 90,
+            "id": 447,
+            "name": "molestiae qui quod quo",
+            "email": "Maryam@jack.name",
+            "body": "rerum omnis voluptatem harum aliquid voluptas accusamus\neius dicta animi\nodio non quidem voluptas tenetur\nnostrum deserunt laudantium culpa dolorum"
+        },
+        {
+            "postId": 90,
+            "id": 448,
+            "name": "pariatur consequatur sit commodi aliquam",
+            "email": "Rick@carlos.tv",
+            "body": "odio maxime beatae ab labore rerum\nalias ipsa nam est nostrum\net debitis aut\nab molestias assumenda eaque repudiandae"
+        },
+        {
+            "postId": 90,
+            "id": 449,
+            "name": "sunt quia soluta quae sit deleniti dolor ullam veniam",
+            "email": "Vallie@jerrod.net",
+            "body": "dolor at accusantium eveniet\nin voluptatem quam et fugiat et quasi dolores\nsunt eligendi voluptatum id voluptas vitae\nquibusdam iure eum perspiciatis"
+        },
+        {
+            "postId": 90,
+            "id": 450,
+            "name": "dolorem corporis facilis et",
+            "email": "Adolph.Hayes@isobel.biz",
+            "body": "et provident quo necessitatibus harum excepturi\nsed est ut sed est doloremque labore quod\nquia optio explicabo adipisci magnam doloribus\nveritatis illo aut est inventore"
+        }
+    ],
+    "fetchDate": "2025-05-08 12:23:24"
 }

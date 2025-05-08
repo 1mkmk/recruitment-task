@@ -1,0 +1,25 @@
+---
+# User and directory setup tasks
+
+- name: Create application user
+  ansible.builtin.user:
+    name: "{{ app_user }}"
+    group: "{{ app_group | default(omit) }}"
+    comment: "User for running {{ app_name }} application"
+    shell: /bin/bash
+    system: yes
+  tags: [user, setup]
+
+- name: Create application directories
+  ansible.builtin.file:
+    path: "{{ item }}"
+    state: directory
+    owner: "{{ app_user }}"
+    group: "{{ app_group | default(app_user) }}"
+    mode: '0755'
+  loop:
+    - "{{ app_dir }}"
+    - "{{ output_dir }}"
+    - "{{ app_log_dir }}"
+    - "{{ app_config_dir }}"
+  tags: [directories, setup]

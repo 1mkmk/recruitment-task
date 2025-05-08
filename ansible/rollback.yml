@@ -1,0 +1,84 @@
+---
+# Rollback playbook for reverting to a previous version
+
+- name: Rollback Application Deployment
+  hosts: app_servers
+  become: true
+  
+  vars:
+    rollback_component: all  # Options: all, backend, frontend
+
+  pre_tasks:
+    - name: Check if backend rollback is possible
+      ansible.builtin.stat:
+        path: "{{ app_dir | default('/opt/jsonplaceholder') }}/backups"
+      register: backend_backup_dir
+      when: rollback_component == 'all' or rollback_component == 'backend'
+      failed_when: 
+        - rollback_component == 'backend'
+        - not backend_backup_dir.stat.exists
+      tags: [always]
+      
+    - name: Check if frontend rollback is possible
+      ansible.builtin.stat:
+        path: "{{ frontend_dir | default('/var/www/jsonplaceholder-frontend') }}/backups"
+      register: frontend_backup_dir
+      when: rollback_component == 'all' or rollback_component == 'frontend'
+      failed_when: 
+        - rollback_component == 'frontend'
+        - not frontend_backup_dir.stat.exists
+      tags: [always]
+      
+    - name: Notify about rollback operation
+      ansible.builtin.debug:
+        msg: "Initiating rollback ({{ rollback_component }}) on {{ inventory_hostname }}"
+      tags: [always]
+
+  tasks:
+    - name: Import backend rollback tasks
+      ansible.builtin.include_tasks: roles/app/tasks/includes/rollback.yml
+      when: rollback_component == 'all' or rollback_component == 'backend'
+      tags: [rollback, backend]
+      
+    - name: Import frontend rollback tasks
+      ansible.builtin.include_tasks: roles/frontend/tasks/includes/rollback.yml
+      when: rollback_component == 'all' or rollback_component == 'frontend'
+      tags: [rollback, frontend]
+  
+  post_tasks:
+    - name: Rollback summary
+      ansible.builtin.debug:
+        msg: "Rollback operation ({{ rollback_component }}) completed on {{ inventory_hostname }}"
+      tags: [always]
+      
+    - name: Health check for backend after rollback
+      ansible.builtin.uri:
+        url: "http://localhost:{{ app_port | default(8080) }}/api/info"
+        return_content: yes
+      register: backend_health
+      failed_when: false
+      become: false
+      when: rollback_component == 'all' or rollback_component == 'backend'
+      tags: [health-check]
+      
+    - name: Report backend health
+      ansible.builtin.debug:
+        msg: "Backend API status: {{ backend_health.status | default('unreachable') }}"
+      when: rollback_component == 'all' or rollback_component == 'backend'
+      tags: [health-check]
+      
+    - name: Health check for frontend after rollback
+      ansible.builtin.uri:
+        url: "http://localhost:{{ frontend_port | default(80) }}/"
+        return_content: yes
+      register: frontend_health
+      failed_when: false
+      become: false
+      when: rollback_component == 'all' or rollback_component == 'frontend'
+      tags: [health-check]
+      
+    - name: Report frontend health
+      ansible.builtin.debug:
+        msg: "Frontend status: {{ frontend_health.status | default('unreachable') }}"
+      when: rollback_component == 'all' or rollback_component == 'frontend'
+      tags: [health-check]

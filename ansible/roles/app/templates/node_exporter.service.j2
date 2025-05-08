@@ -1,0 +1,24 @@
+[Unit]
+Description=Prometheus Node Exporter
+Documentation=https://github.com/prometheus/node_exporter
+After=network-online.target
+
+[Service]
+User={{ node_exporter_user | default('prometheus') }}
+Group={{ node_exporter_group | default('prometheus') }}
+Type=simple
+ExecStart=/usr/bin/prometheus-node-exporter \
+    --web.listen-address=:{{ node_exporter_port | default('9100') }} \
+    --collector.textfile.directory={{ app_dir }}/metrics \
+    {{ node_exporter_extra_args | default('') }}
+
+Restart=on-failure
+RestartSec=5s
+
+# Security hardening
+PrivateTmp=true
+ProtectHome=true
+NoNewPrivileges=true
+
+[Install]
+WantedBy=multi-user.target

@@ -3,5 +3,65 @@
     "id": 83,
     "title": "odit et voluptates doloribus alias odio et",
     "body": "est molestiae facilis quis tempora numquam nihil qui\nvoluptate sapiente consequatur est qui\nnecessitatibus autem aut ipsa aperiam modi dolore numquam\nreprehenderit eius rem quibusdam",
-    "fetchDate": "2025-05-08 00:23:07"
+    "user": {
+        "id": 9,
+        "name": "Glenna Reichert",
+        "username": "Delphine",
+        "email": "Chaim_McDermott@dana.io",
+        "phone": "(775)976-6794 x41206",
+        "website": "conrad.com",
+        "company": {
+            "name": "Yost and Sons",
+            "catchPhrase": "Switchable contextually-based project",
+            "bs": "aggregate real-time technologies"
+        },
+        "address": {
+            "street": "Dayna Park",
+            "suite": "Suite 449",
+            "city": "Bartholomebury",
+            "zipcode": "76495-3109",
+            "geo": {
+                "lat": "24.6463",
+                "lng": "-168.8889"
+            }
+        }
+    },
+    "comments": [
+        {
+            "postId": 83,
+            "id": 411,
+            "name": "hic rem eligendi tenetur ipsum dolore maxime eum",
+            "email": "Sister_Barton@lela.com",
+            "body": "nam voluptatem ex aut voluptatem mollitia sit sapiente\nqui hic ut\nqui natus in iste et magnam dolores et fugit\nea sint ut minima quas eum nobis at reprehenderit"
+        },
+        {
+            "postId": 83,
+            "id": 412,
+            "name": "quaerat et quia accusamus provident earum cumque",
+            "email": "Autumn.Lebsack@kasandra.ca",
+            "body": "veniam non culpa aut voluptas rem eum officiis\nmollitia placeat eos cum\nconsequatur eos commodi dolorem\nanimi maiores qui"
+        },
+        {
+            "postId": 83,
+            "id": 413,
+            "name": "atque porro quo voluptas",
+            "email": "Irma.OKon@arden.me",
+            "body": "consequatur harum est omnis\nqui recusandae qui voluptatem et distinctio sint eaque\ndolores quo dolorem asperiores\naperiam non quis asperiores aut praesentium"
+        },
+        {
+            "postId": 83,
+            "id": 414,
+            "name": "ut qui voluptatem hic maxime",
+            "email": "Alaina_Hammes@carter.info",
+            "body": "molestias debitis magni illo sint officiis ut quia\nsed tenetur dolorem soluta\nvoluptatem fugiat voluptas molestiae magnam fuga\nsimilique enim illum voluptas aspernatur officia"
+        },
+        {
+            "postId": 83,
+            "id": 415,
+            "name": "rerum consequatur ut et voluptate harum amet accusantium est",
+            "email": "Alia@addison.org",
+            "body": "iure vitae accusamus tenetur autem ipsa deleniti\nsunt laudantium ut beatae repellendus non eos\nut consequuntur repudiandae ducimus enim\nreiciendis rem explicabo magni dolore"
+        }
+    ],
+    "fetchDate": "2025-05-08 12:23:20"
 }

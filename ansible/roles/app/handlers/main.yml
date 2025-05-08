@@ -1,0 +1,13 @@
+---
+# Handlers for the app role
+
+- name: Reload systemd daemon
+  ansible.builtin.systemd:
+    daemon_reload: yes
+  listen: "reload systemd"
+
+- name: Restart application service
+  ansible.builtin.systemd:
+    name: "{{ app_name }}"
+    state: restarted
+  listen: "restart application"

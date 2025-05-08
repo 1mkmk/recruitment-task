@@ -1,0 +1,51 @@
+server {
+    listen {{ frontend_port }}{% if frontend_ssl_enabled %} ssl{% endif %};
+    server_name {{ frontend_domain }};
+
+    root {{ frontend_dir }}/dist;
+    index index.html;
+
+{% if frontend_ssl_enabled %}
+    ssl_certificate {{ ssl_certificate_path }};
+    ssl_certificate_key {{ ssl_certificate_key_path }};
+    ssl_protocols TLSv1.2 TLSv1.3;
+    ssl_ciphers HIGH:!aNULL:!MD5;
+{% endif %}
+
+    # Security headers
+    add_header X-Frame-Options "SAMEORIGIN" always;
+    add_header X-Content-Type-Options "nosniff" always;
+    add_header X-XSS-Protection "1; mode=block" always;
+    add_header Referrer-Policy "no-referrer-when-downgrade" always;
+    
+    access_log {{ frontend_dir }}/logs/access.log;
+    error_log {{ frontend_dir }}/logs/error.log error;
+
+    # API Proxy
+    location /api/ {
+        proxy_pass {{ frontend_api_url }}/;
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection 'upgrade';
+        proxy_set_header Host $host;
+        proxy_cache_bypass $http_upgrade;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+    }
+
+    # Static assets
+    location ~* \.(js|css|png|jpg|jpeg|gif|ico|svg)$ {
+        expires 30d;
+        add_header Cache-Control "public, no-transform";
+    }
+
+    # SPA routing - serve index.html for any non-file route
+    location / {
+        try_files $uri $uri/ /index.html;
+    }
+
+    # Error pages
+    error_page 404 /index.html;
+    error_page 500 502 503 504 /index.html;
+}

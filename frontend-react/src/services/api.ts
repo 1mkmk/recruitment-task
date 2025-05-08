@@ -87,7 +87,7 @@ export const getEnvironmentInfo = async (forceRefresh: boolean = false): Promise
     return {
       environment: 'development',
       version: '1.0.0',
-      outputDirectory: './posts_dev',
+      outputDirectory: './posts',
       lastFetchTime: getCurrentDateTime()
     };
   }
@@ -590,4 +590,4 @@ export interface HardRefreshResponse {
   totalFetched: number;
   totalRefreshed: number;
   posts: Post[];
-} 
+}

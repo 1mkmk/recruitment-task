@@ -3,5 +3,65 @@
     "id": 35,
     "title": "id nihil consequatur molestias animi provident",
     "body": "nisi error delectus possimus ut eligendi vitae\nplaceat eos harum cupiditate facilis reprehenderit voluptatem beatae\nmodi ducimus quo illum voluptas eligendi\net nobis quia fugit",
-    "fetchDate": "2025-05-08 00:23:07"
+    "user": {
+        "id": 4,
+        "name": "Patricia Lebsack",
+        "username": "Karianne",
+        "email": "Julianne.OConner@kory.org",
+        "phone": "493-170-9623 x156",
+        "website": "kale.biz",
+        "company": {
+            "name": "Robel-Corkery",
+            "catchPhrase": "Multi-tiered zero tolerance productivity",
+            "bs": "transition cutting-edge web services"
+        },
+        "address": {
+            "street": "Hoeger Mall",
+            "suite": "Apt. 692",
+            "city": "South Elvis",
+            "zipcode": "53919-4257",
+            "geo": {
+                "lat": "29.4572",
+                "lng": "-164.2990"
+            }
+        }
+    },
+    "comments": [
+        {
+            "postId": 35,
+            "id": 171,
+            "name": "voluptatibus qui est et",
+            "email": "Gerda.Reynolds@ceasar.co.uk",
+            "body": "sed non beatae placeat qui libero nam eaque qui\nquia ut ad doloremque\nsequi unde quidem adipisci debitis autem velit\narchitecto aperiam eos nihil enim dolores veritatis omnis ex"
+        },
+        {
+            "postId": 35,
+            "id": 172,
+            "name": "corporis ullam quo",
+            "email": "Ivah@brianne.net",
+            "body": "nemo ullam omnis sit\nlabore perferendis et eveniet nostrum\ndignissimos expedita iusto\noccaecati quia sit quibusdam"
+        },
+        {
+            "postId": 35,
+            "id": 173,
+            "name": "nulla accusamus saepe debitis cum",
+            "email": "Ethyl_Bogan@candace.co.uk",
+            "body": "asperiores hic fugiat aut et temporibus mollitia quo quam\ncumque numquam labore qui illum vel provident quod\npariatur natus incidunt\nsunt error voluptatibus vel voluptas maiores est vero possimus"
+        },
+        {
+            "postId": 35,
+            "id": 174,
+            "name": "iure praesentium ipsam",
+            "email": "Janelle_Guann@americo.info",
+            "body": "sit dolores consequatur qui voluptas sunt\nearum at natus alias excepturi dolores\nmaiores pariatur at reiciendis\ndolor esse optio"
+        },
+        {
+            "postId": 35,
+            "id": 175,
+            "name": "autem totam velit officiis voluptates et ullam rem",
+            "email": "Alfonzo.Barton@kelley.co.uk",
+            "body": "culpa non ea\nperspiciatis exercitationem sed natus sit\nenim voluptatum ratione omnis consequuntur provident commodi omnis\nquae odio sit at tempora"
+        }
+    ],
+    "fetchDate": "2025-05-08 12:22:59"
 }

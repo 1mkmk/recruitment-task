@@ -3,5 +3,65 @@
     "id": 96,
     "title": "quaerat velit veniam amet cupiditate aut numquam ut sequi",
     "body": "in non odio excepturi sint eum\nlabore voluptates vitae quia qui et\ninventore itaque rerum\nveniam non exercitationem delectus aut",
-    "fetchDate": "2025-05-08 00:23:07"
+    "user": {
+        "id": 10,
+        "name": "Clementina DuBuque",
+        "username": "Moriah.Stanton",
+        "email": "Rey.Padberg@karina.biz",
+        "phone": "024-648-3804",
+        "website": "ambrose.net",
+        "company": {
+            "name": "Hoeger LLC",
+            "catchPhrase": "Centralized empowering task-force",
+            "bs": "target end-to-end models"
+        },
+        "address": {
+            "street": "Kattie Turnpike",
+            "suite": "Suite 198",
+            "city": "Lebsackbury",
+            "zipcode": "31428-2261",
+            "geo": {
+                "lat": "-38.2386",
+                "lng": "57.2232"
+            }
+        }
+    },
+    "comments": [
+        {
+            "postId": 96,
+            "id": 476,
+            "name": "quia hic adipisci modi fuga aperiam",
+            "email": "Amely.Kunde@rodrigo.co.uk",
+            "body": "officia quas aut culpa eum\neaque quia rem unde ea quae reiciendis omnis\nexcepturi nemo est vel sequi accusantium tenetur at earum\net rerum quisquam temporibus cupiditate"
+        },
+        {
+            "postId": 96,
+            "id": 477,
+            "name": "ut occaecati non",
+            "email": "Thaddeus.Halvorson@ruthe.ca",
+            "body": "nulla veniam quo consequuntur ullam\nautem nisi error aut facere distinctio rerum quia tempore\nvelit distinctio occaecati ducimus\nratione similique doloribus"
+        },
+        {
+            "postId": 96,
+            "id": 478,
+            "name": "quo error dignissimos numquam qui nam fugit voluptates et",
+            "email": "Hannah@emma.ca",
+            "body": "non similique illo\nquia et rem placeat reprehenderit voluptas\nvelit officiis fugit blanditiis nihil\nab deserunt ullam"
+        },
+        {
+            "postId": 96,
+            "id": 479,
+            "name": "distinctio minima error aspernatur reiciendis inventore quo",
+            "email": "Maryam.Mann@thelma.info",
+            "body": "totam explicabo harum quam impedit sunt\ndoloremque consectetur id et minima eos incidunt quibusdam omnis\nsaepe maiores officiis eligendi alias sint est aut cumque\ndebitis cumque hic aut ut dolorum"
+        },
+        {
+            "postId": 96,
+            "id": 480,
+            "name": "accusantium quo error repudiandae",
+            "email": "Michel@keira.us",
+            "body": "tenetur qui ut\narchitecto officiis voluptatem velit eos molestias incidunt eum dolorum\ndistinctio quam et\nsequi consequatur nihil voluptates animi"
+        }
+    ],
+    "fetchDate": "2025-05-08 12:23:27"
 }

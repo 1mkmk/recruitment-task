@@ -1,0 +1,16 @@
+---
+# Default variables for the app role
+app_name: jsonplaceholder-downloader
+app_version: 1.0-SNAPSHOT
+java_version: 17
+app_user: appuser
+app_group: "{{ app_user }}"
+app_dir: /opt/jsonplaceholder
+output_dir: "{{ app_dir }}/posts"
+app_port: 8080
+app_health_check_path: /api/info
+app_health_check_retries: 5
+app_health_check_delay: 5
+app_log_dir: "{{ app_dir }}/logs"
+app_config_dir: "{{ app_dir }}/config"
+app_java_opts: "-Xms256m -Xmx512m -Dspring.config.location={{ app_config_dir }}/application.properties"

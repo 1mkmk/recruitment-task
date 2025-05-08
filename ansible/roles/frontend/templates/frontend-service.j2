@@ -1,0 +1,30 @@
+[Unit]
+Description={{ frontend_name }} Frontend Service
+After=network.target
+
+[Service]
+Type=simple
+User={{ frontend_user }}
+Group={{ frontend_group }}
+WorkingDirectory={{ frontend_dir }}
+ExecStart={{ frontend_dir }}/serve.sh
+Restart=on-failure
+RestartSec=10
+StandardOutput=journal
+StandardError=journal
+
+# Security hardening
+PrivateTmp=true
+ProtectHome=true
+NoNewPrivileges=true
+
+# Resource controls
+{% if frontend_memory_limit is defined %}
+MemoryLimit={{ frontend_memory_limit }}
+{% endif %}
+{% if frontend_cpu_quota is defined %}
+CPUQuota={{ frontend_cpu_quota }}
+{% endif %}
+
+[Install]
+WantedBy=multi-user.target

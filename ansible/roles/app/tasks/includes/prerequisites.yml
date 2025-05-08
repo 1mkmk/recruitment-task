@@ -1,0 +1,19 @@
+---
+# System prerequisites for the application
+
+- name: Update package repositories
+  ansible.builtin.apt:
+    update_cache: yes
+    cache_valid_time: 3600  # Cache is valid for 1 hour
+  when: ansible_os_family == "Debian"
+  tags: [system, packages]
+
+- name: Install required packages
+  ansible.builtin.package:
+    name:
+      - openjdk-{{ java_version }}-jdk
+      - unzip
+      - curl
+      - wget
+    state: present
+  tags: [system, packages, java]

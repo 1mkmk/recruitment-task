@@ -34,8 +34,8 @@ class CliApp {
                     // Jeśli podano ID, wyświetl konkretny zapisany post
                     getSavedPost(args[1])
                 } else {
-                    // Jeśli nie podano ID, wyświetl wszystkie zapisane posty
-                    listJsonFilesDetailed()
+                    // Jeśli nie podano ID, wyświetl prostą listę plików
+                    listJsonFilesSimple()
                 }
             }
             "save-all" -> savePosts(emptyList())
@@ -154,45 +154,94 @@ class CliApp {
         }
     }
 
-    // Nowa funkcja do wyświetlania listy plików JSON
+    // Udoskonalona funkcja do wyświetlania listy plików JSON
     private fun listJsonFilesDetailed() {
-        val files = FileUtils.listJsonFiles()
+        val config = ConfigProvider.getConfig(currentEnv)
+        val dir = File(config.outputDirectory)
         
-        if (files.isEmpty()) {
-            println("Brak zapisanych plików JSON")
+        if (!dir.exists() || !dir.isDirectory) {
+            println("Katalog wyjściowy nie istnieje: ${config.outputDirectory}")
             return
         }
         
-        println("Zapisane pliki JSON (${files.size}):")
-        files.sortedBy { it.nameWithoutExtension.toIntOrNull() ?: Int.MAX_VALUE }.forEach { file ->
-            val postId = file.nameWithoutExtension.toIntOrNull() ?: 0
-            val lastModified = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")
-                .format(LocalDateTime.ofInstant(java.nio.file.Files.getLastModifiedTime(file.toPath()).toInstant(), java.time.ZoneId.systemDefault()))
-            
-            // Sprawdź, czy plik zawiera post z relacjami
-            val (hasRelations, title) = FileUtils.checkPostFileType(file)
-            val relationsInfo = if (hasRelations) "[z relacjami]" else ""
-            
-            println("- [${postId}] ${title} ${relationsInfo} (Ostatnia modyfikacja: $lastModified)")
+        val jsonFiles = dir.listFiles { file -> 
+            file.isFile && file.name.endsWith(".json") && 
+            file.nameWithoutExtension.toIntOrNull() != null 
+        }
+        
+        if (jsonFiles == null || jsonFiles.isEmpty()) {
+            println("Brak zapisanych plików JSON w katalogu ${config.outputDirectory}")
+            return
+        }
+        
+        println("Zapisane pliki JSON (${jsonFiles.size}):")
+        
+        // Sortuj pliki według ID
+        val sortedFiles = jsonFiles.sortedBy { it.nameWithoutExtension.toIntOrNull() ?: Int.MAX_VALUE }
+        
+        sortedFiles.forEach { file ->
+            try {
+                val postId = file.nameWithoutExtension.toIntOrNull() ?: 0
+                val lastModified = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")
+                    .format(LocalDateTime.ofInstant(java.nio.file.Files.getLastModifiedTime(file.toPath()).toInstant(), java.time.ZoneId.systemDefault()))
+                
+                // Odczyt zawartości pliku
+                val jsonContent = file.readText()
+                val hasUser = jsonContent.contains("\"user\":")
+                val hasComments = jsonContent.contains("\"comments\":")
+                val relationsInfo = if (hasUser || hasComments) "[z relacjami]" else ""
+                
+                // Próba odczytania tytułu
+                val title = try {
+                    if (hasUser || hasComments) {
+                        // Uproszczone podejście - szukamy tytułu w tekście
+                        val titlePattern = "\"title\":\"([^\"]+)\"".toRegex()
+                        val match = titlePattern.find(jsonContent)
+                        match?.groupValues?.get(1) ?: "Brak tytułu"
+                    } else {
+                        // Dla prostszych plików możemy użyć deserializacji
+                        val post = Json.decodeFromString<Post>(jsonContent)
+                        post.title
+                    }
+                } catch (e: Exception) {
+                    "Brak tytułu"
+                }
+                
+                println("- [${postId}] ${title} ${relationsInfo} (Ostatnia modyfikacja: $lastModified)")
+            } catch (e: Exception) {
+                println("- [${file.nameWithoutExtension}] Błąd odczytu pliku")
+            }
         }
     }
 
-    private fun fetchPosts(args: List<String>) = runBlocking {
-        try {
-            val apiService = ServiceBuilder.buildService(ApiService::class.java)
-            println("Pobieranie postów z JSONPlaceholder API...")
-            val posts = apiService.getPosts()
-            println("Pobrano ${posts.size} postów")
-            
-            posts.take(10).forEach { post ->
-                println("- [${post.id}] ${post.title}")
-            }
-            
-            if (posts.size > 10) {
-                println("... i ${posts.size - 10} więcej")
-            }
-        } catch (e: Exception) {
-            println("Błąd podczas pobierania postów: ${e.message}")
+    // Nowa prosta funkcja do wyświetlania listy plików JSON - tylko ścieżki
+    private fun listJsonFilesSimple() {
+        val config = ConfigProvider.getConfig(currentEnv)
+        val dir = File(config.outputDirectory)
+        
+        if (!dir.exists() || !dir.isDirectory) {
+            println("Katalog wyjściowy nie istnieje: ${config.outputDirectory}")
+            return
+        }
+        
+        val jsonFiles = dir.listFiles { file -> 
+            file.isFile && file.name.endsWith(".json") 
+        }
+        
+        if (jsonFiles == null || jsonFiles.isEmpty()) {
+            println("Brak plików JSON w katalogu ${config.outputDirectory}")
+            return
+        }
+        
+        println("Pliki JSON w katalogu ${config.outputDirectory} (${jsonFiles.size}):")
+        
+        // Sortuj pliki według ID, jeśli to możliwe
+        val sortedFiles = jsonFiles.sortedBy { 
+            it.nameWithoutExtension.toIntOrNull() ?: Int.MAX_VALUE
+        }
+        
+        sortedFiles.forEach { file ->
+            println(file.absolutePath)
         }
     }
 

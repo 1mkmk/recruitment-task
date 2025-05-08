@@ -3,5 +3,65 @@
     "id": 54,
     "title": "sit asperiores ipsam eveniet odio non quia",
     "body": "totam corporis dignissimos\nvitae dolorem ut occaecati accusamus\nex velit deserunt\net exercitationem vero incidunt corrupti mollitia",
-    "fetchDate": "2025-05-08 00:23:07"
+    "user": {
+        "id": 6,
+        "name": "Mrs. Dennis Schulist",
+        "username": "Leopoldo_Corkery",
+        "email": "Karley_Dach@jasper.info",
+        "phone": "1-477-935-8478 x6430",
+        "website": "ola.org",
+        "company": {
+            "name": "Considine-Lockman",
+            "catchPhrase": "Synchronised bottom-line interface",
+            "bs": "e-enable innovative applications"
+        },
+        "address": {
+            "street": "Norberto Crossing",
+            "suite": "Apt. 950",
+            "city": "South Christy",
+            "zipcode": "23505-1337",
+            "geo": {
+                "lat": "-71.4197",
+                "lng": "71.7478"
+            }
+        }
+    },
+    "comments": [
+        {
+            "postId": 54,
+            "id": 266,
+            "name": "eum enim provident atque eum",
+            "email": "Carolina.Auer@polly.co.uk",
+            "body": "non et voluptas\neaque atque esse qui molestias porro quam veniam voluptatibus\nminima ut velit velit ut architecto deleniti\nab sint deserunt possimus quas velit et eum"
+        },
+        {
+            "postId": 54,
+            "id": 267,
+            "name": "ea commodi provident veritatis voluptatem voluptates aperiam",
+            "email": "Jaylan.Braun@lane.us",
+            "body": "magnam similique animi eos explicabo natus\nprovident cumque sit maxime velit\nveritatis fuga esse dolor hic nihil nesciunt assumenda\naliquid vero modi alias qui quia doloribus est"
+        },
+        {
+            "postId": 54,
+            "id": 268,
+            "name": "eum et eos delectus",
+            "email": "Javier.Dicki@damien.org",
+            "body": "velit earum perspiciatis ea recusandae nihil consectetur ut\nmaxime repellendus doloribus\naperiam ut ex ratione quia esse magni\nducimus rerum vel rerum officiis suscipit nihil qui"
+        },
+        {
+            "postId": 54,
+            "id": 269,
+            "name": "molestiae vitae pariatur",
+            "email": "Khalil_Sawayn@tanya.net",
+            "body": "quos sed unde repudiandae aut porro dignissimos qui\noccaecati sed alias enim\nvoluptates nesciunt sit ut adipisci est\nexpedita quae corrupti"
+        },
+        {
+            "postId": 54,
+            "id": 270,
+            "name": "rerum adipisci et ut sit sit dolores",
+            "email": "Tom.Russel@pattie.org",
+            "body": "quas placeat repudiandae a delectus facere exercitationem consectetur\nfacilis quas sequi est mollitia\nest vero hic laudantium maiores\nquisquam itaque aut maxime ut cumque quia doloremque voluptatem"
+        }
+    ],
+    "fetchDate": "2025-05-08 12:23:07"
 }

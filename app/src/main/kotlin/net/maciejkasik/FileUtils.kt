@@ -21,11 +21,14 @@ import java.util.zip.ZipOutputStream
  */
 object FileUtils {
     private val logger = LoggerFactory.getLogger(FileUtils::class.java)
+    
+    // Ustawienie opcji Json do deserializacji - bardzo ważne dla relacji
     private val json = Json { 
         prettyPrint = true 
         isLenient = true
         encodeDefaults = true
         ignoreUnknownKeys = true
+        coerceInputValues = true
         useArrayPolymorphism = true
     }
     

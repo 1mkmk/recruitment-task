@@ -1,0 +1,69 @@
+---
+# Tasks for setting up monitoring and log rotation
+
+- name: Set up log rotation
+  ansible.builtin.template:
+    src: logrotate.j2
+    dest: /etc/logrotate.d/{{ app_name }}
+    owner: root
+    group: root
+    mode: '0644'
+  tags: [monitoring, logs]
+
+- name: Install monitoring packages
+  ansible.builtin.package:
+    name: "{{ monitoring_packages | default(['prometheus-node-exporter']) }}"
+    state: present
+  when: enable_monitoring | default(false) | bool
+  tags: [monitoring, packages]
+
+- name: Create app metrics directory
+  ansible.builtin.file:
+    path: "{{ app_dir }}/metrics"
+    state: directory
+    owner: "{{ app_user }}"
+    group: "{{ app_group | default(app_user) }}"
+    mode: '0755'
+  when: enable_monitoring | default(false) | bool
+  tags: [monitoring]
+
+- name: Configure node exporter
+  ansible.builtin.template:
+    src: node_exporter.service.j2
+    dest: /etc/systemd/system/node-exporter.service
+    owner: root
+    group: root
+    mode: '0644'
+  when: 
+    - enable_monitoring | default(false) | bool
+    - "'prometheus-node-exporter' in monitoring_packages | default(['prometheus-node-exporter'])"
+  register: node_exporter_config
+  tags: [monitoring]
+
+- name: Enable and start node exporter
+  ansible.builtin.systemd:
+    name: node-exporter
+    state: started
+    enabled: yes
+    daemon_reload: yes
+  when: 
+    - enable_monitoring | default(false) | bool
+    - node_exporter_config is changed
+  tags: [monitoring]
+
+- name: Create basic health check script
+  ansible.builtin.template:
+    src: health_check.sh.j2
+    dest: "{{ app_dir }}/health_check.sh"
+    owner: "{{ app_user }}"
+    group: "{{ app_group | default(app_user) }}"
+    mode: '0755'
+  tags: [monitoring]
+
+- name: Set up health check cron job
+  ansible.builtin.cron:
+    name: "{{ app_name }} health check"
+    job: "{{ app_dir }}/health_check.sh >> {{ app_log_dir }}/health_check.log 2>&1"
+    minute: "*/5"
+    user: "{{ app_user }}"
+  tags: [monitoring]

@@ -36,8 +36,8 @@ function Show-Help {
 $command = $args[0]
 $additionalArgs = $args[1..($args.Length-1)]
 
-# Przygotowanie argumentow dla aplikacji CLI
-$cliArgs = @("v2")  # Dodajemy v2 jako pierwszy argument, aby użyć nowego CLI
+# Dodajemy v2 jako pierwszy argument, aby używać nowego trybu CLI dla wszystkich komend
+$cliArgs = @("v2")
 
 switch ($command) {
     "posts" {

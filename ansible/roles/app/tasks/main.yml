@@ -1,0 +1,31 @@
+---
+# Main task file for app role
+# This file orchestrates the execution of task modules
+
+- name: Run pre-flight checks
+  ansible.builtin.import_tasks: includes/preflight.yml
+  tags: [preflight]
+
+- name: Import prerequisite tasks
+  ansible.builtin.import_tasks: includes/prerequisites.yml
+  tags: [prerequisites]
+
+- name: Import user and directory setup tasks  
+  ansible.builtin.import_tasks: includes/setup.yml
+  tags: [setup]
+
+- name: Backup existing installation
+  ansible.builtin.import_tasks: includes/backup.yml
+  tags: [backup]
+
+- name: Import application deployment tasks
+  ansible.builtin.import_tasks: includes/deploy.yml
+  tags: [deploy]
+
+- name: Import service management tasks
+  ansible.builtin.import_tasks: includes/service.yml
+  tags: [service]
+
+- name: Set up monitoring and log rotation
+  ansible.builtin.import_tasks: includes/monitoring.yml
+  tags: [monitoring]

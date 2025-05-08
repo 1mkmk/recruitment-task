@@ -3,5 +3,65 @@
     "id": 38,
     "title": "explicabo et eos deleniti nostrum ab id repellendus",
     "body": "animi esse sit aut sit nesciunt assumenda eum voluptas\nquia voluptatibus provident quia necessitatibus ea\nrerum repudiandae quia voluptatem delectus fugit aut id quia\nratione optio eos iusto veniam iure",
-    "fetchDate": "2025-05-08 00:23:07"
+    "user": {
+        "id": 4,
+        "name": "Patricia Lebsack",
+        "username": "Karianne",
+        "email": "Julianne.OConner@kory.org",
+        "phone": "493-170-9623 x156",
+        "website": "kale.biz",
+        "company": {
+            "name": "Robel-Corkery",
+            "catchPhrase": "Multi-tiered zero tolerance productivity",
+            "bs": "transition cutting-edge web services"
+        },
+        "address": {
+            "street": "Hoeger Mall",
+            "suite": "Apt. 692",
+            "city": "South Elvis",
+            "zipcode": "53919-4257",
+            "geo": {
+                "lat": "29.4572",
+                "lng": "-164.2990"
+            }
+        }
+    },
+    "comments": [
+        {
+            "postId": 38,
+            "id": 186,
+            "name": "voluptas distinctio qui similique quasi voluptatem non sit",
+            "email": "Yasmin.Prohaska@hanna.co.uk",
+            "body": "asperiores eaque error sunt ut natus et omnis\nexpedita error iste vitae\nsit alias voluptas voluptatibus quia iusto quia ea\nenim facere est quam ex"
+        },
+        {
+            "postId": 38,
+            "id": 187,
+            "name": "maiores iste dolor itaque nemo voluptas",
+            "email": "Ursula.Kirlin@eino.org",
+            "body": "et enim necessitatibus velit autem magni voluptas\nat maxime error sunt nobis sit\ndolor beatae harum rerum\ntenetur facere pariatur et perferendis voluptas maiores nihil eaque"
+        },
+        {
+            "postId": 38,
+            "id": 188,
+            "name": "quisquam quod quia nihil animi minima facere odit est",
+            "email": "Nichole_Bartoletti@mozell.me",
+            "body": "quam magni adipisci totam\nut reprehenderit ut tempore non asperiores repellendus architecto aperiam\ndignissimos est aut reiciendis consectetur voluptate nihil culpa at\nmolestiae labore qui ea"
+        },
+        {
+            "postId": 38,
+            "id": 189,
+            "name": "ut iusto asperiores delectus",
+            "email": "Lottie_Wyman@jasen.biz",
+            "body": "nostrum excepturi debitis cum\narchitecto iusto laudantium odit aut dolor voluptatem consectetur nulla\nmollitia beatae autem quasi nemo repellendus ut ea et\naut architecto odio cum quod optio"
+        },
+        {
+            "postId": 38,
+            "id": 190,
+            "name": "dignissimos voluptatibus libero",
+            "email": "Dominique_Hermann@paige.ca",
+            "body": "laudantium vero similique eum\niure iste culpa praesentium\nmolestias doloremque alias et at doloribus\naperiam natus est illo quo ratione porro excepturi"
+        }
+    ],
+    "fetchDate": "2025-05-08 12:23:00"
 }

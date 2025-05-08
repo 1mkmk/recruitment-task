@@ -3,5 +3,65 @@
     "id": 15,
     "title": "eveniet quod temporibus",
     "body": "reprehenderit quos placeat\nvelit minima officia dolores impedit repudiandae molestiae nam\nvoluptas recusandae quis delectus\nofficiis harum fugiat vitae",
-    "fetchDate": "2025-05-08 00:23:07"
+    "user": {
+        "id": 2,
+        "name": "Ervin Howell",
+        "username": "Antonette",
+        "email": "Shanna@melissa.tv",
+        "phone": "010-692-6593 x09125",
+        "website": "anastasia.net",
+        "company": {
+            "name": "Deckow-Crist",
+            "catchPhrase": "Proactive didactic contingency",
+            "bs": "synergize scalable supply-chains"
+        },
+        "address": {
+            "street": "Victor Plains",
+            "suite": "Suite 879",
+            "city": "Wisokyburgh",
+            "zipcode": "90566-7771",
+            "geo": {
+                "lat": "-43.9509",
+                "lng": "-34.4618"
+            }
+        }
+    },
+    "comments": [
+        {
+            "postId": 15,
+            "id": 71,
+            "name": "vel pariatur perferendis vero ab aut voluptates labore",
+            "email": "Lavinia@lafayette.me",
+            "body": "mollitia magnam et\nipsum consequatur est expedita\naut rem ut ex doloremque est vitae est\ncumque velit recusandae numquam libero dolor fuga fugit a"
+        },
+        {
+            "postId": 15,
+            "id": 72,
+            "name": "quia sunt dolor dolor suscipit expedita quis",
+            "email": "Sabrina.Marks@savanah.name",
+            "body": "quisquam voluptas ut\npariatur eos amet non\nreprehenderit voluptates numquam\nin est voluptatem dicta ipsa qui esse enim"
+        },
+        {
+            "postId": 15,
+            "id": 73,
+            "name": "ut quia ipsa repellat sunt et sequi aut est",
+            "email": "Desmond_Graham@kailee.biz",
+            "body": "nam qui possimus deserunt\ninventore dignissimos nihil rerum ut consequatur vel architecto\ntenetur recusandae voluptate\nnumquam dignissimos aliquid ut reprehenderit voluptatibus"
+        },
+        {
+            "postId": 15,
+            "id": 74,
+            "name": "ut non illum pariatur dolor",
+            "email": "Gussie_Kunde@sharon.biz",
+            "body": "non accusamus eum aut et est\naccusantium animi nesciunt distinctio ea quas quisquam\nsit ut voluptatem modi natus sint\nfacilis est qui molestias recusandae nemo"
+        },
+        {
+            "postId": 15,
+            "id": 75,
+            "name": "minus laboriosam consequuntur",
+            "email": "Richard@chelsie.co.uk",
+            "body": "natus numquam enim asperiores doloremque ullam et\nest molestias doloribus cupiditate labore vitae aut voluptatem\nitaque quos quo consectetur nihil illum veniam\nnostrum voluptatum repudiandae ut"
+        }
+    ],
+    "fetchDate": "2025-05-08 12:22:51"
 }

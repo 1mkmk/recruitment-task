@@ -3,5 +3,65 @@
     "id": 41,
     "title": "non est facere",
     "body": "molestias id nostrum\nexcepturi molestiae dolore omnis repellendus quaerat saepe\nconsectetur iste quaerat tenetur asperiores accusamus ex ut\nnam quidem est ducimus sunt debitis saepe",
-    "fetchDate": "2025-05-08 00:23:07"
+    "user": {
+        "id": 5,
+        "name": "Chelsey Dietrich",
+        "username": "Kamren",
+        "email": "Lucio_Hettinger@annie.ca",
+        "phone": "(254)954-1289",
+        "website": "demarco.info",
+        "company": {
+            "name": "Keebler LLC",
+            "catchPhrase": "User-centric fault-tolerant solution",
+            "bs": "revolutionize end-to-end systems"
+        },
+        "address": {
+            "street": "Skiles Walks",
+            "suite": "Suite 351",
+            "city": "Roscoeview",
+            "zipcode": "33263",
+            "geo": {
+                "lat": "-31.8129",
+                "lng": "62.5342"
+            }
+        }
+    },
+    "comments": [
+        {
+            "postId": 41,
+            "id": 201,
+            "name": "et adipisci aliquam a aperiam ut soluta",
+            "email": "Cleve@royal.us",
+            "body": "est officiis placeat\nid et iusto ut fugit numquam\neos aut voluptas ad quia tempore qui quibusdam doloremque\nrecusandae tempora qui"
+        },
+        {
+            "postId": 41,
+            "id": 202,
+            "name": "blanditiis vel fuga odio qui",
+            "email": "Donnell@polly.net",
+            "body": "sequi expedita quibusdam enim ipsam\nbeatae ad eum placeat\nperspiciatis quis in nulla porro voluptas quia\nesse et quibusdam"
+        },
+        {
+            "postId": 41,
+            "id": 203,
+            "name": "ab enim adipisci laudantium impedit qui sed",
+            "email": "Bonita@karl.biz",
+            "body": "eum voluptates id autem sequi qui omnis commodi\nveniam et laudantium aut\net molestias esse asperiores et quaerat\npariatur non officia voluptatibus"
+        },
+        {
+            "postId": 41,
+            "id": 204,
+            "name": "autem voluptates voluptas nihil",
+            "email": "Shea@angelina.biz",
+            "body": "voluptatibus pariatur illo\nautem quia aut ullam laudantium quod laborum officia\ndicta sit consequatur quis delectus vel\nomnis laboriosam laborum vero ipsa voluptas"
+        },
+        {
+            "postId": 41,
+            "id": 205,
+            "name": "et reiciendis ullam quae",
+            "email": "Omari@veronica.us",
+            "body": "voluptatem accusamus delectus natus quasi aliquid\nporro ab id ea aut consequatur dignissimos quod et\naspernatur sapiente cum corrupti\npariatur veritatis unde"
+        }
+    ],
+    "fetchDate": "2025-05-08 12:23:02"
 }

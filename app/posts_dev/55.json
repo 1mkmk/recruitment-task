@@ -3,5 +3,65 @@
     "id": 55,
     "title": "sit vel voluptatem et non libero",
     "body": "debitis excepturi ea perferendis harum libero optio\neos accusamus cum fuga ut sapiente repudiandae\net ut incidunt omnis molestiae\nnihil ut eum odit",
-    "fetchDate": "2025-05-08 00:23:07"
+    "user": {
+        "id": 6,
+        "name": "Mrs. Dennis Schulist",
+        "username": "Leopoldo_Corkery",
+        "email": "Karley_Dach@jasper.info",
+        "phone": "1-477-935-8478 x6430",
+        "website": "ola.org",
+        "company": {
+            "name": "Considine-Lockman",
+            "catchPhrase": "Synchronised bottom-line interface",
+            "bs": "e-enable innovative applications"
+        },
+        "address": {
+            "street": "Norberto Crossing",
+            "suite": "Apt. 950",
+            "city": "South Christy",
+            "zipcode": "23505-1337",
+            "geo": {
+                "lat": "-71.4197",
+                "lng": "71.7478"
+            }
+        }
+    },
+    "comments": [
+        {
+            "postId": 55,
+            "id": 271,
+            "name": "et et repellat quasi non ea similique",
+            "email": "Ethelyn.Moore@gabe.info",
+            "body": "quae eaque reprehenderit\nsuscipit facilis ut tenetur blanditiis sint occaecati\naccusantium expedita sed nostrum\nrerum sunt nam qui placeat consequatur et"
+        },
+        {
+            "postId": 55,
+            "id": 272,
+            "name": "repudiandae ut velit dignissimos enim rem dolores odit",
+            "email": "Evangeline_Kuvalis@santina.ca",
+            "body": "consequuntur molestiae aut distinctio illo qui est sequi reprehenderit\nhic accusamus et officiis reprehenderit culpa\nest et numquam et\neius ipsa rerum velit"
+        },
+        {
+            "postId": 55,
+            "id": 273,
+            "name": "et aperiam autem inventore nisi nulla reiciendis velit",
+            "email": "Orland@larry.name",
+            "body": "asperiores et minus non\ndolor dolorem et sint et ipsam\net enim quia sequi\nsed beatae culpa architecto nisi minima"
+        },
+        {
+            "postId": 55,
+            "id": 274,
+            "name": "et vero nostrum tempore",
+            "email": "Micaela.Powlowski@saul.me",
+            "body": "quos illo consectetur dolores\ncupiditate enim rerum dicta sequi totam\naspernatur sed praesentium\nipsum voluptates perspiciatis ipsa accusantium et et"
+        },
+        {
+            "postId": 55,
+            "id": 275,
+            "name": "error nulla est laudantium similique ad",
+            "email": "Imelda_Klein@melany.biz",
+            "body": "error et quasi qui facilis enim eum adipisci iste\nad nostrum sint corporis quam velit necessitatibus a\neius doloribus optio ad qui molestiae\nquaerat dignissimos voluptatem culpa aliquam explicabo commodi natus"
+        }
+    ],
+    "fetchDate": "2025-05-08 12:23:08"
 }

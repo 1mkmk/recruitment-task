@@ -3,5 +3,65 @@
     "id": 70,
     "title": "voluptatem laborum magni",
     "body": "sunt repellendus quae\nest asperiores aut deleniti esse accusamus repellendus quia aut\nquia dolorem unde\neum tempora esse dolore",
-    "fetchDate": "2025-05-08 00:23:07"
+    "user": {
+        "id": 7,
+        "name": "Kurtis Weissnat",
+        "username": "Elwyn.Skiles",
+        "email": "Telly.Hoeger@billy.biz",
+        "phone": "210.067.6132",
+        "website": "elvis.io",
+        "company": {
+            "name": "Johns Group",
+            "catchPhrase": "Configurable multimedia task-force",
+            "bs": "generate enterprise e-tailers"
+        },
+        "address": {
+            "street": "Rex Trail",
+            "suite": "Suite 280",
+            "city": "Howemouth",
+            "zipcode": "58804-1099",
+            "geo": {
+                "lat": "24.8918",
+                "lng": "21.8984"
+            }
+        }
+    },
+    "comments": [
+        {
+            "postId": 70,
+            "id": 346,
+            "name": "beatae in fuga assumenda dolorem accusantium blanditiis mollitia",
+            "email": "Kirstin@tina.info",
+            "body": "quas non magnam\nquia veritatis assumenda reiciendis\nsimilique dolores est ab\npraesentium fuga ut"
+        },
+        {
+            "postId": 70,
+            "id": 347,
+            "name": "tenetur id delectus recusandae voluptates quo aut",
+            "email": "Anthony.Koepp@savannah.tv",
+            "body": "consectetur illo corporis sit labore optio quod\nqui occaecati aut sequi quia\nofficiis quia aut odio quo ad\nrerum tenetur aut quasi veniam"
+        },
+        {
+            "postId": 70,
+            "id": 348,
+            "name": "molestias natus autem quae sint qui",
+            "email": "Bradley.Lang@marilyne.tv",
+            "body": "perferendis dignissimos soluta ut provident sit et\ndelectus ratione ad sapiente qui excepturi error qui quo\nquo illo commodi\nrerum maxime voluptas voluptatem"
+        },
+        {
+            "postId": 70,
+            "id": 349,
+            "name": "odio maiores a porro dolorum ut pariatur inventore",
+            "email": "Loren@aric.biz",
+            "body": "dicta impedit non\net laborum laudantium qui eaque et beatae suscipit\nsequi magnam rem dolorem non quia vel adipisci\ncorrupti officiis laudantium impedit"
+        },
+        {
+            "postId": 70,
+            "id": 350,
+            "name": "eius quia pariatur",
+            "email": "Arjun@natalie.ca",
+            "body": "eaque rerum tempore distinctio\nconsequatur fugiat veniam et incidunt ut ut et\nconsequatur blanditiis magnam\ndoloremque voluptate ut architecto facere in dolorem et aut"
+        }
+    ],
+    "fetchDate": "2025-05-08 12:23:14"
 }

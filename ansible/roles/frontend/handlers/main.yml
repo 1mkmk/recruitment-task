@@ -1,0 +1,27 @@
+---
+# Handlers for the frontend role
+
+- name: restart nginx
+  ansible.builtin.systemd:
+    name: nginx
+    state: restarted
+    enabled: yes
+  listen: "restart web server"
+
+- name: restart apache
+  ansible.builtin.systemd:
+    name: apache2
+    state: restarted
+    enabled: yes
+  listen: "restart web server"
+
+- name: reload systemd
+  ansible.builtin.systemd:
+    daemon_reload: yes
+  listen: "reload systemd"
+
+- name: restart frontend service
+  ansible.builtin.systemd:
+    name: "{{ frontend_name }}"
+    state: restarted
+  listen: "restart frontend"

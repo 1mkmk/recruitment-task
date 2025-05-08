@@ -1,0 +1,96 @@
+---
+# Tasks for configuring the web server for the frontend
+
+- name: Set up Nginx configuration
+  block:
+    - name: Create Nginx site configuration
+      ansible.builtin.template:
+        src: nginx.conf.j2
+        dest: /etc/nginx/sites-available/{{ frontend_name }}.conf
+        owner: root
+        group: root
+        mode: '0644'
+      notify: restart nginx
+      
+    - name: Enable Nginx site
+      ansible.builtin.file:
+        src: /etc/nginx/sites-available/{{ frontend_name }}.conf
+        dest: /etc/nginx/sites-enabled/{{ frontend_name }}.conf
+        state: link
+      notify: restart nginx
+      
+    - name: Remove default Nginx site if configured
+      ansible.builtin.file:
+        path: /etc/nginx/sites-enabled/default
+        state: absent
+      when: remove_default_nginx_site | default(true)
+      notify: restart nginx
+  when: web_server == "nginx"
+  tags: [frontend, webserver, nginx]
+
+- name: Set up Apache configuration
+  block:
+    - name: Create Apache site configuration
+      ansible.builtin.template:
+        src: apache.conf.j2
+        dest: /etc/apache2/sites-available/{{ frontend_name }}.conf
+        owner: root
+        group: root
+        mode: '0644'
+      notify: restart apache
+      
+    - name: Enable Apache site
+      ansible.builtin.command: a2ensite {{ frontend_name }}.conf
+      args:
+        creates: /etc/apache2/sites-enabled/{{ frontend_name }}.conf
+      notify: restart apache
+      
+    - name: Enable required Apache modules
+      ansible.builtin.command: a2enmod {{ item }}
+      args:
+        creates: /etc/apache2/mods-enabled/{{ item }}.load
+      loop:
+        - rewrite
+        - headers
+        - proxy
+        - proxy_http
+      notify: restart apache
+      
+    - name: Remove default Apache site if configured
+      ansible.builtin.command: a2dissite 000-default.conf
+      args:
+        removes: /etc/apache2/sites-enabled/000-default.conf
+      when: remove_default_apache_site | default(true)
+      notify: restart apache
+  when: web_server == "apache2"
+  tags: [frontend, webserver, apache]
+
+- name: Create simple serve script if no web server
+  ansible.builtin.template:
+    src: serve.sh.j2
+    dest: "{{ frontend_dir }}/serve.sh"
+    owner: "{{ frontend_user }}"
+    group: "{{ frontend_group }}"
+    mode: '0755'
+  when: web_server == "none"
+  tags: [frontend, webserver, serve]
+  
+- name: Create systemd service for standalone server
+  ansible.builtin.template:
+    src: frontend-service.j2
+    dest: "/etc/systemd/system/{{ frontend_name }}.service"
+    owner: root
+    group: root
+    mode: '0644'
+  register: frontend_service
+  when: web_server == "none"
+  notify: reload systemd
+  tags: [frontend, webserver, serve]
+
+- name: Start and enable frontend service if standalone
+  ansible.builtin.systemd:
+    name: "{{ frontend_name }}"
+    state: started
+    enabled: yes
+  when: web_server == "none" and frontend_service.changed
+  tags: [frontend, webserver, serve]

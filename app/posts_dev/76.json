@@ -3,5 +3,65 @@
     "id": 76,
     "title": "doloremque officiis ad et non perferendis",
     "body": "ut animi facere\ntotam iusto tempore\nmolestiae eum aut et dolorem aperiam\nquaerat recusandae totam odio",
-    "fetchDate": "2025-05-08 00:23:07"
+    "user": {
+        "id": 8,
+        "name": "Nicholas Runolfsdottir V",
+        "username": "Maxime_Nienow",
+        "email": "Sherwood@rosamond.me",
+        "phone": "586.493.6943 x140",
+        "website": "jacynthe.com",
+        "company": {
+            "name": "Abernathy Group",
+            "catchPhrase": "Implemented secondary concept",
+            "bs": "e-enable extensible e-tailers"
+        },
+        "address": {
+            "street": "Ellsworth Summit",
+            "suite": "Suite 729",
+            "city": "Aliyaview",
+            "zipcode": "45169",
+            "geo": {
+                "lat": "-14.3990",
+                "lng": "-120.7677"
+            }
+        }
+    },
+    "comments": [
+        {
+            "postId": 76,
+            "id": 376,
+            "name": "dolorem qui architecto provident",
+            "email": "Raphaelle@miller.com",
+            "body": "sint qui aut aspernatur necessitatibus\nlaboriosam autem occaecati nostrum non\nofficiis consequuntur odit\net itaque quam placeat aut molestiae saepe veniam provident"
+        },
+        {
+            "postId": 76,
+            "id": 377,
+            "name": "nemo hic sapiente placeat quidem omnis",
+            "email": "Jaren.Schiller@augusta.org",
+            "body": "sint fugit et\nid et saepe non molestiae sit earum doloremque\ndolorem nemo earum dignissimos ipsa soluta deleniti quos\nquis numquam ducimus sed corporis dolores sed quisquam suscipit"
+        },
+        {
+            "postId": 76,
+            "id": 378,
+            "name": "vitae aut perspiciatis quia enim voluptas",
+            "email": "Nikko_Reynolds@harry.me",
+            "body": "est molestiae non fugiat voluptatem quo porro\naut praesentium ipsam aspernatur perferendis fuga\nofficia sit ut\naspernatur rerum est"
+        },
+        {
+            "postId": 76,
+            "id": 379,
+            "name": "est qui quos exercitationem",
+            "email": "Afton.Medhurst@mina.info",
+            "body": "laboriosam quia animi ut\nquasi aut enim sequi numquam similique fugiat voluptatum non\nsed velit quod nisi id quidem\nmagni in eveniet hic"
+        },
+        {
+            "postId": 76,
+            "id": 380,
+            "name": "similique fugiat tenetur ea incidunt numquam",
+            "email": "Wilson.Nikolaus@fredrick.org",
+            "body": "voluptatum quis ipsa voluptatem saepe est\nillum error repellat eaque dolor quae qui\neum rerum sunt quam illo\nvoluptates fuga possimus nemo nihil distinctio"
+        }
+    ],
+    "fetchDate": "2025-05-08 12:23:16"
 }

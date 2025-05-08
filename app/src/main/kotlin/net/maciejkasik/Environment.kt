@@ -75,7 +75,7 @@ object ConfigProvider {
         val baseConfig = when(env) {
             Environment.DEVELOPMENT -> AppConfig(
                 apiBaseUrl = "https://jsonplaceholder.typicode.com",
-                outputDirectory = "./posts_dev",
+                outputDirectory = "./posts",
                 loggingEnabled = true,
                 requestTimeout = 30,
                 serverPort = 8080,
@@ -115,4 +115,4 @@ object ConfigProvider {
         customOutputDirectories[env] = newDirectory
         return newDirectory
     }
-} 
+}

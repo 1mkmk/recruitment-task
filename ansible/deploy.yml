@@ -1,0 +1,53 @@
+---
+# Main playbook for deploying JSONPlaceholder Downloader application
+- name: Deploy JSONPlaceholder Downloader Application
+  hosts: app_servers
+  become: true
+  
+  pre_tasks:
+    - name: Verify environment
+      ansible.builtin.debug:
+        msg: "Deploying {{ app_name | default('jsonplaceholder-downloader') }} version {{ app_version | default('1.0-SNAPSHOT') }} to {{ inventory_hostname }}"
+      tags: [always]
+    
+    - name: Check connectivity
+      ansible.builtin.ping:
+      tags: [pre-check]
+    
+    - name: Check required disk space
+      ansible.builtin.command: df -h {{ app_dir | default('/opt/jsonplaceholder') }}
+      register: disk_space
+      changed_when: false
+      failed_when: false
+      tags: [pre-check]
+      
+    - name: Display disk space
+      ansible.builtin.debug:
+        var: disk_space.stdout_lines
+      when: disk_space.stdout is defined
+      tags: [pre-check]
+
+  roles:
+    - role: app
+      tags: [app, backend]
+    - role: frontend
+      tags: [frontend]
+
+  post_tasks:
+    - name: Deployment summary
+      ansible.builtin.debug:
+        msg: |
+          Deployment successful!
+          Backend API: http://{{ inventory_hostname }}:{{ app_port | default(8080) }}/api/info
+          Frontend: http://{{ inventory_hostname }}:{{ frontend_port | default(80) }}/
+      tags: [always]
+    
+    - name: Record deployment completion time
+      ansible.builtin.set_fact:
+        deployment_completed: "{{ ansible_date_time.iso8601 }}"
+      tags: [report]
+      
+    - name: Deployment duration
+      ansible.builtin.debug:
+        msg: "Deployment completed at {{ deployment_completed }}"
+      tags: [report]

@@ -1,0 +1,13 @@
+{{ app_log_dir }}/*.log {
+    daily
+    missingok
+    rotate 14
+    compress
+    delaycompress
+    notifempty
+    create 0640 {{ app_user }} {{ app_group | default(app_user) }}
+    sharedscripts
+    postrotate
+        systemctl reload {{ app_name }} >/dev/null 2>&1 || true
+    endscript
+}

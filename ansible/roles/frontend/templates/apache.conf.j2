@@ -1,0 +1,43 @@
+<VirtualHost *:{{ frontend_port }}>
+    ServerName {{ frontend_domain }}
+    DocumentRoot {{ frontend_dir }}/dist
+
+    <Directory {{ frontend_dir }}/dist>
+        Options -Indexes +FollowSymLinks
+        AllowOverride All
+        Require all granted
+        
+        # SPA routing - serve index.html for any non-file route
+        RewriteEngine On
+        RewriteCond %{REQUEST_FILENAME} !-f
+        RewriteCond %{REQUEST_FILENAME} !-d
+        RewriteRule ^(.*)$ index.html [L]
+    </Directory>
+
+    # API Proxy
+    ProxyPreserveHost On
+    ProxyPass /api {{ frontend_api_url }}
+    ProxyPassReverse /api {{ frontend_api_url }}
+
+    # Security headers
+    Header always set X-Frame-Options "SAMEORIGIN"
+    Header always set X-Content-Type-Options "nosniff"
+    Header always set X-XSS-Protection "1; mode=block"
+    Header always set Referrer-Policy "no-referrer-when-downgrade"
+
+    # Cache settings for static assets
+    <FilesMatch "\.(js|css|png|jpg|jpeg|gif|ico|svg)$">
+        Header set Cache-Control "max-age=2592000, public"
+    </FilesMatch>
+
+    ErrorLog {{ frontend_dir }}/logs/error.log
+    CustomLog {{ frontend_dir }}/logs/access.log combined
+
+    {% if frontend_ssl_enabled %}
+    SSLEngine on
+    SSLCertificateFile {{ ssl_certificate_path }}
+    SSLCertificateKeyFile {{ ssl_certificate_key_path }}
+    SSLProtocol all -SSLv3 -TLSv1 -TLSv1.1
+    SSLCipherSuite HIGH:!aNULL:!MD5
+    {% endif %}
+</VirtualHost>

@@ -1,0 +1,119 @@
+---
+# Tasks for rollback operations
+
+- name: Find latest backup
+  ansible.builtin.find:
+    paths: "{{ app_dir }}/backups"
+    patterns: "{{ app_name }}-*.jar"
+    file_type: file
+  register: backup_files
+  tags: [rollback]
+
+- name: Set latest backup file
+  ansible.builtin.set_fact:
+    latest_backup_jar: "{{ (backup_files.files | sort(attribute='mtime', reverse=true) | first).path }}"
+  when: backup_files.matched > 0
+  tags: [rollback]
+
+- name: Check for last successful version
+  ansible.builtin.slurp:
+    src: "{{ app_dir }}/backups/last_successful_version"
+  register: last_version_file
+  failed_when: false
+  tags: [rollback]
+
+- name: Display rollback information
+  ansible.builtin.debug:
+    msg: "Rolling back to previous version from: {{ latest_backup_jar | default('No backup found') }}"
+  when: backup_files.matched > 0
+  tags: [rollback]
+
+- name: Stop application service
+  ansible.builtin.systemd:
+    name: "{{ app_name }}"
+    state: stopped
+  tags: [rollback]
+
+- name: Restore application JAR from backup
+  ansible.builtin.copy:
+    src: "{{ latest_backup_jar }}"
+    dest: "{{ app_dir }}/{{ app_name }}.jar"
+    remote_src: yes
+    owner: "{{ app_user }}"
+    group: "{{ app_group | default(app_user) }}"
+    mode: '0644'
+  when: backup_files.matched > 0
+  tags: [rollback]
+
+- name: Find latest configuration backups
+  ansible.builtin.find:
+    paths: "{{ app_dir }}/backups"
+    patterns: "{{ item }}-*"
+    file_type: file
+  register: "config_backups_{{ item | basename | regex_replace('\\.', '_') }}"
+  with_items:
+    - "application.properties"
+    - "run-app.sh"
+    - "{{ app_name }}.service"
+  tags: [rollback]
+
+- name: Restore configuration files
+  ansible.builtin.copy:
+    src: "{{ item.path }}"
+    dest: "{{ item.restore_path }}"
+    remote_src: yes
+    owner: "{{ item.owner }}"
+    group: "{{ item.group }}"
+    mode: "{{ item.mode }}"
+  loop:
+    - { 
+        path: "{{ (config_backups_application_properties.files | default([]) | sort(attribute='mtime', reverse=true) | first).path | default('') }}", 
+        restore_path: "{{ app_config_dir }}/application.properties",
+        owner: "{{ app_user }}",
+        group: "{{ app_group | default(app_user) }}",
+        mode: "0644"
+      }
+    - { 
+        path: "{{ (config_backups_run_app_sh.files | default([]) | sort(attribute='mtime', reverse=true) | first).path | default('') }}", 
+        restore_path: "{{ app_dir }}/run-app.sh",
+        owner: "{{ app_user }}",
+        group: "{{ app_group | default(app_user) }}",
+        mode: "0755"
+      }
+    - { 
+        path: "{{ (config_backups_jsonplaceholder_downloader_service.files | default([]) | sort(attribute='mtime', reverse=true) | first).path | default('') }}", 
+        restore_path: "/etc/systemd/system/{{ app_name }}.service",
+        owner: "root",
+        group: "root",
+        mode: "0644"
+      }
+  when: item.path != ''
+  tags: [rollback]
+
+- name: Reload systemd after restoring service file
+  ansible.builtin.systemd:
+    daemon_reload: yes
+  tags: [rollback]
+
+- name: Start application service after rollback
+  ansible.builtin.systemd:
+    name: "{{ app_name }}"
+    state: started
+  tags: [rollback]
+
+- name: Check application status after rollback
+  ansible.builtin.uri:
+    url: "http://localhost:{{ app_port }}{{ app_health_check_path }}"
+    return_content: yes
+  register: rollback_health_check
+  until: rollback_health_check.status == 200
+  retries: "{{ app_health_check_retries }}"
+  delay: "{{ app_health_check_delay }}"
+  failed_when: false
+  become: false
+  tags: [rollback]
+
+- name: Report rollback status
+  ansible.builtin.debug:
+    msg: "{{ rollback_health_check.status | default(0) == 200 | ternary('Rollback successful! Application is healthy', 'Warning: Application may not be healthy after rollback') }}"
+  tags: [rollback]
