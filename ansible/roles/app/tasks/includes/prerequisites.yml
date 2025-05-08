@@ -1,19 +1,69 @@
 ---
 # System prerequisites for the application
 
+- name: Ensure reliable APT sources are configured
+  ansible.builtin.copy:
+    content: |
+      deb http://archive.ubuntu.com/ubuntu/ focal main restricted universe multiverse
+      deb http://archive.ubuntu.com/ubuntu/ focal-updates main restricted universe multiverse
+      deb http://archive.ubuntu.com/ubuntu/ focal-security main restricted universe multiverse
+      deb http://archive.ubuntu.com/ubuntu/ focal-backports main restricted universe multiverse
+    dest: /etc/apt/sources.list.d/reliable-sources.list
+    owner: root
+    group: root
+    mode: '0644'
+  when: ansible_distribution == "Ubuntu" and ansible_distribution_major_version == "20"
+  tags: [system, packages]
+
 - name: Update package repositories
   ansible.builtin.apt:
     update_cache: yes
     cache_valid_time: 3600  # Cache is valid for 1 hour
+  register: apt_update
+  retries: 10
+  delay: 20
+  until: apt_update is success
   when: ansible_os_family == "Debian"
   tags: [system, packages]
 
+- name: Check if Java is already installed
+  ansible.builtin.command: which java
+  register: java_installed
+  changed_when: false
+  failed_when: false
+  tags: [system, packages, java]
+
 - name: Install required packages
-  ansible.builtin.package:
+  ansible.builtin.apt:
     name:
-      - openjdk-{{ java_version }}-jdk
+      - "{{ 'openjdk-' + (java_version | default('11')) + '-jdk' }}"
       - unzip
       - curl
       - wget
     state: present
+    update_cache: no
+    install_recommends: no
+  register: package_install
+  retries: 5
+  delay: 15
+  until: package_install is success
+  async: 600
+  poll: 30
+  when: ansible_os_family == "Debian" and java_installed.rc != 0
   tags: [system, packages, java]
+
+- name: Install other required packages
+  ansible.builtin.apt:
+    name:
+      - unzip
+      - curl
+      - wget
+    state: present
+    update_cache: no
+    install_recommends: no
+  register: other_package_install
+  retries: 3
+  delay: 10
+  until: other_package_install is success
+  when: ansible_os_family == "Debian" and java_installed.rc == 0
+  tags: [system, packages]

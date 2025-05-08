@@ -1,10 +1,17 @@
 ---
 # User and directory setup tasks
 
+- name: Create application group
+  ansible.builtin.group:
+    name: "{{ app_group | default('appuser') }}"
+    state: present
+    system: yes
+  tags: [user, setup]
+
 - name: Create application user
   ansible.builtin.user:
     name: "{{ app_user }}"
-    group: "{{ app_group | default(omit) }}"
+    group: "{{ app_group | default('appuser') }}"
     comment: "User for running {{ app_name }} application"
     shell: /bin/bash
     system: yes

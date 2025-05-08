@@ -18,6 +18,12 @@ jvm_extra_opts: "-XX:+UseG1GC -XX:MaxGCPauseMillis=200"
 app_memory_limit: "1G"
 app_cpu_quota: "200%"
 
+# Port configuration
+app_port: 8080  # Internal application port
+app_external_port: 40060  # External port for backend
+frontend_port: 80  # Internal frontend port
+frontend_external_port: 40061  # External port for frontend
+
 # Monitoring configuration
 monitoring_packages:
   - prometheus-node-exporter
@@ -39,7 +45,6 @@ additional_app_props:
 frontend_name: jsonplaceholder-frontend
 frontend_version: 1.0.0
 frontend_dir: /var/www/jsonplaceholder-frontend
-frontend_port: 80
 frontend_min_disk_space: 200000  # 200MB in KB
 frontend_memory_limit: "512M"
 frontend_cpu_quota: "100%"
@@ -47,6 +52,7 @@ frontend_cpu_quota: "100%"
 # Web server and API connection
 web_server: nginx
 frontend_api_url: "http://localhost:8080/api"
+frontend_api_external_url: "http://srv14.mikr.us:40060/api"  # External API URL
 remove_default_nginx_site: true
 
 # Build settings

@@ -14,6 +14,30 @@
       ansible.builtin.ping:
       tags: [pre-check]
     
+    - name: Check internet connectivity
+      ansible.builtin.command: ping -c 4 8.8.8.8
+      register: ping_result
+      changed_when: false
+      failed_when: false
+      tags: [pre-check]
+      
+    - name: Show internet connectivity status
+      ansible.builtin.debug:
+        msg: "Internet connectivity: {{ 'OK' if ping_result.rc == 0 else 'FAILED' }}"
+      tags: [pre-check]
+      
+    - name: Check package repository connectivity
+      ansible.builtin.command: ping -c 2 archive.ubuntu.com
+      register: repo_ping
+      changed_when: false
+      failed_when: false
+      tags: [pre-check]
+      
+    - name: Show repository connectivity status
+      ansible.builtin.debug:
+        msg: "Package repository connectivity: {{ 'OK' if repo_ping.rc == 0 else 'FAILED' }}"
+      tags: [pre-check]
+    
     - name: Check required disk space
       ansible.builtin.command: df -h {{ app_dir | default('/opt/jsonplaceholder') }}
       register: disk_space
@@ -38,8 +62,8 @@
       ansible.builtin.debug:
         msg: |
           Deployment successful!
-          Backend API: http://{{ inventory_hostname }}:{{ app_port | default(8080) }}/api/info
-          Frontend: http://{{ inventory_hostname }}:{{ frontend_port | default(80) }}/
+          Backend API: http://srv14.mikr.us:{{ app_external_port | default(40060) }}/api/info
+          Frontend: http://srv14.mikr.us:{{ frontend_external_port | default(40061) }}/
       tags: [always]
     
     - name: Record deployment completion time

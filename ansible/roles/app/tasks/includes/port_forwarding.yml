@@ -1,0 +1,36 @@
+---
+# Port forwarding configuration for backend
+
+- name: Install iptables
+  ansible.builtin.package:
+    name: iptables-persistent
+    state: present
+  tags: [ports, setup, iptables]
+
+- name: Configure port forwarding for backend (40060 -> 8080)
+  ansible.builtin.iptables:
+    table: nat
+    chain: PREROUTING
+    protocol: tcp
+    destination_port: "{{ app_external_port }}"
+    jump: REDIRECT
+    to_ports: "{{ app_port }}"
+    comment: "Forward external port {{ app_external_port }} to internal app port {{ app_port }}"
+  become: true
+  register: iptables_forward
+  tags: [ports, setup, iptables]
+
+- name: Save iptables rules
+  ansible.builtin.shell: netfilter-persistent save
+  become: true
+  when: iptables_forward is changed
+  tags: [ports, setup, iptables]
+
+- name: Ensure the application port is allowed in firewall
+  ansible.builtin.ufw:
+    rule: allow
+    port: "{{ app_external_port }}"
+    proto: tcp
+  become: true
+  when: ansible_os_family == "Debian"
+  tags: [ports, setup, firewall]

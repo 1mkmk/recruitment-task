@@ -1,0 +1,36 @@
+---
+# Port forwarding configuration for frontend
+
+- name: Install iptables
+  ansible.builtin.package:
+    name: iptables-persistent
+    state: present
+  tags: [ports, setup, iptables]
+
+- name: Configure port forwarding for frontend (40061 -> 80)
+  ansible.builtin.iptables:
+    table: nat
+    chain: PREROUTING
+    protocol: tcp
+    destination_port: "{{ frontend_external_port }}"
+    jump: REDIRECT
+    to_ports: "{{ frontend_port }}"
+    comment: "Forward external port {{ frontend_external_port }} to internal frontend port {{ frontend_port }}"
+  become: true
+  register: iptables_forward_frontend
+  tags: [ports, setup, iptables]
+
+- name: Save iptables rules
+  ansible.builtin.shell: netfilter-persistent save
+  become: true
+  when: iptables_forward_frontend is changed
+  tags: [ports, setup, iptables]
+
+- name: Ensure the frontend port is allowed in firewall
+  ansible.builtin.ufw:
+    rule: allow
+    port: "{{ frontend_external_port }}"
+    proto: tcp
+  become: true
+  when: ansible_os_family == "Debian"
+  tags: [ports, setup, firewall]

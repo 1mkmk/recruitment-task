@@ -11,22 +11,75 @@
   ansible.builtin.meta: flush_handlers
   tags: [service]
 
+- name: Ensure service is started
+  ansible.builtin.systemd:
+    name: "{{ app_name }}"
+    state: started
+  register: service_start
+  tags: [service]
+
+- name: Display service start status
+  ansible.builtin.debug:
+    msg: "Service start status: {{ service_start }}"
+  tags: [service, debug]
+
+- name: Increase delay to allow application to fully initialize
+  ansible.builtin.pause:
+    seconds: 20
+  tags: [service]
+
+- name: Check if application port is listening
+  ansible.builtin.wait_for:
+    host: 127.0.0.1
+    port: "{{ app_port }}"
+    timeout: 60
+  register: port_check
+  ignore_errors: yes
+  tags: [service, health-check]
+
 - name: Wait for application to become available
+  ansible.builtin.uri:
+    url: "http://{{ inventory_hostname }}:{{ app_port }}{{ app_health_check_path }}"
+    return_content: yes
+    status_code: 200
+    timeout: 30
+    follow_redirects: yes
+  register: health_check
+  until: health_check.status == 200
+  retries: "{{ app_health_check_retries | default(10) }}"
+  delay: "{{ app_health_check_delay | default(15) }}"
+  become: false
+  ignore_errors: yes
+  when: port_check is success
+  tags: [service, health-check]
+
+- name: Try localhost health check as fallback
   ansible.builtin.uri:
     url: "http://localhost:{{ app_port }}{{ app_health_check_path }}"
     return_content: yes
     status_code: 200
-  register: health_check
-  until: health_check.status == 200
-  retries: "{{ app_health_check_retries }}"
-  delay: "{{ app_health_check_delay }}"
+    timeout: 30
+  register: local_health_check
+  until: local_health_check.status == 200
+  retries: "{{ app_health_check_retries | default(10) }}"
+  delay: "{{ app_health_check_delay | default(15) }}"
   become: false
+  ignore_errors: yes
+  when: (health_check is defined and health_check.failed is defined and health_check.failed) or port_check is failed
   tags: [service, health-check]
   
 - name: Display application status
   ansible.builtin.debug:
-    msg: "Application is running and healthy{% if health_check.content is defined %}: {{ health_check.content | default('') | from_json | default(health_check.content) }}{% endif %}"
-  when: health_check.status is defined and health_check.status == 200
+    msg: "Application is running and healthy{% if health_check.content is defined and health_check.status == 200 %}: {{ health_check.content | default('') | from_json | default(health_check.content) }}{% elif local_health_check.content is defined and local_health_check.status == 200 %}: {{ local_health_check.content | default('') | from_json | default(local_health_check.content) }}{% endif %}"
+  when: (health_check.status is defined and health_check.status == 200) or (local_health_check.status is defined and local_health_check.status == 200)
+  tags: [service, health-check]
+
+- name: Fail if application is not healthy
+  ansible.builtin.fail:
+    msg: "Application failed to start properly. Please check logs at {{ app_log_dir }}/app.log"
+  when: (port_check is failed) or 
+        (health_check is defined and health_check.failed is defined and health_check.failed and 
+         local_health_check is defined and local_health_check.failed is defined and local_health_check.failed)
   tags: [service, health-check]
   
 - name: Record deployment in monitoring system
